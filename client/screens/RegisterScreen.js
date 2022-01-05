@@ -1,5 +1,5 @@
-import React,{useState} from 'react';
-import {StyleSheet, View} from 'react-native';
+import React,{useState,useEffect} from 'react';
+import {Alert, StyleSheet, View} from 'react-native';
 import {
     Input,
     NativeBaseProvider,
@@ -9,29 +9,55 @@ import {
     Box,
     Heading,
     Button,
-    Select, CheckIcon, Text, extendTheme
+    Select, CheckIcon, Text
 } from 'native-base';
-import AdministratorScreen from "./AdministratortScreen";
 import api from "../api";
+import uuid from 'react-native-uuid';
+
 
 const RegisterScreen = (props) => {
-    const [mail,setMail] = useState('')
-    const [age,setAge] = useState('')
-    const [gender,setGender] = useState('')
+    const [mail,setMail] = useState(undefined)
+    const [age,setAge] = useState(undefined)
+    const [gender,setGender] = useState(undefined)
+    const [deviceUid,setDeviceUid] = useState(uuid.v4())
     const [showError,setShowError] = useState(false)
    const onNextPress = () => {
-        if (mail && age && gender){
-            // validation tests
-            // send uuid of mobile
-            // send model of mobile
-            // send android version
-            api.registerPlayer(mail,age,gender)
+        if (validateAge(age) && validateEmail(mail) && gender){
+            console.log(deviceUid)
+            api.registerPlayer(mail,age,gender,deviceUid)
             props.navigation.navigate({routeName:'FindPlayer'});
         }
         else {
+            Alert.alert(
+                "לפחות אחד מהפרטים אינו חוקי",
+                "",
+                [
+                    {
+                        text: " אישור", onPress: () => {
+                        }
+                    }
+                ],
+            );
             setShowError(true)
         }
 
+    }
+    useEffect(() => {
+        console.log('---')
+    }, []);
+
+    const validateEmail = (inputText) => {
+        const mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+        if(inputText && inputText.match(mailformat)) {
+            return true;
+        }
+        return false;
+    }
+    const validateAge = (inputText) => {
+        if (inputText > 0 && inputText <= 100){
+            return true
+        }
+        return false
     }
     return (
         <NativeBaseProvider>
