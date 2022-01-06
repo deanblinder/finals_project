@@ -13,6 +13,13 @@ async function getUserByEmail(email) {
     );
 }
 
+async function getUserIdByUUID(uuid) {
+    console.log(" in getUserByEmail")
+    return await DButils.execQuery(
+        `select user_id from Users where uuid='${uuid}'`
+    );
+}
+
 async function addUser(id,email, age,gender, model,version ) {
     console.log(" in addUser")
     await DButils.execQuery(
@@ -29,5 +36,6 @@ async function deleteUserByEmail(email) {
 
 exports.getUserById= getUserById;
 exports.getUserByEmail= getUserByEmail;
+exports.getUserIdByUUID= getUserIdByUUID;
 exports.addUser= addUser;
 exports.deleteUserByEmail= deleteUserByEmail;
