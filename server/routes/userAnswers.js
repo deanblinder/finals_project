@@ -4,45 +4,38 @@ const userAnswers_utils = require("./utils/userAnswers_utils");
 
 
 router.get("/getAnswerByUserId/:userId", async (req, res, next) => {
-    let user_answers = [];
     try {
         const user_answers_details = await userAnswers_utils.getAnswerByUserId(
             req.params.userId
         );
-        //we should keep implementing team page.....
         console.log(user_answers_details)
-        user_answers.push(user_answers_details)
-        res.send(user_answers).status(200);
+        res.send(user_answers_details).status(200);
     } catch (error) {
         next(error);
     }
 });
 
 router.get("/getAnswerByQuestionNumber/:question_number", async (req, res, next) => {
-    let user_answers = [];
     try {
         const user_answers_details = await userAnswers_utils.getAnswerByQuestionNumber(
             req.params.question_number
         );
         //we should keep implementing team page.....
         console.log(user_answers_details)
-        user_answers.push(user_answers_details)
-        res.send(user_answers).status(200);
+        res.send(user_answers_details).status(200);
     } catch (error) {
         next(error);
     }
 });
 
 router.get("/getAnswerByAgentType/:agent_type", async (req, res, next) => {
-    let user_answers = [];
     try {
         const user_answers_details = await userAnswers_utils.getAnswerByAgentType(
             req.params.agent_type
         );
-        //we should keep implementing team page.....
         console.log(user_answers_details)
         user_answers.push(user_answers_details)
-        res.send(user_answers).status(200);
+        res.send(user_answers_details).status(200);
     } catch (error) {
         next(error);
     }
@@ -66,7 +59,6 @@ router.delete("/deleteAnswerByUserId/:user_id", async (req, res, next) => {
         await userAnswers_utils.deleteAnswerByUserId(
             req.params.user_id
         );
-        //we should keep implementing team page.....
         res.status(200);
     } catch (error) {
         next(error);

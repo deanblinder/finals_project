@@ -4,15 +4,12 @@ const sessionsAgentFollowerAlgo_utils = require("./utils/sessionsAgentFollowerAl
 
 
 router.get("/getSessionByUserId/:userId", async (req, res, next) => {
-    let sessions_agent_follower_algo_user = [];
     try {
         const sessions_agent_follower_algo_user_details = await sessionsAgentFollowerAlgo_utils.getSessionByUserId(
             req.params.userId
         );
-        //we should keep implementing team page.....
         console.log(sessions_agent_follower_algo_user_details)
-        sessions_agent_follower_algo_user.push(sessions_agent_follower_algo_user_details)
-        res.send(sessions_agent_follower_algo_user).status(200);
+        res.send(sessions_agent_follower_algo_user_details).status(200);
     } catch (error) {
         next(error);
     }
@@ -36,7 +33,6 @@ router.delete("/deleteSessionByUserSessionId/:UserSessionId", async (req, res, n
         await sessionsAgentFollowerAlgo_utils.deleteSessionByUserSessionId(
             req.params.UserSessionId
         );
-        //we should keep implementing team page.....
         res.status(200);
     } catch (error) {
         next(error);

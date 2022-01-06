@@ -1,24 +1,24 @@
 const DButils = require("./DButils");
 
-async function getAdminByAdminName(name) {
-    console.log(" in getAdminByAdminName")
-    return await DButils.execQuery(
-        `select * from admin where admin_name='${name}'`
-    );
-}
+// async function getAdminByAdminName(name) {
+//     console.log(" in getAdminByAdminName")
+//     return await DButils.execQuery(
+//         `select * from admin where admin_name='${name}'`
+//     );
+// }
+//
+// async function getAdminByEmail(email) {
+//     console.log(" in getAdminByEmail")
+//     return await DButils.execQuery(
+//         `select * from admin where email='${email}'`
+//     );
+// }
 
-async function getAdminByEmail(email) {
-    console.log(" in getAdminByEmail")
-    return await DButils.execQuery(
-        `select * from admin where email='${email}'`
-    );
-}
 
-
-async function addAdmin(name,email) {
+async function addAdmin(name,password) {
     console.log(" in addAdmin")
     await DButils.execQuery(
-        `INSERT INTO admin VALUES ('${name}','${email}')`
+        `INSERT INTO admin VALUES ('${name}','${password}')`
     );
 }
 
@@ -29,7 +29,7 @@ async function deleteAdminByUserName(name) {
     );
 }
 
-exports.getAdminByAdminName= getAdminByAdminName;
-exports.getAdminByEmail= getAdminByEmail;
+// exports.getAdminByAdminName= getAdminByAdminName;
+// exports.getAdminByEmail= getAdminByEmail;
 exports.addAdmin= addAdmin;
 exports.deleteAdminByUserName= deleteAdminByUserName;

@@ -1,16 +1,6 @@
-// import express from 'express'expres;
-// import  bodyParser from 'body-parser';
-// import router from '../server/routes/users.js'
 const express = require('express')
 const bodyParser = require('body-parser')
 const app = express();
-
-/* TODO: 1. connect DB .
-    TODO: 2. connect DB
-    TODO: 3.
- */
-
-
 
 const PORT = 3232;
 
@@ -29,11 +19,36 @@ app.use("/users", users);
 
 const sessionsNetworkAlgo = require("./routes/sessionsNetworkAlgo");
 app.use("/sessionsNetworkAlgo", sessionsNetworkAlgo);
+
 const sessionAgentLeader = require("./routes/sessionAgentLeader");
 app.use("/sessionAgentLeader", sessionAgentLeader);
+
+const sessionsAgentFollowerAlgo = require("./routes/sessionsAgentFollowerAlgo");
+app.use("/sessionsAgentFollowerAlgo", sessionsAgentFollowerAlgo);
+
+const actions = require("./routes/actions");
+app.use("/actions", actions);
+
+const userAnswers = require("./routes/userAnswers");
+app.use("/userAnswers", userAnswers);
+
 const admin = require("./routes/admin");
 app.use("/admin", admin);
 
+const agents = require("./routes/agents");
+app.use("/agents", agents);
+
+const errors = require("./routes/errors");
+app.use("/errors", errors);
+
+const feedback = require("./routes/feedback");
+app.use("/feedback", feedback);
+
+
+
+/*
+TODO: delete all until app.listen(PORT);
+ */
 app.post('/api/administratorLogin/:username/:password',(req,res)=>{
     console.log('---administratorLogin---')
     const username = req.params.username
@@ -82,65 +97,3 @@ app.post('/api/sendGameData',(req,res)=>{
 app.listen(PORT);
 console.log('Listening on port', PORT);
 
-
-//************************************************************************************
-// import express from 'express';
-// import axios from 'axios';
-// import bcryptjs from 'bcryptjs';
-// import  bodyParser from 'body-parser';
-//
-//
-// // require("dotenv").config();
-// //#endregion
-// //#region express configures
-// // var path = require("path");
-// import logger from "morgan";
-//
-// import cors from "cors";
-//
-// var app = express();
-//
-// // app.use(logger("dev")); //logger
-// app.use(express.json()); // parse application/json
-// app.use(bodyParser.json());
-//
-// app.use(express.urlencoded({ extended: false })); // parse application/x-www-form-urlencoded
-// // app.use(express.static(path.join(__dirname, "public"))); //To serve static files such as images, CSS files, and JavaScript files
-//
-// // middleware to serve all the needed static files under the dist directory - loaded from the index.html file
-// // https://expressjs.com/en/starter/static-files.html
-// app.use(express.static("dist"));
-//
-// // app.get("/api", (req, res) => {
-// //     res.sendFile(__dirname + "/index.html");
-// // });
-//
-// const corsConfig = {
-//     origin: true,
-//     credentials: true,
-// };
-//
-// app.use(cors(corsConfig));
-// app.options("*", cors(corsConfig));
-//
-// const port = process.env.PORT || "3232";
-// const users = require("./routes/users");
-//
-// // Routings
-// app.use("/users", users);
-//
-//
-// // app.use(function (err, req, res, next) {
-// //     console.error(err);
-// //     res.status(err.status || 500).send(err.message);
-// // });
-//
-// const server = app.listen(port, () => {
-//     console.log(`Server listen on port ${port}`);
-// });
-//
-// process.on("SIGINT", function () {
-//   if (server) {
-//     server.close(() => console.log("server closed"));
-//   }
-// });

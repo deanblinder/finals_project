@@ -23,7 +23,7 @@ async function updateAgent(AgentType,permanentDelay, variance) {
 
 
 async function deleteAgentByAgentType(AgentType) {
-    console.log("in delete session")
+    console.log("in delete agent")
     await DButils.execQuery(
         `DELETE FROM agents where agent_type='${AgentType}'`
     );
