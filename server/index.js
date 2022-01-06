@@ -3,7 +3,7 @@ import  bodyParser from 'body-parser';
 const app = express();
 const PORT = 3232;
 
-/* TODO: 1. connect DB
+/* TODO: 1. connect DB .
     TODO: 2. connect DB
     TODO: 3.
  */
