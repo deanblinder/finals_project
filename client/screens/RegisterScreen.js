@@ -14,7 +14,6 @@ import {
 import api from "../api";
 import uuid from 'react-native-uuid';
 
-
 const RegisterScreen = (props) => {
     const [mail,setMail] = useState(undefined)
     const [age,setAge] = useState(undefined)
