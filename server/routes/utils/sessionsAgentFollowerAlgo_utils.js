@@ -18,7 +18,7 @@ async function addNewSession(user_session_id,id, agent_type,score) {
 async function deleteSessionByUserSessionId(user_session_id) {
     console.log(" in delete user")
     await DButils.execQuery(
-        `DELETE FROM Users where user_session_id='${user_session_id}'`
+        `DELETE FROM sessionsAgentFollowerAlgo where user_session_id='${user_session_id}'`
     );
 }
 
