@@ -17,7 +17,7 @@ async function addFeedback(user_id,feedback) {
 async function deleteFeedbackByUserId(user_id) {
     console.log(" in deleteFeedbackByUserId")
     await DButils.execQuery(
-        `DELETE FROM Users where user_id='${user_id}'`
+        `DELETE FROM feedback where user_id='${user_id}'`
     );
 }
 
