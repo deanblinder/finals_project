@@ -1,8 +1,15 @@
 const DButils = require("./DButils");
 
 async function getUserById(user_id) {
+    console.log(" in getUserById")
     return await DButils.execQuery(
         `select * from Users where id='${user_id}'`
+    );
+}
+async function getUserByEmail(email) {
+    console.log(" in getUserByEmail")
+    return await DButils.execQuery(
+        `select * from Users where email='${email}'`
     );
 }
 
@@ -13,5 +20,14 @@ async function addUser(id,email, age,gender, model,version ) {
     );
 }
 
+async function deleteUserByEmail(email) {
+    console.log(" in delete user")
+    await DButils.execQuery(
+        `DELETE FROM Users where email='${email}'`
+    );
+}
+
 exports.getUserById= getUserById;
+exports.getUserByEmail= getUserByEmail;
 exports.addUser= addUser;
+exports.deleteUserByEmail= deleteUserByEmail;
