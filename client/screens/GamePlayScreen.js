@@ -6,15 +6,22 @@ import api from "../api";
 
 const GamePlayScreen = (props) => {
     const [isLoading,setLoading] = useState(true)
+    const [playerTimeStamp, setPlayerTimeStamp] = useState([])
+    const [agentTimeStamp, setAgentTimeStamp] = useState([])
     useEffect(() => {
         setTimeout(() => {
             setLoading(false)
         }, 4000);
     });
     const press = () => {
-        console.log('----')
-        api.sendPressTimeStamp([1,2,3,4],[2,3,54,65]) //send also 2 arrays
+        api.sendPressTimeStamp(playerTimeStamp,agentTimeStamp) //send also 2 arrays
         props.navigation.navigate({routeName:'Questionnaire'});
+    }
+
+    const playerPress = (timeStamp) => {
+        const newAgentTimeStamp = [...playerTimeStamp]
+        newAgentTimeStamp.push(timeStamp)
+        setPlayerTimeStamp(newAgentTimeStamp)
     }
     return (
         <NativeBaseProvider>
@@ -26,7 +33,7 @@ const GamePlayScreen = (props) => {
                         סוכן
                     </Circle>
                 </Pressable>
-                <Pressable onPress={()=>console.log('send current press time in an array')}>
+                <Pressable onPress={()=>playerPress(new Date().getTime())}>
                     <Circle size={170} bg="secondary.400">
                         משתמש
                     </Circle>
