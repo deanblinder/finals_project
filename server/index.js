@@ -7,15 +7,6 @@ const app = express();
 
 const PORT = 3232;
 
-/* TODO: 1. connect DB .
-    TODO: 2. connect DB
-    TODO: 3.
- */
-
-
-
-const PORT = 3232;
-
 app.use(bodyParser.json());
 
 
@@ -32,6 +23,8 @@ app.use("/users", users);
 const sessionsNetworkAlgo = require("./routes/sessionsNetworkAlgo");
 app.use("/sessionsNetworkAlgo", sessionsNetworkAlgo);
 
+const actions = require("./routes/actions");
+app.use("/actions", actions);
 
 app.post('/api/administratorLogin/:username/:password',(req,res)=>{
     console.log('---administratorLogin---')

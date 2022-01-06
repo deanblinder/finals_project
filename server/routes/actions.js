@@ -19,24 +19,24 @@ router.get("/getActionByUserId/:userId", async (req, res, next) => {
     }
 });
 
-router.post("/addAction/:userSessionId/:sessionId/:actionOwner/:timePress/:timeRelese", async (req, res, next) => {
+router.post("/addAction/:userSessionId/:sessionId/:actionOwner/:timePress", async (req, res, next) => {
     try {
         const userSessionId = req.params.userSessionId
         const sessionId = req.params.sessionId
         const actionOwner = req.params.actionOwner
-        const timePress = new Date(req.params.timePress)
-        const timeRelese = new Date(req.params.timeRelese)
-        await actions_utils.addAction(userSessionId,sessionId, actionOwner,timePress, timeRelese);
+        const timePress = req.params.timePress
+        // const timePress2 = new Date(timePress)
+        await actions_utils.addAction(userSessionId,sessionId, actionOwner,timePress);
         res.status(201).send("The addAction added");
     } catch (error) {
         next(error);
     }
 });
 
-router.delete("/deleteActionByUserSessionId/:userId", async (req, res, next) => {
+router.delete("/deleteActionByUserSessionId/:UserSessionId", async (req, res, next) => {
     try {
-        await actions_utils.deleteSessionByUserSessionId(
-            req.params.userId
+        await actions_utils.deleteActionByUserSessionId(
+            req.params.UserSessionId
         );
         //we should keep implementing team page.....
         res.status(200);

@@ -6,10 +6,11 @@ async function getActionByUserId(userId) {
     );
 }
 
-async function addAction(userSessionId,sessionId, actionOwner,timePress, timeRelese) {
+async function addAction(userSessionId,sessionId, actionOwner,timePress) {
     console.log("add action")
+
     await DButils.execQuery(
-        `INSERT INTO action VALUES ('${userSessionId}','${sessionId}','${actionOwner}','${timePress}','${timeRelese}')`
+        `INSERT INTO action VALUES ('${userSessionId}','${sessionId}','${actionOwner}','${timePress}')`
     );
 }
 
