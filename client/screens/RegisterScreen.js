@@ -13,6 +13,7 @@ import {
 } from 'native-base';
 import AdministratorScreen from "./AdministratortScreen";
 import api from "../api";
+// import DeviceInfo from 'react-native-device-info';
 
 const RegisterScreen = (props) => {
     const [mail,setMail] = useState('')
