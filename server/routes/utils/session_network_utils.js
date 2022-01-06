@@ -16,7 +16,7 @@ async function addSession(id, agent_type, score ) {
 async function deleteSessionByUserSessionId(id) {
     console.log("in delete session")
     await DButils.execQuery(
-        `DELETE FROM Users where id='${id}'`
+        `DELETE FROM sessionsNetworkAlgo where id='${id}'`
     );
 }
 
