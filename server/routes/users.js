@@ -3,24 +3,6 @@ var router = express.Router();
 const users_utils = require("./utils/users_utils");
 
 
-/**
- * Authenticate all incoming requests by middleware
- */
-// router.use(async function (req, res, next) {
-//     if (req.session && req.session.user_id) {
-//         DButils.execQuery("SELECT user_id FROM Users")
-//             .then((users) => {
-//                 if (users.find((x) => x.user_id === req.session.user_id)) {
-//                     req.user_id = req.session.user_id;
-//                     next();
-//                 }
-//             })
-//             .catch((err) => next(err));
-//     } else {
-//         res.sendStatus(401);
-//     }
-// });
-
 
 router.get("/getUserById/:userId", async (req, res, next) => {
     let users = [];
@@ -45,11 +27,28 @@ router.get("/getUserByEmail/:email", async (req, res, next) => {
         );
         //we should keep implementing team page.....
         console.log(user_details)
+        users.push(users_utils)
         res.send(users).status(200);
     } catch (error) {
         next(error);
     }
 });
+
+router.get("/getUserIdByUUID/:uuid", async (req, res, next) => {
+    let users = [];
+    try {
+        const user_details = await users_utils.getUserIdByUUID(
+            req.params.uuid
+        );
+        //we should keep implementing team page.....
+        console.log(user_details)
+        users.push(user_details)
+        res.send(users).status(200);
+    } catch (error) {
+        next(error);
+    }
+});
+
 
 router.post("/addUser/:mail/:age/:gender/:model/:version", async (req, res, next) => {
     try {

@@ -27,7 +27,7 @@ const ChangeParamAdministratorScreen = (props) => {
         }
     }
    const onUpdatePress = () => {
-       // sendToBackend(mail,age,gender)
+
        if (agent && latency && variance) {
            Alert.alert(
                "פרטים שונו",

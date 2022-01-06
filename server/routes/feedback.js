@@ -1,6 +1,7 @@
 var express = require("express");
 var router = express.Router();
 const feedback_utils = require("./utils/feedback_utils");
+const users_utils = require("./utils/users_utils")
 
 router.get("/getFeedbackByUserId/:userId", async (req, res, next) => {
     let user_feedback = [];
@@ -18,10 +19,12 @@ router.get("/getFeedbackByUserId/:userId", async (req, res, next) => {
 });
 
 
-router.post("/addFeedback/:user_id/:feedback", async (req, res, next) => {
+router.post("/addFeedback/:uuid/:feedback", async (req, res, next) => {
     try {
-        const user_id = req.params.user_id
+        const uuid = req.params.uuid
         const feedback = req.params.feedback
+
+        const user_id = users_utils.getUserIdByUUID(uuid)
         await feedback_utils.addFeedback(user_id,feedback);
         res.status(201).send("The User added");
     } catch (error) {
