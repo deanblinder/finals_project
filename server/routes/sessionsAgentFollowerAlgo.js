@@ -1,6 +1,5 @@
 var express = require("express");
 var router = express.Router();
-const DButils = require("./utils/DButils");
 const sessionsAgentFollowerAlgo_utils = require("./utils/sessionsAgentFollowerAlgo_utils");
 
 
@@ -12,6 +11,7 @@ router.get("/getSessionByUserId/:userId", async (req, res, next) => {
         );
         //we should keep implementing team page.....
         console.log(sessions_agent_follower_algo_user_details)
+        sessions_agent_follower_algo_user.push(sessions_agent_follower_algo_user_details)
         res.send(sessions_agent_follower_algo_user).status(200);
     } catch (error) {
         next(error);
