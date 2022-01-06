@@ -1,6 +1,5 @@
 var express = require("express");
 var router = express.Router();
-const DButils = require("./utils/DButils");
 const users_utils = require("./utils/users_utils");
 
 
@@ -31,6 +30,7 @@ router.get("/getUserById/:userId", async (req, res, next) => {
         );
         //we should keep implementing team page.....
         console.log(user_details)
+        users.push(users_utils)
         res.send(users).status(200);
     } catch (error) {
         next(error);
@@ -68,13 +68,13 @@ router.post("/addUser/:mail/:age/:gender/:model/:version", async (req, res, next
 });
 
 router.delete("/deleteUserByEmail/:email", async (req, res, next) => {
-    let users = [];
+
     try {
-        const user_details = await users_utils.deleteUserByEmail(
+         await users_utils.deleteUserByEmail(
             req.params.email
         );
         //we should keep implementing team page.....
-        res.send(users).status(200);
+        res.status(200);
     } catch (error) {
         next(error);
     }
