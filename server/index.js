@@ -28,6 +28,11 @@ app.use((_, res, next) => {
 
 const users = require("./routes/users");
 app.use("/users", users);
+
+const sessionsNetworkAlgo = require("./routes/sessionsNetworkAlgo");
+app.use("/sessionsNetworkAlgo", sessionsNetworkAlgo);
+
+
 app.post('/api/administratorLogin/:username/:password',(req,res)=>{
     console.log('---administratorLogin---')
     const username = req.params.username
