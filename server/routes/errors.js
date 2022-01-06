@@ -13,7 +13,7 @@ router.get("/getErrorByUserId/:userId", async (req, res, next) => {
             req.params.userId
         );
         console.log(errors_details)
-        res.send(errors).status(200);
+        res.send(errors_details).status(200);
     } catch (error) {
         next(error);
     }
@@ -35,12 +35,11 @@ router.post("/addError/:UserId/:AgentType/:Error", async (req, res, next) => {
 });
 
 router.delete("/deleteErrorByUserId/:userId", async (req, res, next) => {
-    let users = [];
     try {
         await errors_utils.deleteErrorByUserId(
             req.params.userId
         );
-        res.send(users).status(200);
+        res.status(200);
     } catch (error) {
         next(error);
     }

@@ -13,12 +13,14 @@ router.get("/getSessionByUserId/:userId", async (req, res, next) => {
             req.params.userId
         );
         console.log(session_details)
-        res.send(session).status(200);
+        // session.push(session_details)
+        res.send(session_details).status(200);
     } catch (error) {
         next(error);
     }
 });
 
+// need to fix
 router.post("/addSession/:agent_type/:score", async (req, res, next) => {
     try {
         const agent_type = req.params.agent_type

@@ -13,20 +13,19 @@ router.get("/getSessionByUserId/:userId", async (req, res, next) => {
             req.params.userId
         );
         console.log(session_details)
-        res.send(session).status(200);
+        res.send(session_details).status(200);
     } catch (error) {
         next(error);
     }
 });
 
-router.post("/addSession/:agent_type/:score", async (req, res, next) => {
+router.post("/addSession/:user_session_id/:id/:agent_type/:score", async (req, res, next) => {
     try {
+        const user_session_id = req.params.user_session_id
+        const id = req.params.id
         const agent_type = req.params.agent_type
         const score = req.params.score
-        
-        console.log("in router.post: before adding")
-        await session_agent_leader_utils.addSession('1',agent_type, score);
-        console.log("in router.post: after adding")
+        await session_agent_leader_utils.addSession(user_session_id,id,agent_type, score);
         res.status(201).send("The Session added");
     } catch (error) {
         next(error);
@@ -34,12 +33,11 @@ router.post("/addSession/:agent_type/:score", async (req, res, next) => {
 });
 
 router.delete("/deleteSessionByUserSessionId/:userId", async (req, res, next) => {
-    let users = [];
     try {
         await session_agent_leader_utils.deleteSessionByUserSessionId(
             req.params.userId
         );
-        res.send(users).status(200);
+        res.status(200);
     } catch (error) {
         next(error);
     }

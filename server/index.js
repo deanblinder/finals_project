@@ -23,12 +23,29 @@ app.use("/users", users);
 const sessionsNetworkAlgo = require("./routes/sessionsNetworkAlgo");
 app.use("/sessionsNetworkAlgo", sessionsNetworkAlgo);
 
+const sessionAgentLeader = require("./routes/sessionAgentLeader");
+app.use("/sessionAgentLeader", sessionAgentLeader);
+
+const sessionsAgentFollowerAlgo = require("./routes/sessionsAgentFollowerAlgo");
+app.use("/sessionsAgentFollowerAlgo", sessionsAgentFollowerAlgo);
+
 const actions = require("./routes/actions");
 app.use("/actions", actions);
 
 const userAnswers = require("./routes/userAnswers");
 app.use("/userAnswers", userAnswers);
 
+const admin = require("./routes/admin");
+app.use("/admin", admin);
+
+const agents = require("./routes/agents");
+app.use("/agents", agents);
+
+const errors = require("./routes/errors");
+app.use("/errors", errors);
+
+const feedback = require("./routes/feedback");
+app.use("/feedback", feedback);
 
 
 app.post('/api/administratorLogin/:username/:password',(req,res)=>{
