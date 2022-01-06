@@ -7,16 +7,17 @@ import {
     Heading,
     TextArea,Input
 } from 'native-base';
+import uuid from 'react-native-uuid';
+
 import api from "../api";
 export default function GoodByeScreen() {
     const [textAreaValue, setTextAreaValue] = useState('')
     const [isDone,setIsDone] = useState(false)
 
     const press = async () => {
+        const deviceUUID = uuid.v4()
+        await api.sendFeedBack(textAreaValue,deviceUUID)
         // setIsDone(true)
-        //userId
-        await api.sendFeedBack(textAreaValue)
-        console.log(textAreaValue,'---')
 
     }
     return (

@@ -1,5 +1,5 @@
 import React,{useState} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {Alert, StyleSheet, View} from 'react-native';
 import createApiClient from '../api';
 import {
     Input,
@@ -20,16 +20,26 @@ const AdministratorScreen = (props) => {
     const [password,setPassword] = useState(undefined)
     const [showError, setShowError] = useState(false)
    const onNextPress =  () => {
+       let status;
         if (username && password){
-            //ask backEnd admin username and password
-            // console.log(username,'username')
-            api.administratorLogin(username,password)
-            // if confirmed
-            props.navigation.navigate({routeName:'ChangeParam'});
-            //else alert
-        }else{
-            setShowError(true)
-        }
+                status = api.administratorLogin(username,password)
+            }
+       // if (status ===  '200'){
+       if (true){
+           props.navigation.navigate({routeName:'ChangeParam'});
+            } else{
+           Alert.alert(
+               "שם משתמש או סיסמה שגויים",
+               "",
+               [
+                   {
+                       text: " אישור", onPress: () => {
+                       }
+                   }
+               ],
+           );
+                setShowError(true)
+            }
     }
     return (
         <NativeBaseProvider>

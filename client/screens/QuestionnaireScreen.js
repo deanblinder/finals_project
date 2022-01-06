@@ -9,6 +9,7 @@ import {
 import GuidelineComponent from "../compoenents/PickerComponent";
 import AdministratorScreen from "./AdministratortScreen";
 import api from "../api";
+import uuid from "react-native-uuid";
 
 const QuestionnaireScreen =(props) => {
     const [qDict, setQDict] = useState({
@@ -42,9 +43,8 @@ const QuestionnaireScreen =(props) => {
     const onNextPress = () =>{
         //send Qdict
         if (qDict.questionOne && qDict.questionTwo && qDict.questionThree && qDict.questionFour){
-            // getUserId from server
-            // user id, agent id,
-            api.sendQuestionnaireAnswers(qDict) // send user id,
+            const deviceUUID = uuid.v4()
+            api.sendQuestionnaireAnswers(qDict,deviceUUID) // send user id,
             props.navigation.navigate({routeName:'GoodBye'});
         }
     }
