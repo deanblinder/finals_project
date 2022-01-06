@@ -1,16 +1,14 @@
-import express from 'express';
-import  bodyParser from 'body-parser';
+// import express from 'express'expres;
+// import  bodyParser from 'body-parser';
+// import router from '../server/routes/users.js'
+const express = require('express')
+const bodyParser = require('body-parser')
 const app = express();
+
 const PORT = 3232;
 
-/* TODO: 1. connect DB
-    TODO: 2. connect DB
-    TODO: 3.
- */
-
-
-
 app.use(bodyParser.json());
+
 
 app.use((_, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -19,6 +17,8 @@ app.use((_, res, next) => {
     next();
 });
 
+const users = require("./routes/users");
+app.use("/users", users);
 app.post('/api/administratorLogin/:username/:password',(req,res)=>{
     console.log('---administratorLogin---')
     const username = req.params.username
@@ -63,5 +63,69 @@ app.post('/api/sendGameData',(req,res)=>{
 })
 
 
+
 app.listen(PORT);
 console.log('Listening on port', PORT);
+
+
+//************************************************************************************
+// import express from 'express';
+// import axios from 'axios';
+// import bcryptjs from 'bcryptjs';
+// import  bodyParser from 'body-parser';
+//
+//
+// // require("dotenv").config();
+// //#endregion
+// //#region express configures
+// // var path = require("path");
+// import logger from "morgan";
+//
+// import cors from "cors";
+//
+// var app = express();
+//
+// // app.use(logger("dev")); //logger
+// app.use(express.json()); // parse application/json
+// app.use(bodyParser.json());
+//
+// app.use(express.urlencoded({ extended: false })); // parse application/x-www-form-urlencoded
+// // app.use(express.static(path.join(__dirname, "public"))); //To serve static files such as images, CSS files, and JavaScript files
+//
+// // middleware to serve all the needed static files under the dist directory - loaded from the index.html file
+// // https://expressjs.com/en/starter/static-files.html
+// app.use(express.static("dist"));
+//
+// // app.get("/api", (req, res) => {
+// //     res.sendFile(__dirname + "/index.html");
+// // });
+//
+// const corsConfig = {
+//     origin: true,
+//     credentials: true,
+// };
+//
+// app.use(cors(corsConfig));
+// app.options("*", cors(corsConfig));
+//
+// const port = process.env.PORT || "3232";
+// const users = require("./routes/users");
+//
+// // Routings
+// app.use("/users", users);
+//
+//
+// // app.use(function (err, req, res, next) {
+// //     console.error(err);
+// //     res.status(err.status || 500).send(err.message);
+// // });
+//
+// const server = app.listen(port, () => {
+//     console.log(`Server listen on port ${port}`);
+// });
+//
+// process.on("SIGINT", function () {
+//   if (server) {
+//     server.close(() => console.log("server closed"));
+//   }
+// });
