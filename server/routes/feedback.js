@@ -26,7 +26,7 @@ router.post("/addFeedback/:uuid/:feedback", async (req, res, next) => {
 
         const user_id = users_utils.getUserIdByUUID(uuid)
         await feedback_utils.addFeedback(user_id,feedback);
-        res.status(201).send("The User added");
+        res.status(201).send("The addFeedback added");
     } catch (error) {
         next(error);
     }
