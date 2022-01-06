@@ -1,5 +1,12 @@
 const DButils = require("./DButils");
 
+async function getAdmin(name, password) {
+    console.log(" in getAdmin")
+    return await DButils.execQuery(
+        `select * from admin where admin_name='${name}' and password = '${password}'`
+    );
+}
+
 async function getAdminByAdminName(name) {
     console.log(" in getAdminByAdminName")
     return await DButils.execQuery(
@@ -7,12 +14,6 @@ async function getAdminByAdminName(name) {
     );
 }
 
-async function getAdminByEmail(email) {
-    console.log(" in getAdminByAdminName")
-    return await DButils.execQuery(
-        `select * from admin where email='${email}'`
-    );
-}
 
 
 async function addAdmin(name,email) {
@@ -29,7 +30,8 @@ async function deleteAdminByUserName(name) {
     );
 }
 
+
+exports.getAdmin = getAdmin;
 exports.getAdminByAdminName= getAdminByAdminName;
-exports.getAdminByEmail= getAdminByEmail;
 exports.addAdmin= addAdmin;
 exports.deleteAdminByUserName= deleteAdminByUserName;

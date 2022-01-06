@@ -1,3 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
   <component name="dataSourceStorageLocal" created-in="WS-213.6461.79">
     <data-source name="@syncproject.database.windows.net" uuid="67a09c73-a26f-4419-8330-272e2cda30ba">
       <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="AZURE" exact-version="0" />
