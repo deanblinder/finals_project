@@ -5,8 +5,6 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const app = express();
 
-const PORT = 3232;
-
 /* TODO: 1. connect DB .
     TODO: 2. connect DB
     TODO: 3.
@@ -31,7 +29,10 @@ app.use("/users", users);
 
 const sessionsNetworkAlgo = require("./routes/sessionsNetworkAlgo");
 app.use("/sessionsNetworkAlgo", sessionsNetworkAlgo);
-
+const sessionAgentLeader = require("./routes/sessionAgentLeader");
+app.use("/sessionAgentLeader", sessionAgentLeader);
+const admin = require("./routes/admin");
+app.use("/admin", admin);
 
 app.post('/api/administratorLogin/:username/:password',(req,res)=>{
     console.log('---administratorLogin---')

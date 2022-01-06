@@ -8,7 +8,7 @@ async function getAdminByAdminName(name) {
 }
 
 async function getAdminByEmail(email) {
-    console.log(" in getAdminByAdminName")
+    console.log(" in getAdminByEmail")
     return await DButils.execQuery(
         `select * from admin where email='${email}'`
     );

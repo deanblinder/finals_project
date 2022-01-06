@@ -6,10 +6,10 @@ async function getSessionByUserId(user_id) {
     );
 }
 
-async function addSession(id, agent_type, score ) {
+async function addSession(user_session_id, id, agent_type, score ) {
     console.log("add session")
     await DButils.execQuery(
-        `INSERT INTO sessionsAgentLeaderAlgo VALUES ('${id}','${agent_type}','${score}')`
+        `INSERT INTO sessionsAgentLeaderAlgo VALUES ('${user_session_id}', '${id}','${agent_type}','${score}')`
     );
 }
 
