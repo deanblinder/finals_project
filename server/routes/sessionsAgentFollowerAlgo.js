@@ -25,7 +25,7 @@ router.post("/addNewSession/:user_session_id/:id/:agent_type/:score", async (req
         const agent_type = req.params.agent_type
         const score = req.params.score
         await sessionsAgentFollowerAlgo_utils.addNewSession(user_session_id, id, agent_type, score);
-        res.status(201).send("The sessionsAgentFollowerAlgo_utils added");
+        res.status(201).send("The addNewSession added");
     } catch (error) {
         next(error);
     }
