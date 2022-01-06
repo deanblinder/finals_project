@@ -37,6 +37,20 @@ router.get("/getUserById/:userId", async (req, res, next) => {
     }
 });
 
+router.get("/getUserByEmail/:email", async (req, res, next) => {
+    let users = [];
+    try {
+        const user_details = await users_utils.getUserByEmail(
+            req.params.email
+        );
+        //we should keep implementing team page.....
+        console.log(user_details)
+        res.send(users).status(200);
+    } catch (error) {
+        next(error);
+    }
+});
+
 router.post("/addUser/:mail/:age/:gender/:model/:version", async (req, res, next) => {
     try {
         const mail = req.params.mail
@@ -53,6 +67,17 @@ router.post("/addUser/:mail/:age/:gender/:model/:version", async (req, res, next
     }
 });
 
-
+router.delete("/deleteUserByEmail/:email", async (req, res, next) => {
+    let users = [];
+    try {
+        const user_details = await users_utils.deleteUserByEmail(
+            req.params.email
+        );
+        //we should keep implementing team page.....
+        res.send(users).status(200);
+    } catch (error) {
+        next(error);
+    }
+});
 
 module.exports = router;
