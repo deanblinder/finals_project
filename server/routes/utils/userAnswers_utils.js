@@ -20,10 +20,20 @@ async function getAnswerByQuestionNumber(question_number) {
 }
 
 
-async function addNewAnswer(user_id, agent_type,question_number, answer) {
+async function addNewAnswer(user_id, agent_type,answerDict) {
     console.log(" in addNewAnswer")
+
     await DButils.execQuery(
-        `INSERT INTO userAnswers VALUES ('${user_id}','${agent_type}','${question_number}','${answer}')`
+        `INSERT INTO userAnswers VALUES ('${user_id}','${agent_type}','${1}','${answerDict['questionOne']}')`
+    );
+    await DButils.execQuery(
+        `INSERT INTO userAnswers VALUES ('${user_id}','${agent_type}','${2}','${answerDict['questionTwo']}')`
+    );
+    await DButils.execQuery(
+        `INSERT INTO userAnswers VALUES ('${user_id}','${agent_type}','${3}','${answerDict['questionThree']}')`
+    );
+    await DButils.execQuery(
+        `INSERT INTO userAnswers VALUES ('${user_id}','${agent_type}','${4}','${answerDict['questionFour']}')`
     );
 }
 

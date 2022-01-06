@@ -52,12 +52,14 @@ router.get("/getUserIdByUUID/:uuid", async (req, res, next) => {
 
 router.post("/addUser/:mail/:age/:gender/:model/:version", async (req, res, next) => {
     try {
+        // id = UUID
         const mail = req.params.mail
         const age = req.params.age
         const gender = req.params.gender
         const model = req.params.model
         const version = req.params.version
         console.log("in router.post: before adding")
+        //call check the user dosent exsist, sent the id
         await users_utils.addUser('1',mail, age, gender, model, version);
         console.log("in router.post: after adding")
         res.status(201).send("The User added");
