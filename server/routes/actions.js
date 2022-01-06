@@ -1,6 +1,5 @@
 var express = require("express");
 var router = express.Router();
-const DButils = require("./utils/DButils");
 const actions_utils = require("./utils/actions_utils");
 
 
@@ -12,7 +11,8 @@ router.get("/getActionByUserId/:userId", async (req, res, next) => {
         const action_details = await actions_utils.getActionByUserId(
             req.params.userId
         );
-        console.log(session_details)
+        console.log(action_details)
+        action.push(action_details)
         res.send(action).status(200);
     } catch (error) {
         next(error);
@@ -24,27 +24,22 @@ router.post("/addAction/:userSessionId/:sessionId/:actionOwner/:timePress/:timeR
         const userSessionId = req.params.userSessionId
         const sessionId = req.params.sessionId
         const actionOwner = req.params.actionOwner
-        const timePress = req.params.timePress
-        const timeRelese = req.params.timeRelese
-
-
-        console.log("in router.post: before adding")
+        const timePress = new Date(req.params.timePress)
+        const timeRelese = new Date(req.params.timeRelese)
         await actions_utils.addAction(userSessionId,sessionId, actionOwner,timePress, timeRelese);
-        console.log("in router.post: after adding")
-        res.status(201).send("The Session added");
+        res.status(201).send("The addAction added");
     } catch (error) {
         next(error);
     }
 });
 
 router.delete("/deleteActionByUserSessionId/:userId", async (req, res, next) => {
-    let users = [];
     try {
         await actions_utils.deleteSessionByUserSessionId(
             req.params.userId
         );
         //we should keep implementing team page.....
-        res.send(users).status(200);
+        res.status(200);
     } catch (error) {
         next(error);
     }
