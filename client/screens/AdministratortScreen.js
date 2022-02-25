@@ -19,27 +19,31 @@ const AdministratorScreen = (props) => {
     const [username,setUsername] = useState(undefined)
     const [password,setPassword] = useState(undefined)
     const [showError, setShowError] = useState(false)
-   const onNextPress =  () => {
-       let status;
-        if (username && password){
-                status = api.administratorLogin(username,password)
-            }
-       // if (status ===  '200'){
-       if (true){
-           props.navigation.navigate({routeName:'ChangeParam'});
-            } else{
-           Alert.alert(
-               "שם משתמש או סיסמה שגויים",
-               "",
-               [
-                   {
-                       text: " אישור", onPress: () => {
-                       }
-                   }
-               ],
-           );
-                setShowError(true)
-            }
+    const onNextPress  = async () => {
+        let response;
+        console.log('1---')
+        if (username && password) {
+            console.log('---')
+            response = await api.administratorLogin(username, password);
+            console.log('status: ',response)
+            // console.log(status)
+        }
+        if (response.status === 200) {
+            // if (true){
+            props.navigation.navigate({routeName: 'ChangeParam'});
+        } else {
+            Alert.alert(
+                "שם משתמש או סיסמה שגויים",
+                "",
+                [
+                    {
+                        text: " אישור", onPress: () => {
+                        }
+                    }
+                ],
+            );
+            setShowError(true)
+        }
     }
     return (
         <NativeBaseProvider>

@@ -21,6 +21,11 @@ async function addAdmin(name,password) {
         `INSERT INTO admin VALUES ('${name}','${password}')`
     );
 }
+async function administratorLogin(name,password) {
+    return await DButils.execQuery(
+        `SELECT * FROM admin WHERE admin_name='${name}' and  password='${password}'`
+    );
+}
 
 async function deleteAdminByUserName(name) {
     console.log(" in deleteAdminByUserName")
@@ -33,3 +38,4 @@ async function deleteAdminByUserName(name) {
 // exports.getAdminByEmail= getAdminByEmail;
 exports.addAdmin= addAdmin;
 exports.deleteAdminByUserName= deleteAdminByUserName;
+exports.administratorLogin =administratorLogin;

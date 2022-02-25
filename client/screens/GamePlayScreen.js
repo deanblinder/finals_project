@@ -8,6 +8,41 @@ const GamePlayScreen = (props) => {
     const [isLoading,setLoading] = useState(true)
     const [playerTimeStamp, setPlayerTimeStamp] = useState([])
     const [agentTimeStamp, setAgentTimeStamp] = useState([])
+    //TODO: pot all the new code in a time loop of 1 min (mark in ***)
+    // --- *************** ---
+    //need to have userID or same detail of the user and agent
+    const userId = 1
+    const agentType = 'fast'
+    let pastAgentActions = []
+    let pastUserActions = []
+    let meanPastAgentActions = average(pastAgentActions)
+    let meanPastUserActions = average(pastUserActions)
+    let isUserTorn = false
+    //get algo type: 1 - agentLeader 2 - agentFollower 3 - network
+    const algoType = 1
+    let listeningLevel = 0
+    // pressTimeNextAction = releaseTimeNextAction(listeningLevel) + totalTimeBetweenActions(const)
+    let pressTimeNextAction  = 0
+    if(algoType === 1){
+        listeningLevel = 0.8*meanPastAgentActions + 0.2*meanPastUserActions
+    }
+    if(algoType === 2){
+        listeningLevel = 0.2*meanPastAgentActions + 0.8*meanPastUserActions
+    }
+    if(algoType === 3){
+        listeningLevel = 0.5*meanPastAgentActions + 0.5*meanPastUserActions
+    //    add the rest of the algo
+    }
+    pressTimeNextAction = listeningLevel + 0.5
+    if (isUserTorn){
+        pastUserActions.push(pressTimeNextAction)
+    }
+    else {
+        pastAgentActions.push(pressTimeNextAction)
+    }
+    isUserTorn = !isUserTorn
+    //TODO: --- *************** ---
+
     useEffect(() => {
         setTimeout(() => {
             setLoading(false)
@@ -23,6 +58,19 @@ const GamePlayScreen = (props) => {
         newAgentTimeStamp.push(timeStamp)
         setPlayerTimeStamp(newAgentTimeStamp)
     }
+    const sum = function(array) {
+        var total = 0;
+        for (var i=0; i<array.length; i++) {
+            total += array[i];
+        }
+        return total;
+    };
+
+
+    const average = function(array) {
+        var arraySum = sum(array);
+        return arraySum / array.length;
+    };
     return (
         <NativeBaseProvider>
             { isLoading ?

@@ -6,15 +6,20 @@ async function getActionByUserId(userId) {
     );
 }
 
-async function addAction(userSessionId,sessionId, actionOwner,timePress, timeRelese) {
-    console.log("add action")
-    await DButils.execQuery(
-        `INSERT INTO action VALUES ('${userSessionId}','${sessionId}','${actionOwner}','${timePress}','${timeRelese}')`
+async function getSessionIdByUserId(userId) {
+    return await DButils.execQuery(
+        `select session_id from action where user_session_id='${userId}'`
     );
 }
 
-
-
+async function addAction(userSessionId,sessionId, actionOwner,pressTimeArr) {
+    console.log("add action")
+    for(let i=0 ; i< pressTimeArr.length ; i++){
+        await DButils.execQuery(
+            `INSERT INTO action VALUES ('${userSessionId}','${sessionId}','${actionOwner}','${pressTimeArr[i]}')`
+        );
+    }
+}
 
 async function deleteActionByUserSessionId(userId) {
     console.log("in delete action")
@@ -25,5 +30,6 @@ async function deleteActionByUserSessionId(userId) {
 
 
 exports.getActionByUserId= getActionByUserId;
+exports.getSessionIdByUserId = getSessionIdByUserId;
 exports.addAction= addAction;
 exports.deleteActionByUserSessionId= deleteActionByUserSessionId;

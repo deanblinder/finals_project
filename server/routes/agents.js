@@ -30,15 +30,16 @@ router.post("/addAgent/:AgentType/:permanentDelay/:variance", async (req, res, n
     }
 });
 
-router.put("/updateAgentByAgentType/:AgentType/:permanentDelay/:variance", async (req, res, next) => {
+router.post("/updateAgentByAgentType/:AgentType/:permanentDelay/:variance", async (req, res, next) => {
     try {
+        console.log("in updateAgentByAgentType")
         const AgentType = req.params.AgentType
         const permanentDelay = req.params.permanentDelay
         const variance = req.params.variance
 
         await agents_utils.updateAgent(AgentType,permanentDelay, variance);
-
-        res.status(201).send("The Agent added");
+        console.log("after added")
+        res.status(200).send("The Agent added");
     } catch (error) {
         next(error);
     }

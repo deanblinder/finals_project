@@ -41,17 +41,16 @@ router.get("/getUserIdByUUID/:uuid", async (req, res, next) => {
 });
 
 
-router.post("/addUser/:id/:mail/:age/:gender/:model/:version", async (req, res, next) => {
+router.post("/addUser/:mail/:age/:gender/:deviceUid/:version", async (req, res, next) => {
     try {
         //id = uuid
-        const id = req.params.id
         const mail = req.params.mail
         const age = req.params.age
         const gender = req.params.gender
         const model = req.params.model
         const version = req.params.version
-        await users_utils.addUser(id,mail, age, gender, model, version);
-        res.status(201).send("The User added");
+        await users_utils.addUser(mail, age, gender, model, version);
+        res.status(200).send("The User added");
     } catch (error) {
         next(error);
     }

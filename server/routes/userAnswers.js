@@ -41,13 +41,12 @@ router.get("/getAnswerByAgentType/:agent_type", async (req, res, next) => {
     }
 });
 
-router.post("/addNewAnswer/:user_id/:agent_type/:question_number/:answer", async (req, res, next) => {
+router.post("/addNewAnswer/:user_id/:agent_type/:qDict", async (req, res, next) => {
     try {
         const user_id = req.params.user_id
         const agent_type = req.params.agent_type
-        const question_number = req.params.question_number
-        const answer = req.params.answer
-        await userAnswers_utils.addNewAnswer(user_id, agent_type, question_number, answer);
+        const qDict = req.body.qDict
+        await userAnswers_utils.addNewAnswer(user_id, agent_type, qDict);
         res.status(201).send("The answers added");
     } catch (error) {
         next(error);
