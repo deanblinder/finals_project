@@ -20,6 +20,7 @@ const ChangeParamAdministratorScreen = (props) => {
     const [variance,setVariance] = useState(undefined)
     const [showError, setShowError] = useState(false)
     const onConfirmationPress =  () => {
+        console.log(agent , latency , variance)
         if (agent && latency && variance){
             console.log("--1-1-1--")
             api.changeAgentParams(agent,latency,variance)
@@ -29,18 +30,19 @@ const ChangeParamAdministratorScreen = (props) => {
    const onUpdatePress = () => {
         console.log(agent , latency , variance)
        if (agent && latency && variance) {
-           Alert.alert(
-               "פרטים שונו",
-               "",
-               [
-                   {text: "ביטול", style: "cancel"},
-                   {
-                       text: " אישור", onPress: () => {
-                           onConfirmationPress()
-                       }
-                   }
-               ],
-           );
+           onConfirmationPress();
+           // Alert.alert(
+           //     "פרטים שונו",
+           //     "",
+           //     [
+           //         {text: "ביטול", style: "cancel"},
+           //         {
+           //             text: " אישור", onPress: () => {
+           //                 onConfirmationPress()
+           //             }
+           //         }
+           //     ],
+           // );
        }else {
            setShowError(true)
        }

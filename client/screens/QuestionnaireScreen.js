@@ -40,11 +40,14 @@ const QuestionnaireScreen =(props) => {
         tempQDict.questionFour=rating
         setQDict(tempQDict)
     }
-    const onNextPress = () =>{
+    const onNextPress = async () =>{
         //send Qdict
         if (qDict.questionOne && qDict.questionTwo && qDict.questionThree && qDict.questionFour){
             const deviceUUID = uuid.v4()
-            api.sendQuestionnaireAnswers(qDict,deviceUUID) // send user id,
+            //TODO: sent also agent type
+            const agentType = 'fast'
+            const response = await api.sendQuestionnaireAnswers(qDict,agentType,deviceUUID) // send user id,
+            console.log(response.status)
             props.navigation.navigate({routeName:'GoodBye'});
         }
     }

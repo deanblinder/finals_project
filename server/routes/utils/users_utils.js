@@ -20,10 +20,10 @@ async function getUserIdByUUID(uuid) {
     );
 }
 
-async function addUser(id,email, age,gender, model,version ) {
+async function addUser(email, age,gender, model,version ) {
     console.log("in addUser")
     await DButils.execQuery(
-        `INSERT INTO Users VALUES ('${id}','${email}','${age}','${gender}', '${model}', '${version}' )`
+        `INSERT INTO Users VALUES ('3','${email}','${age}','${gender}', '${model}', '${version}' )`
     );
 }
 
