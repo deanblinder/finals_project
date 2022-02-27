@@ -21,15 +21,15 @@ router.get("/getActionByUserId/:userId", async (req, res, next) => {
 
 router.post("/addAction/:userId/:actionOwner/:pressTimeArr", async (req, res, next) => {
     try {
+        console.log("*** addAction ***")
         const userSessionId = req.params.userId
         // const sessionId = req.params.sessionId
         const actionOwner = req.params.actionOwner
-        const  pressTimeArr = req.params.pressTimeArr
-        // const timePress = new Date(req.params.timePress)
-        // const timeRelese = new Date(req.params.timeRelese)
-        const sessionId = actions_utils.getSessionIdByUserId(userSessionId);
+        const  pressTimeArr = [req.params.pressTimeArr]
+        // const sessionId = actions_utils.getSessionIdByUserId(userSessionId);
+        const sessionId = 1  //temp
         await actions_utils.addAction(userSessionId,sessionId, actionOwner,pressTimeArr);
-        res.status(201).send("The addAction added");
+        res.status(200).send("The addAction added");
     } catch (error) {
         next(error);
     }
