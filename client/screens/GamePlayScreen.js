@@ -3,7 +3,6 @@ import { StyleSheet, View } from 'react-native';
 import {Circle, NativeBaseProvider, Button, Heading, createIcon, Center, Avatar,Pressable} from 'native-base';
 import AdministratorScreen from "./AdministratortScreen";
 import api from "../api";
-const lodash = require('lodash');
 
 const GamePlayScreen = (props) => {
     let [isLoading,setLoading] = useState(true)

@@ -19,9 +19,9 @@ const ChangeParamAdministratorScreen = (props) => {
     const [latency,setLatency] = useState(undefined)
     const [variance,setVariance] = useState(undefined)
     const [showError, setShowError] = useState(false)
-    const onConfirmationPress =  () => {
-        console.log(agent , latency , variance)
+    const onConfirmationPress = async () => {
         if (agent && latency && variance){
+            console.log("--1-1-1--")
             api.changeAgentParams(agent,latency,variance)
             props.navigation.navigate({routeName:'Welcome'})
         }
@@ -29,7 +29,6 @@ const ChangeParamAdministratorScreen = (props) => {
    const onUpdatePress = () => {
         console.log(agent , latency , variance)
        if (agent && latency && variance) {
-           onConfirmationPress();
            Alert.alert(
                "פרטים שונו",
                "",
