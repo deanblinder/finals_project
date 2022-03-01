@@ -86,7 +86,8 @@ const GamePlayScreen = (props) => {
             const sumOfPlayerDiffPressArr = lodash.sum(playerDiffPressArr);
             console.log("sumOfPlayerDiffPressArr",sumOfPlayerDiffPressArr)
             setAvgPlayerPresses(sumOfPlayerDiffPressArr/playerDiffPressArr.length)
-            setInterval(agentPress,avgPlayerPresses)
+            let intervalId = setInterval(agentPress,avgPlayerPresses)
+            // clearInterval(intervalId)
         }
         // else {
         //     setInterval(myCallback,2000)
@@ -107,7 +108,7 @@ const GamePlayScreen = (props) => {
     const agentPress = () => {
         setCircleColor('secondary.200')
         setTimeout(()=>{setCircleColor("secondary.400")},100)
-        // clearInterval(myInterval)
+        // clearInterval(intervalId)
     }
     //
     const renderAgentCircle = () =>{
