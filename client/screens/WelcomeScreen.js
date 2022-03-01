@@ -39,7 +39,7 @@ const WelcomeScreen = (props) => {
 }
 WelcomeScreen.navigationOptions = navigationData =>{
     return{
-        title: 'ברוכים הבאיםםם',
+        title: 'ברוכים הבאים',
         headerTitleAlign: 'center'
     }
 }

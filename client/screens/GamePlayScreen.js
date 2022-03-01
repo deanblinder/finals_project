@@ -11,37 +11,40 @@ const GamePlayScreen = (props) => {
     //TODO: pot all the new code in a time loop of 1 min (mark in ***)
     // --- *************** ---
     //need to have userID or same detail of the user and agent
-    const userId = 1
-    const agentType = 'fast'
-    let pastAgentActions = []
-    let pastUserActions = []
-    let meanPastAgentActions = average(pastAgentActions)
-    let meanPastUserActions = average(pastUserActions)
-    let isUserTorn = false
-    //get algo type: 1 - agentLeader 2 - agentFollower 3 - network
-    const algoType = 1
-    let listeningLevel = 0
-    // pressTimeNextAction = releaseTimeNextAction(listeningLevel) + totalTimeBetweenActions(const)
-    let pressTimeNextAction  = 0
-    if(algoType === 1){
-        listeningLevel = 0.8*meanPastAgentActions + 0.2*meanPastUserActions
+    const algorithem = () => {
+        const userId = 1
+        const agentType = 'fast'
+        let pastAgentActions = []
+        let pastUserActions = []
+        let meanPastAgentActions = average(pastAgentActions)
+        let meanPastUserActions = average(pastUserActions)
+        let isUserTorn = false
+        //get algo type: 1 - agentLeader 2 - agentFollower 3 - network
+        const algoType = 1
+        let listeningLevel = 0
+        // pressTimeNextAction = releaseTimeNextAction(listeningLevel) + totalTimeBetweenActions(const)
+        let pressTimeNextAction  = 0
+        if(algoType === 1){
+            listeningLevel = 0.8*meanPastAgentActions + 0.2*meanPastUserActions
+        }
+        if(algoType === 2){
+            listeningLevel = 0.2*meanPastAgentActions + 0.8*meanPastUserActions
+        }
+        if(algoType === 3){
+            listeningLevel = 0.5*meanPastAgentActions + 0.5*meanPastUserActions
+            //    add the rest of the algo
+        }
+        pressTimeNextAction = listeningLevel + 0.5
+        if (isUserTorn){
+            pastUserActions.push(pressTimeNextAction)
+        }
+        else {
+            pastAgentActions.push(pressTimeNextAction)
+        }
+        isUserTorn = !isUserTorn
+        //TODO: --- *************** ---
     }
-    if(algoType === 2){
-        listeningLevel = 0.2*meanPastAgentActions + 0.8*meanPastUserActions
-    }
-    if(algoType === 3){
-        listeningLevel = 0.5*meanPastAgentActions + 0.5*meanPastUserActions
-    //    add the rest of the algo
-    }
-    pressTimeNextAction = listeningLevel + 0.5
-    if (isUserTorn){
-        pastUserActions.push(pressTimeNextAction)
-    }
-    else {
-        pastAgentActions.push(pressTimeNextAction)
-    }
-    isUserTorn = !isUserTorn
-    //TODO: --- *************** ---
+
 
     useEffect(() => {
         setTimeout(() => {
@@ -65,7 +68,13 @@ const GamePlayScreen = (props) => {
         }
         return total;
     };
-
+    const renderAgent = () => {
+        return (
+            <Circle size={170} bg="secondary.400">
+                סוכן
+            </Circle>
+        )
+    }
 
     const average = function(array) {
         var arraySum = sum(array);
@@ -76,11 +85,12 @@ const GamePlayScreen = (props) => {
             { isLoading ?
             <View style={styles.container}>
             <View style={styles.buttons}>
-                <Pressable style={{margin:10}} onPress={()=>console.log('send current press time in an array')}>
-                    <Circle size={170} bg="secondary.400">
-                        סוכן
-                    </Circle>
-                </Pressable>
+                {renderAgent()}
+                {/*<Pressable style={{margin:10}} onPress={()=>console.log('send current press time in an array')}>*/}
+                {/*    <Circle size={170} bg="secondary.400">*/}
+                {/*        סוכן*/}
+                {/*    </Circle>*/}
+                {/*</Pressable>*/}
                 <Pressable onPress={()=>playerPress(new Date().getTime())}>
                     <Circle size={170} bg="secondary.400">
                         משתמש

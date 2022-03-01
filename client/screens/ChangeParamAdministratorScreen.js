@@ -19,7 +19,7 @@ const ChangeParamAdministratorScreen = (props) => {
     const [latency,setLatency] = useState(undefined)
     const [variance,setVariance] = useState(undefined)
     const [showError, setShowError] = useState(false)
-    const onConfirmationPress =  () => {
+    const onConfirmationPress = async () => {
         if (agent && latency && variance){
             console.log("--1-1-1--")
             api.changeAgentParams(agent,latency,variance)
