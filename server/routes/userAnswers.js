@@ -46,7 +46,7 @@ router.post("/addNewAnswer/:user_id/:agent_type/:qDict", async (req, res, next) 
         console.log("*** in addNewAnswer ***")
         const user_id = req.params.user_id
         const agent_type = req.params.agent_type
-        const qDict = req.body.qDict
+        const qDict = req.params.qDict
         await userAnswers_utils.addNewAnswer(user_id, agent_type, qDict);
         console.log("after addNewAnswer")
         res.status(200).send("The answers added");

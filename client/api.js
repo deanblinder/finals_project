@@ -38,7 +38,7 @@ const createApiClient = () => {
         },
         sendQuestionnaireAnswers:(qDict,agentType,deviceUid)=>{
             console.log("deviceUid: ", deviceUid, "agentType: ", "qDict: ",qDict)
-            return axios.post(`http://127.0.0.1:3232/userAnswers/addNewAnswer/${deviceUid}/${agentType}`,qDict).then((res) => res);
+            return axios.post(`http://127.0.0.1:3232/userAnswers/addNewAnswer/${deviceUid}/${agentType}/${qDict}`,).then((res) => res);
         },
         sendFeedBack:(deviceUUID, feedBack)=>{
             return axios.post(`http://127.0.0.1:3232/feedback/addFeedback/${deviceUUID}/${feedBack}`).then((res) => res);
