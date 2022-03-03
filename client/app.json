@@ -2,6 +2,7 @@
   "expo": {
     "name": "finals-project",
     "slug": "finals-project",
+    "sdkVersion": "41.0.0",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -10,6 +11,10 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
+    "platforms": [
+      "android",
+      "ios"
+    ],
     "updates": {
       "fallbackToCacheTimeout": 0
     },
@@ -17,13 +22,15 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.deanblinder.finalsproject"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.deanblinder.finalsproject"
     },
     "web": {
       "favicon": "./assets/favicon.png"

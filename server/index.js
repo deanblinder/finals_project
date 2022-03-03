@@ -3,9 +3,8 @@ const bodyParser = require('body-parser')
 const app = express();
 
 const PORT = 3232;
-
+app.use(bodyParser({limit: '50mb'}));
 app.use(bodyParser.json());
-
 
 app.use((_, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');

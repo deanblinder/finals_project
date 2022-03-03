@@ -22,7 +22,7 @@ const ChangeParamAdministratorScreen = (props) => {
     const onConfirmationPress = async () => {
         if (agent && latency && variance){
             console.log("--1-1-1--")
-            api.changeAgentParams(agent,latency,variance)
+            await api.changeAgentParams(agent,latency,variance)
             props.navigation.navigate({routeName:'Welcome'})
         }
     }

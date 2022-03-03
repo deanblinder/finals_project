@@ -1,18 +1,25 @@
 import React, {useEffect, useState} from 'react';
 import { StyleSheet, View } from 'react-native';
-import {Circle, NativeBaseProvider, Button, Heading, createIcon, Center, Avatar,Pressable} from 'native-base';
+import {Circle, NativeBaseProvider, Button, Heading, createIcon, Center, Avatar,Pressable,Text} from 'native-base';
 import AdministratorScreen from "./AdministratortScreen";
 import api from "../api";
 
-const GamePlayScreen = (props) => {
+const GamePlayScreen = (props) =>{
     let [isLoading,setLoading] = useState(true)
     let [playerTimeStampArr, setPlayerTimeStampArr] = useState([])
-    let [playerDiffPressArr, setPlayerDiffPressArr] = useState([])
     let [agentTimeStampArr, setAgentTimeStampArr] = useState([])
-    let [circleColor, setCircleColor] = useState("secondary.400")
+    let [playerDiffPressArr, setPlayerDiffPressArr] = useState([])
+    let [agentDiffPressArr, setAgentDiffPressArr] = useState([])
+    let [agentCircleColor, setAgentCircleColor] = useState("secondary.400")
+    let [playerCircleColor, setPlayerCircleColor] = useState("secondary.400")
+    let [numberOfAgentPresses, setNumberOfAgentPresses] = useState(0)
     let [numberOfPresses, setNumberOfPresses] = useState(0)
     let [avgPlayerPresses, setAvgPlayerPresses] = useState(0)
-    // let [myInterval, setMyInterval] = useState()
+    let [avgAgentPresses, setAvgAgentPresses] = useState(2000)
+    let [intervalID,setMyInterval] = useState(null)
+    // let numberOfPresses = 0
+    let sumOfPlayerDiffPressArr = 0
+    let sumOfAgentDiffPressArr = 0
     //TODO: pot all the new code in a time loop of 1 min (mark in ***)
     // --- *************** ---
     //need to have userID or same detail of the user and agent
@@ -54,94 +61,122 @@ const GamePlayScreen = (props) => {
     //TODO: --- *************** ---
 
     useEffect(() => {
-        setInterval(agentPress,2000)
+        intervalID = setMyInterval(setInterval(agentPress,2000))
+        // avgPlayerPresses= 2000
         // console.log('myInterval',myInterval)
         setTimeout(() => {
             setLoading(false)
+            clearInterval(intervalID)
         }, 30000);
 
     },[]);
     const onNextPress = async () => {
         //TODO:need to have userID or same detail of the user and agent
         // and add actionOwner
-        const userID = 3;
-        await api.sendPressTimeStamp(userID,"player",playerTimeStampArr) //send also 2 arrays
+        // const userID = 3;
+        // await api.sendPressTimeStamp(userID,"player",playerTimeStampArr) //send also 2 arrays
         // open when fix the algo
-        await api.sendPressTimeStamp(userID,"agent",agentTimeStampArr) //send also 2 arrays
+        // await api.sendPressTimeStamp(userID,"agent",agentTimeStampArr) //send also 2 arrays
         props.navigation.navigate({routeName:'Questionnaire'});
     }
-
-    const playerPress = async (timeStamp) => {
-        const newAgentTimeStamp = [...playerTimeStampArr]
-        newAgentTimeStamp.push(timeStamp)
-        await  setPlayerTimeStampArr(newAgentTimeStamp)
-        if (numberOfPresses >= 2){
-            console.log('playerTimeStemp',playerTimeStampArr)
-            let tempPlayerDiffPress = [...playerDiffPressArr]
-            const diffBetweenPresses = playerTimeStampArr[playerTimeStampArr.length-1]-playerTimeStampArr[playerTimeStampArr.length-2]
-            console.log("diffBetweenPresses",diffBetweenPresses)
-            tempPlayerDiffPress.push(diffBetweenPresses)
-            setPlayerDiffPressArr(tempPlayerDiffPress)
-            console.log('playerDiff',playerDiffPressArr)
-            const sumOfPlayerDiffPressArr = lodash.sum(playerDiffPressArr);
-            console.log("sumOfPlayerDiffPressArr",sumOfPlayerDiffPressArr)
-            setAvgPlayerPresses(sumOfPlayerDiffPressArr/playerDiffPressArr.length)
-            let intervalId = setInterval(agentPress,avgPlayerPresses)
-            // clearInterval(intervalId)
-        }
-        // else {
-        //     setInterval(myCallback,2000)
+    const agentPress  = () => {
+        setAgentCircleColor('secondary.900')
+        setTimeout(()=>{setAgentCircleColor("secondary.400")},10)
+        // setAgentTimeStampArr(agentTimeStampArr=>[...agentTimeStampArr,timeStamp])
+        // let diffBetweenPresses
+        // if (numberOfAgentPresses >= 2){
+        //     diffBetweenPresses = agentTimeStampArr[agentTimeStampArr.length-1]-agentTimeStampArr[agentTimeStampArr.length-2]
+        //     setAgentDiffPressArr(agentDiffPressArr=>[...agentDiffPressArr,diffBetweenPresses])
+        //     sumOfAgentDiffPressArr = mySum(agentDiffPressArr,3);
+        //     setAvgAgentPresses(sumOfAgentDiffPressArr/3)
         // }
-        setNumberOfPresses(numberOfPresses+1)
+        // let num = numberOfAgentPresses + 1
+        // setNumberOfAgentPresses(num)
+        console.log('-------------agent----------------')
     }
-    // const sum = function(array) {
-    //     var total = 0;
-    //     for (var i=0; i<array.length; i++) {
-    //         total += array[i];
-    //     }
-    //     return total;
-    // };
-    // const average = function(array) {
-    //     let arraySum = sum(array);
-    //     return arraySum / array.length;
-    // };
-    const agentPress = () => {
-        setCircleColor('secondary.200')
-        setTimeout(()=>{setCircleColor("secondary.400")},100)
-        // clearInterval(intervalId)
+    const playerPress = async (timeStamp) => {
+        console.log('-------------player----------------')
+        setPlayerCircleColor('secondary.900')
+        setTimeout(()=>{setPlayerCircleColor("secondary.400")},10)
+        setPlayerTimeStampArr(playerTimeStampArr=>[...playerTimeStampArr,timeStamp])
+        let diffBetweenPresses
+        if (numberOfPresses > 2){
+            diffBetweenPresses = playerTimeStampArr[playerTimeStampArr.length-1]-playerTimeStampArr[playerTimeStampArr.length-2]
+            await setPlayerDiffPressArr(playerDiffPressArr=>[...playerDiffPressArr,diffBetweenPresses])
+            sumOfPlayerDiffPressArr = mySum(playerDiffPressArr,3);
+            // await setAvgPlayerPresses(sumOfPlayerDiffPressArr/3)
+            // const linsteningLevel = 0.5*avgPlayerPresses + 0.5*avgAgentPresses
+            // console.log("player --- linsteningLevel",linsteningLevel)
+            // console.log("player --- sumOfPlayerDiffPressArr",sumOfPlayerDiffPressArr)
+            // console.log("player --- playerTimeStampArr",playerDiffPressArr)
+            // console.log("player --- avgPlayerPresses",sumOfPlayerDiffPressArr/3)
+            let avg = (sumOfPlayerDiffPressArr/3)
+            setAgentCircleColor('secondary.900')
+            setTimeout(()=>{setAgentCircleColor("secondary.400")},10)
+            clearInterval(intervalID)
+            intervalID = setMyInterval(setInterval(agentPress,avg))
+        }
+
+        let num = numberOfPresses +1
+        await setNumberOfPresses(num)
+        console.log('numberOfPresses',numberOfPresses)
+        console.log('-------------player----------------')
     }
-    //
+
+
+    const mySum = (arr,num) => {
+        let sum = 0;
+        let len
+        if (arr.length-num < 0){
+            len = arr.length
+        }
+        else{
+            len = arr.length-num
+        }
+        for (let i = len; i < arr.length; i++) {
+            sum += arr[i];
+        }
+        console.log('sum',sum)
+        return sum
+    }
     const renderAgentCircle = () =>{
         return(
-        // <Pressable style={{margin:10}} onPress={()=>console.log('send current press time in an array')}>
-            <Circle size={170} bg={circleColor}>
+            <Circle size={170} bg={agentCircleColor}>
                 סוכן
             </Circle>
-        // </Pressable>
         )
 
     }
-    return (
-        <NativeBaseProvider>
-            { isLoading ?
-            <View style={styles.container}>
-            <View style={styles.buttons}>
-                {renderAgentCircle()}
-                {/*{play()}*/}
-                <Pressable onPress={()=>playerPress(new Date().getTime())}>
-                    <Circle size={170} bg="secondary.400">
-                        משתמש
-                    </Circle>
-                </Pressable>
-            </View>
-            </View> :
-                <View style={styles.gameOverContainer}>
-                    <Heading style={{justifyContent:'center',alignItems: 'center'}}>המשחק נגמר</Heading>
-                    <Button onPress={onNextPress}>המשך</Button>
-                </View>}
+    const renderPlayerCircle = () =>{
+        return(
+            <Pressable onPress={()=>playerPress(new Date().getTime())}>
+                <Circle size={170} bg={playerCircleColor}>
+                    משתמש
+                </Circle>
+            </Pressable>
+        )
 
-        </NativeBaseProvider>
-    );
+    }
+        return (
+            <NativeBaseProvider>
+                { isLoading ?
+                    <View style={styles.container}>
+                        <View style={styles.buttons}>
+                            <View style={styles.buttonsContainer}>
+                            {renderAgentCircle()}
+                            {renderPlayerCircle()}
+                            </View>
+
+                        </View>
+                    </View> :
+                    <View style={styles.gameOverContainer}>
+                        <Heading style={{justifyContent:'center',alignItems: 'center'}}>המשחק נגמר</Heading>
+                        <Button onPress={onNextPress}>המשך</Button>
+                    </View>}
+
+            </NativeBaseProvider>
+        );
+
 }
 GamePlayScreen.navigationOptions = navigationData =>{
     return{
@@ -166,6 +201,11 @@ const styles = StyleSheet.create({
         flex:1,
         alignItems: 'center',
         justifyContent: 'center',
+    },
+    buttonsContainer:{
+        flex:1,
+        alignItems: 'center',
+        justifyContent: 'space-evenly',
     }
 });
 export default GamePlayScreen
