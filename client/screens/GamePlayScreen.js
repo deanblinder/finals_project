@@ -67,10 +67,10 @@ const GamePlayScreen = (props) =>{
         setTimeout(() => {
             setLoading(false)
             clearInterval(intervalID)
-        }, 30000);
+        }, 10000);
 
     },[]);
-    const onNextPress = async () => {
+    const onNextPress = () => {
         //TODO:need to have userID or same detail of the user and agent
         // and add actionOwner
         // const userID = 3;
