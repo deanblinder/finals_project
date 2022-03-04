@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import { StyleSheet, View } from 'react-native';
 import {Circle, NativeBaseProvider, Button, Heading, createIcon, Center, Avatar,Pressable,Text} from 'native-base';
+import {store} from '../state/state'
 import AdministratorScreen from "./AdministratortScreen";
 import api from "../api";
 
@@ -61,6 +62,7 @@ const GamePlayScreen = (props) =>{
     //TODO: --- *************** ---
 
     useEffect(() => {
+        console.log(store.getAgentType())
         intervalID = setMyInterval(setInterval(agentPress,2000))
         // avgPlayerPresses= 2000
         // console.log('myInterval',myInterval)
@@ -166,7 +168,6 @@ const GamePlayScreen = (props) =>{
                             {renderAgentCircle()}
                             {renderPlayerCircle()}
                             </View>
-
                         </View>
                     </View> :
                     <View style={styles.gameOverContainer}>

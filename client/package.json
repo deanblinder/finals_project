@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "start": "expo start --dev-client",
+    "start": "expo start",
     "android": "expo run:android",
     "ios": "expo run:ios",
     "web": "expo start --web",
@@ -11,6 +11,7 @@
     "axios": "^0.24.0",
     "body-parser": "^1.19.1",
     "expo": "~43.0.2",
+    "expo-splash-screen": "~0.10.2",
     "expo-status-bar": "~1.1.0",
     "expo-updates": "~0.5.4",
     "lodash": "^4.17.21",
@@ -27,13 +28,13 @@
     "react-native-screens": "~3.8.0",
     "react-native-svg": "^12.1.1",
     "react-native-ui-lib": "^6.4.3",
+    "react-native-unimodules": "~0.13.3",
     "react-native-uuid": "^2.0.1",
     "react-native-web": "0.17.1",
     "react-navigation": "^4.4.4",
     "react-navigation-header-buttons": "^6.3.1",
-    "usehooks-ts": "^2.4.2",
-    "expo-splash-screen": "~0.10.2",
-    "react-native-unimodules": "~0.13.3"
+    "remx": "^4.0.108-rc.4",
+    "usehooks-ts": "^2.4.2"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
