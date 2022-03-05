@@ -65,7 +65,7 @@ const ChangeParamAdministratorScreen = (props) => {
                 <FormControl isRequired style={{marginBottom:15,marginTop:15}}>
                     <Stack mx="4">
                         <View style={{margin:10,textAlign:'right',justifyContent: 'space-between'}}>
-                            <Text>בחר סוכן</Text>
+                            <Text style={{textAlign:'right'}}>בחר סוכן</Text>
                         </View>
                         <Select style={{textAlign:'right'}}
                                 minWidth="200"
@@ -86,7 +86,7 @@ const ChangeParamAdministratorScreen = (props) => {
                             <Select.Item label="1 לסוכן" value="5" onValueChange={() => setAgent(5)}/>
                         </Select>
                         <View style={{margin:10,textAlign:'right',justifyContent: 'space-between'}}>
-                            <Text>בחר ממוצע</Text>
+                            <Text style={{textAlign:'right'}}>בחר ממוצע</Text>
                         </View>
                         <Select style={{textAlign:'right'}}
                                 minWidth="200"
@@ -146,7 +146,7 @@ const ChangeParamAdministratorScreen = (props) => {
 
 ChangeParamAdministratorScreen.navigationOptions = navigationData =>{
     return{
-        title: 'שינוי הפטרמטים של הסוכן',
+        title: 'שינוי הפטרמטים',
         headerTitleAlign: 'center'
         // headerTitleStyle: 'open-sans',
     }

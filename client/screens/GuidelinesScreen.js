@@ -18,7 +18,7 @@ export const Guidelines = () => {
             sections={data}
             keyExtractor={(item, index) => item + index}
             renderItem={({ item }) => (
-                <Text style={styles.test} py="4" minW="64">
+                <Text style={{textAlign:'right'}} py="4" minW="64">
                     {item}
                 </Text>
             )}
@@ -33,7 +33,7 @@ const GuidelinesScreen = (props) => {
     return (
         <NativeBaseProvider>
             <View style={styles.container}>
-                <Heading size={"lg"}>הוראות</Heading>
+                <Heading style={{textAlign:'center'}} size={"lg"}>הוראות</Heading>
                 <Guidelines/>
                 <Button onPress={onStartPress}>המשך</Button>
             </View>
