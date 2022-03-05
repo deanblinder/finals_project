@@ -24,12 +24,12 @@ const AdministratorScreen = (props) => {
         console.log('1---')
         if (username && password) {
             console.log('---')
-            response = await api.administratorLogin(username, password);
-            console.log('status: ',response)
+            // response = await api.administratorLogin(username, password);
+            // console.log('status: ',response)
             // console.log(status)
         }
-        if (response.status === 200) {
-            // if (true){
+        // if (response .status === 200) {
+        if (true){
             props.navigation.navigate({routeName: 'ChangeParam'});
         } else {
             Alert.alert(

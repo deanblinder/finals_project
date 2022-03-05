@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import {store} from '../state/state'
 import { StyleSheet} from 'react-native';
 import {
     NativeBaseProvider,
@@ -6,7 +7,7 @@ import {
     HStack,
     Spinner,
     View,
-    Button
+    Button, Select, CheckIcon
 } from 'native-base';
 import AdministratorScreen from "./AdministratortScreen";
 
@@ -37,8 +38,13 @@ const FindPlayersScreen = (props) => {
                     </Heading></View>}
                 </HStack>
             </View>
+
             <View>
-                {!isLoading ? <Button onPress={press}>שחק</Button> : null}
+                {!isLoading ?
+                        <View>
+                            <Button onPress={press}>שחק</Button>
+                        </View>
+                    : null}
             </View>
         </View>
         </NativeBaseProvider>

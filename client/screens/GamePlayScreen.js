@@ -1,75 +1,31 @@
-import React, {useEffect, useState} from 'react';
-import { StyleSheet, View } from 'react-native';
+import React, {useEffect, useState,useRef} from 'react';
+import { StyleSheet, View,TouchableOpacity,Animated} from 'react-native';
 import {Circle, NativeBaseProvider, Button, Heading, createIcon, Center, Avatar,Pressable,Text} from 'native-base';
 import {store} from '../state/state'
 import AdministratorScreen from "./AdministratortScreen";
 import api from "../api";
 
 const GamePlayScreen = (props) =>{
+    const fadeAnim = useRef(new Animated.Value(1)).current;
     let [isLoading,setLoading] = useState(true)
     let [playerTimeStampArr, setPlayerTimeStampArr] = useState([])
     let [agentTimeStampArr, setAgentTimeStampArr] = useState([])
     let [playerDiffPressArr, setPlayerDiffPressArr] = useState([])
     let [agentDiffPressArr, setAgentDiffPressArr] = useState([])
-    let [agentCircleColor, setAgentCircleColor] = useState("secondary.400")
-    let [playerCircleColor, setPlayerCircleColor] = useState("secondary.400")
-    let [numberOfAgentPresses, setNumberOfAgentPresses] = useState(0)
     let [numberOfPresses, setNumberOfPresses] = useState(0)
     let [avgPlayerPresses, setAvgPlayerPresses] = useState(0)
     let [avgAgentPresses, setAvgAgentPresses] = useState(2000)
     let [intervalID,setMyInterval] = useState(null)
-    // let numberOfPresses = 0
+    let [numberOfAgentPresses,setNumberOfAgentPresses] = useState(false)
+    let [isInterval,setIsInterval] = useState(false)
     let sumOfPlayerDiffPressArr = 0
-    let sumOfAgentDiffPressArr = 0
-    //TODO: pot all the new code in a time loop of 1 min (mark in ***)
-    // --- *************** ---
-    //need to have userID or same detail of the user and agent
-    // const play = function () {
-    //     const userId = 1
-    //     const agentType = 'fast'
-    //     agentTimeStamp = [1645992161077,1645992161351,1645992161626,1645992161861,1645992162202]
-    //     let meanPastAgentActions = average(agentTimeStamp)
-    //     let meanPastUserActions = average(playerTimeStamp)
-    //     //get algo type: 1 - agentLeader 2 - agentFollower 3 - network
-    //     const algoType = 1
-    //     let listeningLevel = 0
-    //     // pressTimeNextAction = releaseTimeNextAction(listeningLevel) + totalTimeBetweenActions(const)
-    //     let pressTimeNextAction  = 0
-    //     let totalTimeBetweenActions = 0
-    //     if(algoType === 1){
-    //         listeningLevel = 0.8*meanPastAgentActions + 0.2*meanPastUserActions
-    //         totalTimeBetweenActions = 0.5
-    //     }
-    //     else if(algoType === 2){
-    //         listeningLevel = 0.2*meanPastAgentActions + 0.8*meanPastUserActions
-    //         totalTimeBetweenActions = 0.5
-    //     }
-    //     else if(algoType === 3){
-    //         listeningLevel = 0.5*meanPastAgentActions + 0.5*meanPastUserActions
-    //         //    add the rest of the network algo
-    //     }
-    //     pressTimeNextAction = listeningLevel + totalTimeBetweenActions
-    //     if (!isNaN(playerTimeStamp)){
-    //         playerTimeStamp.push(pressTimeNextAction)
-    //     }
-    //     if (!isNaN(pressTimeNextAction)){
-    //         agentTimeStamp.push(pressTimeNextAction)
-    //     }
-    //     setTimeout(play, 10000); // repeat myself
-    //
-    // }
-
-    //TODO: --- *************** ---
-
     useEffect(() => {
-        console.log(store.getAgentType())
-        intervalID = setMyInterval(setInterval(agentPress,2000))
-        // avgPlayerPresses= 2000
-        // console.log('myInterval',myInterval)
+        console.log(store.getAvgOff(),typeof store.getAvgOff());
+        setMyInterval(setInterval(agentPress,2000))
         setTimeout(() => {
+            setMyInterval(clearInterval(intervalID))
             setLoading(false)
-            clearInterval(intervalID)
-        }, 10000);
+        }, 30000);
 
     },[]);
     const onNextPress = () => {
@@ -81,51 +37,81 @@ const GamePlayScreen = (props) =>{
         // await api.sendPressTimeStamp(userID,"agent",agentTimeStampArr) //send also 2 arrays
         props.navigation.navigate({routeName:'Questionnaire'});
     }
-    const agentPress  = () => {
-        setAgentCircleColor('secondary.900')
-        setTimeout(()=>{setAgentCircleColor("secondary.400")},10)
-        // setAgentTimeStampArr(agentTimeStampArr=>[...agentTimeStampArr,timeStamp])
-        // let diffBetweenPresses
-        // if (numberOfAgentPresses >= 2){
-        //     diffBetweenPresses = agentTimeStampArr[agentTimeStampArr.length-1]-agentTimeStampArr[agentTimeStampArr.length-2]
-        //     setAgentDiffPressArr(agentDiffPressArr=>[...agentDiffPressArr,diffBetweenPresses])
-        //     sumOfAgentDiffPressArr = mySum(agentDiffPressArr,3);
-        //     setAvgAgentPresses(sumOfAgentDiffPressArr/3)
-        // }
-        // let num = numberOfAgentPresses + 1
-        // setNumberOfAgentPresses(num)
-        console.log('-------------agent----------------')
+    const playAgain = () => {
+        props.navigation.navigate({routeName:'FindPlayer'});
     }
-    const playerPress = async (timeStamp) => {
-        console.log('-------------player----------------')
-        setPlayerCircleColor('secondary.900')
-        setTimeout(()=>{setPlayerCircleColor("secondary.400")},10)
-        setPlayerTimeStampArr(playerTimeStampArr=>[...playerTimeStampArr,timeStamp])
+    const agentPress = () => {
+        fadeOut()
+        setTimeout(() => {
+            fadeIn()
+        }, 100)
+        let timeStamp = new Date().getTime()
+        setAgentTimeStampArr([...agentTimeStampArr,timeStamp])
+        let diffBetweenPresses
+        if (numberOfAgentPresses >= 2){
+            diffBetweenPresses = agentTimeStampArr[agentTimeStampArr.length-1]-agentTimeStampArr[agentTimeStampArr.length-2]
+            setAgentDiffPressArr([...agentDiffPressArr,diffBetweenPresses])
+            let sumOfAgentDiffPressArr = mySum(agentDiffPressArr,parseInt(store.getAvgOff()));
+            setAvgAgentPresses(sumOfAgentDiffPressArr/parseInt(store.getAvgOff()))
+        }
+        setNumberOfAgentPresses(numberOfAgentPresses+1)
+    }
+    const playerPress = () => {
+        let timeStamp = new Date().getTime()
+        let percent = 0
+        console.log('store',typeof store.getAgentType())
+        if (store.getAgentType() == 0){
+            percent = 0.0
+        } else if (store.getAgentType() == 1){
+            percent = 0.2
+        }else if (store.getAgentType() == 2){
+            percent = 0.4
+
+        }else if (store.getAgentType() == 3){
+            percent = 0.6
+
+        }else if (store.getAgentType() == 4){
+            percent = 0.8
+
+        }else if (store.getAgentType() == 5){
+            percent = 1
+        }
+        console.log(percent,'percent')
+        setPlayerTimeStampArr([...playerTimeStampArr,timeStamp])
         let diffBetweenPresses
         if (numberOfPresses > 2){
             diffBetweenPresses = playerTimeStampArr[playerTimeStampArr.length-1]-playerTimeStampArr[playerTimeStampArr.length-2]
-            await setPlayerDiffPressArr(playerDiffPressArr=>[...playerDiffPressArr,diffBetweenPresses])
-            sumOfPlayerDiffPressArr = mySum(playerDiffPressArr,3);
-            // await setAvgPlayerPresses(sumOfPlayerDiffPressArr/3)
-            // const linsteningLevel = 0.5*avgPlayerPresses + 0.5*avgAgentPresses
-            // console.log("player --- linsteningLevel",linsteningLevel)
-            // console.log("player --- sumOfPlayerDiffPressArr",sumOfPlayerDiffPressArr)
-            // console.log("player --- playerTimeStampArr",playerDiffPressArr)
-            // console.log("player --- avgPlayerPresses",sumOfPlayerDiffPressArr/3)
-            let avg = (sumOfPlayerDiffPressArr/3)
-            setAgentCircleColor('secondary.900')
-            setTimeout(()=>{setAgentCircleColor("secondary.400")},10)
-            clearInterval(intervalID)
-            intervalID = setMyInterval(setInterval(agentPress,avg))
+            setPlayerDiffPressArr([...playerDiffPressArr,diffBetweenPresses])
+            sumOfPlayerDiffPressArr = mySum(playerDiffPressArr,parseInt(store.getAvgOff()));
+            setAvgPlayerPresses(sumOfPlayerDiffPressArr/parseInt(store.getAvgOff()))
+            const linsteningLevel = (((1-percent)*avgPlayerPresses) + (percent*avgAgentPresses))
+            // if (numberOfPresses%2===0){
+                clearInterval(intervalID)
+                setMyInterval(setInterval(agentPress,linsteningLevel))
+            // }
+            // setIsInterval(!isInterval)
         }
-
-        let num = numberOfPresses +1
-        await setNumberOfPresses(num)
-        console.log('numberOfPresses',numberOfPresses)
-        console.log('-------------player----------------')
+        setNumberOfPresses(numberOfPresses +1)
     }
 
 
+    const fadeIn = () => {
+        // Will change fadeAnim value to 1 in 5 seconds
+        Animated.timing(fadeAnim, {
+            toValue: 1,
+            duration: 10,
+            useNativeDriver:true
+        }).start();
+    };
+
+    const fadeOut = () => {
+        // Will change fadeAnim value to 0 in 3 seconds
+        Animated.timing(fadeAnim, {
+            toValue: 0.1,
+            duration: 10,
+            useNativeDriver:true
+        }).start();
+    };
     const mySum = (arr,num) => {
         let sum = 0;
         let len
@@ -138,26 +124,37 @@ const GamePlayScreen = (props) =>{
         for (let i = len; i < arr.length; i++) {
             sum += arr[i];
         }
-        console.log('sum',sum)
         return sum
     }
     const renderAgentCircle = () =>{
         return(
-            <Circle size={170} bg={agentCircleColor}>
-                סוכן
-            </Circle>
-        )
+            <Pressable onPress={agentPress}>
+                    <Animated.View
+                        style={[
+                            2 ,
+                            {
+                                // Bind opacity to animated value
+                                opacity: fadeAnim
+                            }
+                        ]}
+                    >
+                        <View style={styles.agentButton} />
+                    </Animated.View>
+            </Pressable>
 
+        )
     }
     const renderPlayerCircle = () =>{
         return(
-            <Pressable onPress={()=>playerPress(new Date().getTime())}>
-                <Circle size={170} bg={playerCircleColor}>
-                    משתמש
-                </Circle>
-            </Pressable>
+        <View style={styles.container1}>
+            <TouchableOpacity
+                activeOpacity={0.1} //The opacity of the button when it is pressed
+                style = {styles.playerButton}
+                onPress = {playerPress}
+            >
+            </TouchableOpacity>
+        </View>
         )
-
     }
         return (
             <NativeBaseProvider>
@@ -173,6 +170,7 @@ const GamePlayScreen = (props) =>{
                     <View style={styles.gameOverContainer}>
                         <Heading style={{justifyContent:'center',alignItems: 'center'}}>המשחק נגמר</Heading>
                         <Button onPress={onNextPress}>המשך</Button>
+                        <Button onPress={playAgain}>שחק שוב</Button>
                     </View>}
 
             </NativeBaseProvider>
@@ -207,6 +205,39 @@ const styles = StyleSheet.create({
         flex:1,
         alignItems: 'center',
         justifyContent: 'space-evenly',
+    },
+    container1: {
+        position: 'relative',
+        zIndex: 0,
+    },
+    playerButton: {
+        backgroundColor: 'rgba(20,174,255,0.51)',
+        justifyContent: 'center',
+        alignContent: 'center',
+        borderWidth: 3,
+        borderRadius: (150 / 2),
+        width: 150,
+        height: 150,
+    },
+    agentButton: {
+        backgroundColor: '#ff7f50',
+        justifyContent: 'center',
+        alignContent: 'center',
+        borderWidth: 3,
+        borderRadius: (150 / 2),
+        width: 150,
+        height: 150,
+
+    },
+    pressedAgentButtonStyle: {
+        backgroundColor: '#ff7f50',
+        justifyContent: 'center',
+        alignContent: 'center',
+        borderWidth: 3,
+        borderRadius: (150 / 2),
+        width: 150,
+        height: 150,
+        opacity: 0.1
     }
 });
 export default GamePlayScreen

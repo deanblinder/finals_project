@@ -9,9 +9,8 @@ const GuidelineComponent = (props) => {
     const [rate, setRate] = useState(undefined)
     const onChangeBox = (val) => {
         if (rate === undefined){
-            setRate(val)
             props.rating(val)
-
+            setRate(val)
         }
         else{
             setRate(undefined)

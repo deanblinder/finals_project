@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "finals-project",
-    "slug": "finals-project",
+    "name": "finals-project-only-game_one_works",
+    "slug": "finals-project-only-game_one_works",
     "sdkVersion": "41.0.0",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -34,6 +34,7 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "description": ""
   }
 }
