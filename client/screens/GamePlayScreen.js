@@ -85,16 +85,11 @@ const GamePlayScreen = (props) =>{
             sumOfPlayerDiffPressArr = mySum(playerDiffPressArr,parseInt(store.getAvgOff()));
             setAvgPlayerPresses(sumOfPlayerDiffPressArr/parseInt(store.getAvgOff()))
             const linsteningLevel = (((1-percent)*avgPlayerPresses) + (percent*avgAgentPresses))
-            // if (numberOfPresses%2===0){
-                clearInterval(intervalID)
-                setMyInterval(setInterval(agentPress,linsteningLevel))
-            // }
-            // setIsInterval(!isInterval)
+            clearInterval(intervalID)
+            setMyInterval(setInterval(agentPress,linsteningLevel))
         }
         setNumberOfPresses(numberOfPresses +1)
     }
-
-
     const fadeIn = () => {
         // Will change fadeAnim value to 1 in 5 seconds
         Animated.timing(fadeAnim, {
@@ -168,9 +163,14 @@ const GamePlayScreen = (props) =>{
                         </View>
                     </View> :
                     <View style={styles.gameOverContainer}>
-                        <Heading style={{justifyContent:'center',alignItems: 'center'}}>המשחק נגמר</Heading>
-                        <Button onPress={onNextPress}>המשך</Button>
-                        <Button onPress={playAgain}>שחק שוב</Button>
+                        <View></View>
+                        <View style={{alignItems: 'center'}}>
+                            <Heading >המשחק נגמר!</Heading>
+                        </View>
+                        <View style={{flexDirection:'row',justifyContent:'space-between'}}>
+                            <Button size={"lg"} style={{width:'45%'}} onPress={onNextPress}>המשך</Button>
+                            <Button size={"lg"} style={{width:'45%'}} onPress={playAgain}>שחק שוב</Button>
+                        </View>
                     </View>}
 
             </NativeBaseProvider>
@@ -193,8 +193,9 @@ const styles = StyleSheet.create({
     },
     gameOverContainer:{
         flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
+        // alignItems: 'center',
+        justifyContent: 'space-between',
+        padding:20
     },
     buttons:{
         flex:1,
@@ -238,6 +239,6 @@ const styles = StyleSheet.create({
         width: 150,
         height: 150,
         opacity: 0.1
-    }
+    },
 });
 export default GamePlayScreen
