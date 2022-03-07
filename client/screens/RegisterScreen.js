@@ -11,7 +11,7 @@ import {
     Button,
     Select, CheckIcon, Text
 } from 'native-base';
-import api from "../api";
+import api from "../../../../Downloads/finals_project-algo/client/api";
 import uuid from 'react-native-uuid';
 
 const RegisterScreen = (props) => {
@@ -21,9 +21,10 @@ const RegisterScreen = (props) => {
     const [deviceUid,setDeviceUid] = useState(uuid.v4())
     const [showError,setShowError] = useState(false)
    const onNextPress = () => {
-        if (validateAge(age) && validateEmail(mail) && gender){
+        // if (validateAge(age) && validateEmail(mail) && gender){
+       if (true){
             console.log(deviceUid)
-            api.registerPlayer(mail,age,gender,deviceUid)
+            // api.registerPlayer(mail,age,gender,deviceUid)
             props.navigation.navigate({routeName:'FindPlayer'});
         }
         else {
@@ -61,7 +62,7 @@ const RegisterScreen = (props) => {
     return (
         <NativeBaseProvider>
         <View style={styles.container}>
-               <Heading size={"lg"}>בבקשה מלא את הפרטים שלך</Heading>
+               <Heading style={{textAlign:'center'}} size={"lg"}>בבקשה מלא את הפרטים שלך</Heading>
             <Box
                 w={{
                     base: "90%",
@@ -71,7 +72,7 @@ const RegisterScreen = (props) => {
                 <FormControl isRequired>
                     <Stack mx="4">
                         <View style={{margin:10,textAlign:'right',justifyContent: 'space-between'}}>
-                            <Text>מייל</Text>
+                            <Text style={{textAlign:'right'}}>מייל</Text>
                         </View>
                         <Input style={{textAlign:'right'}} onChangeText={(text)=>{setMail(text)}} type="email" defaultValue="" placeholder="מייל" />
                         <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>
@@ -79,7 +80,7 @@ const RegisterScreen = (props) => {
                         </FormControl.ErrorMessage>
 
                         <View style={{margin:10,textAlign:'right',justifyContent: 'space-between'}}>
-                            <Text>גיל</Text>
+                            <Text style={{textAlign:'right'}}>גיל</Text>
                         </View>
                         <Input style={{textAlign:'right'}} onChangeText={(text)=>{setAge(text)}}  type="number" defaultValue="" placeholder="גיל" />
                         <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>
@@ -87,7 +88,7 @@ const RegisterScreen = (props) => {
                         </FormControl.ErrorMessage>
                         <FormControl isRequired isInvalid={false}>
                             <View style={{margin:10,textAlign:'right',justifyContent: 'space-between'}}>
-                                <Text>בחר מגדר</Text>
+                                <Text style={{textAlign:'right'}}>בחר מגדר</Text>
                             </View>
                             <Select style={{textAlign:'right'}}
                                     minWidth="200"

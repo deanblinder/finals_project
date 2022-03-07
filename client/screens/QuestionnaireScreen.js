@@ -8,11 +8,11 @@ import {
 } from 'native-base';
 import GuidelineComponent from "../compoenents/PickerComponent";
 import AdministratorScreen from "./AdministratortScreen";
-import api from "../api";
+import api from "../../../../Downloads/finals_project-algo/client/api";
 import uuid from "react-native-uuid";
 
 const QuestionnaireScreen =(props) => {
-    const [qDict, setQDict] = useState({
+    let [qDict, setQDict] = useState({
         questionOne:undefined,
         questionTwo:undefined,
         questionThree:undefined,
@@ -20,31 +20,39 @@ const QuestionnaireScreen =(props) => {
     })
 
     const sendRating1 = (rating) => {
-        const tempQDict = {...qDict}
+        const tempQDict = qDict
+        console.log(tempQDict)
+
         tempQDict.questionOne=rating
-        setQDict(tempQDict)
+         setQDict(tempQDict)
     }
     const sendRating2 = (rating) => {
-        const tempQDict = {...qDict}
+        const tempQDict = qDict
+        console.log(tempQDict)
+
+
         tempQDict.questionTwo=rating
         setQDict(tempQDict)
     }
     const sendRating3 = (rating) => {
-        const tempQDict = {...qDict}
+        const tempQDict = qDict
+        console.log(tempQDict)
         tempQDict.questionThree=rating
         setQDict(tempQDict)
     }
 
     const sendRating4 = (rating) => {
-        const tempQDict = {...qDict}
+        const tempQDict = qDict
+        console.log(tempQDict)
         tempQDict.questionFour=rating
         setQDict(tempQDict)
     }
     const onNextPress = () =>{
+        console.log(qDict)
         //send Qdict
         if (qDict.questionOne && qDict.questionTwo && qDict.questionThree && qDict.questionFour){
             const deviceUUID = uuid.v4()
-            api.sendQuestionnaireAnswers(qDict,deviceUUID) // send user id,
+            // api.sendQuestionnaireAnswers(qDict,deviceUUID) // send user id,
             props.navigation.navigate({routeName:'GoodBye'});
         }
     }

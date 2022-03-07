@@ -9,9 +9,8 @@ const GuidelineComponent = (props) => {
     const [rate, setRate] = useState(undefined)
     const onChangeBox = (val) => {
         if (rate === undefined){
-            setRate(val)
             props.rating(val)
-
+            setRate(val)
         }
         else{
             setRate(undefined)
@@ -23,7 +22,7 @@ const GuidelineComponent = (props) => {
             <View style={{justifyContent:'space-between',flexDirection:"row"}}>
                 <Text style={{margin: 10}}>בכלל לא</Text>
                 <View>
-                    <Checkbox isDisabled={rate && rate !== '1'} color={'red'} onChange={()=>onChangeBox('1')}  value="1" my="1">
+                    <Checkbox isDisabled={rate && rate !== '1'}  onChange={()=>onChangeBox('1')}  value="1" my="1">
                         1
                     </Checkbox>
                 </View>
@@ -48,7 +47,7 @@ const GuidelineComponent = (props) => {
     );
 }
 
-const styles = StyleSheet.create({
-
-});
+// const styles = StyleSheet.create({
+//
+// });
 export default GuidelineComponent

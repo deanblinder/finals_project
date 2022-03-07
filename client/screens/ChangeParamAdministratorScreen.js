@@ -1,5 +1,6 @@
 import React,{useState} from 'react';
 import {StyleSheet, View,Alert} from 'react-native';
+import {store} from '../../../../Downloads/finals_project-algo/client/state/state'
 import {
     Input,
     NativeBaseProvider,
@@ -12,23 +13,26 @@ import {
     Select, CheckIcon,Text,extendTheme
 } from 'native-base';
 import AdministratorScreen from "./AdministratortScreen";
-import api from "../api";
+import api from "../../../../Downloads/finals_project-algo/client/api";
 
 const ChangeParamAdministratorScreen = (props) => {
     const [agent,setAgent] = useState(undefined)
+    const [avg,setAvg] = useState(1)
     const [latency,setLatency] = useState(undefined)
     const [variance,setVariance] = useState(undefined)
     const [showError, setShowError] = useState(false)
-    const onConfirmationPress =  () => {
-        if (agent && latency && variance){
-            console.log("--1-1-1--")
-            api.changeAgentParams(agent,latency,variance)
+    const onConfirmationPress = () => {
+        // if (agent && latency && variance){
+        // if (true){
+        //     console.log("--1-1-1--")
+            // await api.changeAgentParams(agent,latency,variance)
             props.navigation.navigate({routeName:'Welcome'})
-        }
+        // }
     }
    const onUpdatePress = () => {
         console.log(agent , latency , variance)
-       if (agent && latency && variance) {
+       // if (agent && latency && variance) {
+       if (true) {
            Alert.alert(
                "פרטים שונו",
                "",
@@ -61,7 +65,7 @@ const ChangeParamAdministratorScreen = (props) => {
                 <FormControl isRequired style={{marginBottom:15,marginTop:15}}>
                     <Stack mx="4">
                         <View style={{margin:10,textAlign:'right',justifyContent: 'space-between'}}>
-                            <Text>בחר סוכן</Text>
+                            <Text style={{textAlign:'right'}}>בחר סוכן</Text>
                         </View>
                         <Select style={{textAlign:'right'}}
                                 minWidth="200"
@@ -72,27 +76,48 @@ const ChangeParamAdministratorScreen = (props) => {
                                     startIcon: <CheckIcon size={5} />,
                                 }}
                                 mt="1"
-                                onValueChange={(agent) => setAgent(agent)}
+                                onValueChange={(agent) => store.setAgentType(agent)}
                         >
-                            <Select.Item label="איטי-מפוזר" value="slow-l" onValueChange={(val) => setAgent(val)}/>
-                            <Select.Item label="איטי-מסונכרן" value="slow-h" onValueChange={(val) => setAgent(val)}/>
-                            <Select.Item label="אמצע" value="middle" onValueChange={(val) => setAgent(val)}/>
-                            <Select.Item label="מהיר מפוזר" value="fast-l" onValueChange={(val) => setAgent(val)}/>
-                            <Select.Item label="מסונכרן" value="fast-h" onValueChange={(val) => setAgent(val)}/>
-
+                            <Select.Item label="0 לסוכן" value="0" onValueChange={() => setAgent(0)}/>
+                            <Select.Item label="0.2 לסוכן" value="1" onValueChange={() => setAgent(1)}/>
+                            <Select.Item label="0.4 לסוכן" value="2" onValueChange={() => setAgent(2)}/>
+                            <Select.Item label="0.6 לסוכן" value="3" onValueChange={() => setAgent(3)}/>
+                            <Select.Item label="0.8 לסוכן" value="4" onValueChange={() => setAgent(4)}/>
+                            <Select.Item label="1 לסוכן" value="5" onValueChange={() => setAgent(5)}/>
                         </Select>
                         <View style={{margin:10,textAlign:'right',justifyContent: 'space-between'}}>
-                            <Text>עכבה (ms)</Text>
+                            <Text style={{textAlign:'right'}}>בחר ממוצע</Text>
                         </View>
-                        <Input style={{textAlign:'right'}} onChangeText={(text)=>{setLatency(text)}} type="email" defaultValue="" placeholder="הכנס עקבה" />
-                        <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>
-                            Atleast 6 characters are required.
-                        </FormControl.ErrorMessage>
+                        <Select style={{textAlign:'right'}}
+                                minWidth="200"
+                                accessibilityLabel="Choose Service"
+                                placeholder="ממוצע של x לחיצות"
+                                _selectedItem={{
+                                    bg: "teal.600",
+                                    startIcon: <CheckIcon size={5} />,
+                                }}
+                                mt="1"
+                                onValueChange={(avg) => store.setAvgOf(parseInt(avg))}
+                        >
+                            <Select.Item label="1" value="0" onValueChange={() => setAvg(0)}/>
+                            <Select.Item label="2" value="1" onValueChange={() => setAvg(1)}/>
+                            <Select.Item label="3" value="2" onValueChange={() => setAvg(2)}/>
+                            <Select.Item label="4" value="3" onValueChange={() => setAvg(3)}/>
+                            <Select.Item label="5" value="4" onValueChange={() => setAvg(4)}/>
+                            <Select.Item label="6" value="5" onValueChange={() => setAvg(5)}/>
+                        </Select>
+                        {/*<View style={{margin:10,textAlign:'right',justifyContent: 'space-between'}}>*/}
+                        {/*    <Text>ממוצא של כמה אחרונים (ms)</Text>*/}
+                        {/*</View>*/}
+                        {/*<Input style={{textAlign:'right'}} onChangeText={(text)=>{setLatency(text)}} type="email" defaultValue="" placeholder="הכנס עקבה" />*/}
+                        {/*<FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>*/}
+                        {/*    Atleast 6 characters are required.*/}
+                        {/*</FormControl.ErrorMessage>*/}
 
-                        <View style={{margin:10,textAlign:'right',justifyContent: 'space-between'}}>
-                            <Text>שונות (ms)</Text>
-                        </View>
-                        <Input style={{textAlign:'right'}} onChangeText={(text)=>{setVariance(text)}}  type="number" defaultValue="" placeholder="הכנס שונות" />
+                        {/*<View style={{margin:10,textAlign:'right',justifyContent: 'space-between'}}>*/}
+                        {/*    <Text>שונות (ms)</Text>*/}
+                        {/*</View>*/}
+                        {/*<Input style={{textAlign:'right'}} onChangeText={(text)=>{setVariance(text)}}  type="number" defaultValue="" placeholder="הכנס שונות" />*/}
                         <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>
                             Atleast 6 characters are required.
                         </FormControl.ErrorMessage>
@@ -121,7 +146,7 @@ const ChangeParamAdministratorScreen = (props) => {
 
 ChangeParamAdministratorScreen.navigationOptions = navigationData =>{
     return{
-        title: 'שינוי הפטרמטים של הסוכן',
+        title: 'שינוי הפטרמטים',
         headerTitleAlign: 'center'
         // headerTitleStyle: 'open-sans',
     }

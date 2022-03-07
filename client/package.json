@@ -29,7 +29,8 @@
     "react-native-uuid": "^2.0.1",
     "react-native-web": "0.17.1",
     "react-navigation": "^4.4.4",
-    "react-navigation-header-buttons": "^6.3.1"
+    "react-navigation-header-buttons": "^6.3.1",
+    "remx": "^4.0.108-rc.4"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
