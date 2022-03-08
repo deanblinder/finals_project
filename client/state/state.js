@@ -2,7 +2,8 @@ import * as remx from 'remx';
 
 const initialState = {
     agentType: 0,
-    avgOff:3
+    avgOff:3,
+    gameTime:30
 };
 
 const setters = remx.setters({
@@ -11,6 +12,9 @@ const setters = remx.setters({
     },
     setAvgOf(avgOff) {
         state.avgOff = avgOff;
+    },
+    setGameTime(gameTime) {
+        state.gameTime = gameTime;
     },
 });
 
@@ -21,6 +25,8 @@ const getters = remx.getters({
     getAvgOff() {
         return state.avgOff;
     },
+    getGameTime() {
+        return state.gameTime;    },
 });
 
 export const store = {

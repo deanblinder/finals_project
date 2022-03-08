@@ -106,10 +106,10 @@ const ChangeParamAdministratorScreen = (props) => {
                             <Select.Item label="5" value="4" onValueChange={() => setAvg(4)}/>
                             <Select.Item label="6" value="5" onValueChange={() => setAvg(5)}/>
                         </Select>
-                        {/*<View style={{margin:10,textAlign:'right',justifyContent: 'space-between'}}>*/}
-                        {/*    <Text>ממוצא של כמה אחרונים (ms)</Text>*/}
-                        {/*</View>*/}
-                        {/*<Input style={{textAlign:'right'}} onChangeText={(text)=>{setLatency(text)}} type="email" defaultValue="" placeholder="הכנס עקבה" />*/}
+                        <View style={{margin:10,textAlign:'right',justifyContent: 'space-between'}}>
+                            <Text style={{textAlign:'right'}}>זמן משחק</Text>
+                        </View>
+                        <Input style={{textAlign:'right'}} onChangeText={(time)=>{store.setGameTime(parseInt(time))}} type="number" defaultValue="" placeholder="הכנס זמן משחק בשניות" />
                         {/*<FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>*/}
                         {/*    Atleast 6 characters are required.*/}
                         {/*</FormControl.ErrorMessage>*/}

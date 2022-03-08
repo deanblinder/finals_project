@@ -61,7 +61,7 @@ const AdministratorScreen = (props) => {
                             <View style={{margin:10,textAlign:'right',justifyContent: 'space-between'}}>
                                 <Text style={{textAlign:'right'}}>שם משתמש</Text>
                             </View>
-                            <Input style={{textAlign:'right'}} onChangeText={(text)=>{setUsername(text)}} type="email" defaultValue="" placeholder="שם משתמש" />
+                            <Input style={styles.input} onChangeText={(text)=>{setUsername(text)}} type="email" defaultValue="" placeholder="שם משתמש" />
                             <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>
                                 Atleast 6 characters are required.
                             </FormControl.ErrorMessage>
@@ -100,5 +100,9 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'space-between'
     },
+    input:{
+        textAlign : 'center',
+
+    }
 });
 export default AdministratorScreen

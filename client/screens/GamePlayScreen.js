@@ -16,16 +16,20 @@ const GamePlayScreen = (props) =>{
     let [avgPlayerPresses, setAvgPlayerPresses] = useState(0)
     let [avgAgentPresses, setAvgAgentPresses] = useState(2000)
     let [intervalID,setMyInterval] = useState(null)
+    let [intervalID2,setMyInterval2] = useState(null)
+    let [isIntervalID,setIsIntervalID] = useState(true)
     let [numberOfAgentPresses,setNumberOfAgentPresses] = useState(false)
-    let [isInterval,setIsInterval] = useState(false)
+    let [linsteningLevel,setLinsteningLevel] = useState(0)
     let sumOfPlayerDiffPressArr = 0
     useEffect(() => {
         console.log(store.getAvgOff(),typeof store.getAvgOff());
+        console.log(store.getGameTime(),typeof store.getGameTime());
         setMyInterval(setInterval(agentPress,2000))
         setTimeout(() => {
             setMyInterval(clearInterval(intervalID))
+            setMyInterval2(clearInterval(intervalID2))
             setLoading(false)
-        }, 30000);
+        }, parseInt(store.getGameTime())*1000);
 
     },[]);
     const onNextPress = () => {
@@ -58,38 +62,69 @@ const GamePlayScreen = (props) =>{
     }
     const playerPress = () => {
         let timeStamp = new Date().getTime()
+
         let percent = 0
-        console.log('store',typeof store.getAgentType())
-        if (store.getAgentType() == 0){
+        console.log('store', typeof store.getAgentType())
+        if (store.getAgentType() == 0) {
             percent = 0.0
-        } else if (store.getAgentType() == 1){
+        } else if (store.getAgentType() == 1) {
             percent = 0.2
-        }else if (store.getAgentType() == 2){
+        } else if (store.getAgentType() == 2) {
             percent = 0.4
 
-        }else if (store.getAgentType() == 3){
+        } else if (store.getAgentType() == 3) {
             percent = 0.6
 
-        }else if (store.getAgentType() == 4){
+        } else if (store.getAgentType() == 4) {
             percent = 0.8
 
-        }else if (store.getAgentType() == 5){
+        } else if (store.getAgentType() == 5) {
             percent = 1
         }
-        console.log(percent,'percent')
-        setPlayerTimeStampArr([...playerTimeStampArr,timeStamp])
+        console.log(percent, 'percent')
+        setPlayerTimeStampArr([...playerTimeStampArr, timeStamp])
         let diffBetweenPresses
-        if (numberOfPresses > 2){
-            diffBetweenPresses = playerTimeStampArr[playerTimeStampArr.length-1]-playerTimeStampArr[playerTimeStampArr.length-2]
-            setPlayerDiffPressArr([...playerDiffPressArr,diffBetweenPresses])
-            sumOfPlayerDiffPressArr = mySum(playerDiffPressArr,parseInt(store.getAvgOff()));
-            setAvgPlayerPresses(sumOfPlayerDiffPressArr/parseInt(store.getAvgOff()))
-            const linsteningLevel = (((1-percent)*avgPlayerPresses) + (percent*avgAgentPresses))
-            clearInterval(intervalID)
-            setMyInterval(setInterval(agentPress,linsteningLevel))
+        if (numberOfPresses > 2) {
+            diffBetweenPresses = playerTimeStampArr[playerTimeStampArr.length - 1] - playerTimeStampArr[playerTimeStampArr.length - 2]
+            setPlayerDiffPressArr([...playerDiffPressArr, diffBetweenPresses])
+            let num = parseInt(store.getAvgOff())
+            if (num>playerDiffPressArr.length){
+                setAvgPlayerPresses(fullSum(playerDiffPressArr) / playerDiffPressArr.length)
+                console.log('1')
+            }
+            else {
+                console.log('2')
+                sumOfPlayerDiffPressArr = mySum(playerDiffPressArr, num);
+                setAvgPlayerPresses(sumOfPlayerDiffPressArr / (num === 0 ? 1:num))
+            }
+            console.log(sumOfPlayerDiffPressArr, 'sum')
+            console.log(avgPlayerPresses,'avg')
+
+            setLinsteningLevel(((1 - percent) * avgPlayerPresses) + (percent * avgAgentPresses))
+            console.log(linsteningLevel,'lst')
+            let timeStamp2 = new Date().getTime()
+            let timePassed = timeStamp2 - timeStamp
+            if (isIntervalID) {
+                setMyInterval2(setInterval(agentPress, linsteningLevel))
+                setTimeout(() => {
+                    clearInterval(intervalID)
+                }, (linsteningLevel - (timePassed-110)))
+                setIsIntervalID(!isIntervalID)
+            } else {
+
+                setMyInterval(setInterval(agentPress, linsteningLevel))
+                setTimeout(() => {
+                    clearInterval(intervalID2)
+                }, (linsteningLevel - (timePassed-110)))
+                setIsIntervalID(!isIntervalID)
+            }
         }
+
+        console.log(numberOfPresses,'n')
         setNumberOfPresses(numberOfPresses +1)
+
     }
+
     const fadeIn = () => {
         // Will change fadeAnim value to 1 in 5 seconds
         Animated.timing(fadeAnim, {
@@ -117,6 +152,13 @@ const GamePlayScreen = (props) =>{
             len = arr.length-num
         }
         for (let i = len; i < arr.length; i++) {
+            sum += arr[i];
+        }
+        return sum
+    }
+    const fullSum = (arr) => {
+       let sum = 0
+        for (let i = 0; i < arr.length; i++) {
             sum += arr[i];
         }
         return sum
