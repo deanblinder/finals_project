@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {store} from '../../../../Downloads/finals_project-algo/client/'
+import {store} from '../../client/'
 import { StyleSheet} from 'react-native';
 import {
     NativeBaseProvider,

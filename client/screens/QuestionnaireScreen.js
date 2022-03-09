@@ -8,7 +8,7 @@ import {
 } from 'native-base';
 import GuidelineComponent from "../compoenents/PickerComponent";
 import AdministratorScreen from "./AdministratortScreen";
-import api from "../../../../Downloads/finals_project-algo/client/api";
+import api from "../api";
 import uuid from "react-native-uuid";
 
 const QuestionnaireScreen =(props) => {

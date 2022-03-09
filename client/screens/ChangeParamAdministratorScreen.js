@@ -1,6 +1,6 @@
 import React,{useState} from 'react';
 import {StyleSheet, View,Alert} from 'react-native';
-import {store} from '../../../../Downloads/finals_project-algo/client/state/state'
+import {store} from '../state/state'
 import {
     Input,
     NativeBaseProvider,
@@ -13,7 +13,7 @@ import {
     Select, CheckIcon,Text,extendTheme
 } from 'native-base';
 import AdministratorScreen from "./AdministratortScreen";
-import api from "../../../../Downloads/finals_project-algo/client/api";
+import api from "../api";
 
 const ChangeParamAdministratorScreen = (props) => {
     const [agent,setAgent] = useState(undefined)

@@ -1,6 +1,6 @@
 import React,{useState} from 'react';
 import {Alert, StyleSheet, View} from 'react-native';
-import createApiClient from '../../../../Downloads/finals_project-algo/client/api';
+import createApiClient from '../api';
 import {
     Input,
     NativeBaseProvider,

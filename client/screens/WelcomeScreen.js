@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet } from 'react-native';
-const cardImage = require('../../../../Downloads/finals_project-algo/client/assets/photos/letsStart.jpg')
+const cardImage = require('../assets/photos/letsStart.jpg')
 import {
     NativeBaseProvider,
     Heading,

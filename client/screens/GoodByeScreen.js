@@ -9,7 +9,7 @@ import {
 } from 'native-base';
 import uuid from 'react-native-uuid';
 
-import api from "../../../../Downloads/finals_project-algo/client/api";
+import api from "../api";
 export default function GoodByeScreen() {
     const [textAreaValue, setTextAreaValue] = useState('')
     const [isDone,setIsDone] = useState(false)

@@ -11,7 +11,7 @@ import {
     Button,
     Select, CheckIcon, Text
 } from 'native-base';
-import api from "../../../../Downloads/finals_project-algo/client/api";
+import api from "../api";
 import uuid from 'react-native-uuid';
 
 const RegisterScreen = (props) => {

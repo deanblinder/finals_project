@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet} from 'react-native';
 import{View} from 'react-native-ui-lib'
 import {Center, Heading, SectionList,NativeBaseProvider,Text,Button} from "native-base";
-import AdministratorScreen from "./AdministratortScreen";
+import AdministratorScreen from "../screens/AdministratortScreen";
 
 export const Guidelines = () => {
     const data = [

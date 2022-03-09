@@ -1,9 +1,9 @@
 import React, {useEffect, useState,useRef} from 'react';
 import { StyleSheet, View,TouchableOpacity,Animated} from 'react-native';
 import {Circle, NativeBaseProvider, Button, Heading, createIcon, Center, Avatar,Pressable,Text} from 'native-base';
-import {store} from '../../../../Downloads/finals_project-algo/client/state/state'
+import {store} from '../state/state'
 import AdministratorScreen from "./AdministratortScreen";
-import api from "../../../../Downloads/finals_project-algo/client/api";
+import api from "../api";
 
 const GamePlayScreen = (props) =>{
     const fadeAnim = useRef(new Animated.Value(1)).current;
