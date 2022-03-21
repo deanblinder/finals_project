@@ -21,9 +21,7 @@ const AdministratorScreen = (props) => {
     const [showError, setShowError] = useState(false)
     const onNextPress  = async () => {
         let response;
-        console.log('1---')
         if (username && password) {
-            console.log('---')
             // response = await api.administratorLogin(username, password);
             // console.log('status: ',response)
             // console.log(status)
@@ -61,7 +59,7 @@ const AdministratorScreen = (props) => {
                                 <View style={{margin:10,textAlign:'right',justifyContent: 'space-between'}}>
                                     <Text style={{textAlign:'right'}}>שם משתמש</Text>
                                 </View>
-                                <Input style={styles.input} onChangeText={(text)=>{setUsername(text)}} type="email" defaultValue="" placeholder="שם משתמש" />
+                                <Input style={{...styles.input, textAlign:'right'}} onChangeText={(text)=>{setUsername(text)}} type="email" defaultValue="" placeholder="שם משתמש" />
                                 <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>
                                     Atleast 6 characters are required.
                                 </FormControl.ErrorMessage>

@@ -3,7 +3,9 @@ import * as remx from 'remx';
 const initialState = {
     agentType: 0,
     avgOff:3,
-    gameTime:30
+    gameTime:30,
+    latency:0,
+    gitter:0,
 };
 
 const setters = remx.setters({
@@ -16,6 +18,15 @@ const setters = remx.setters({
     setGameTime(gameTime) {
         state.gameTime = gameTime;
     },
+    setExperimentType(experimentType) {
+        state.experimentType = experimentType;
+    },
+    setLatency(latency) {
+        state.latency = latency;
+    },
+    setGitter(gitter) {
+        state.gitter = gitter;
+    },
 });
 
 const getters = remx.getters({
@@ -26,7 +37,17 @@ const getters = remx.getters({
         return state.avgOff;
     },
     getGameTime() {
-        return state.gameTime;    },
+        return state.gameTime;
+        },
+    getExperimentType() {
+        return state.experimentType;
+    },
+    getLatency() {
+        return state.latency;
+    },
+    getGitter() {
+        return state.gitter;
+    },
 });
 
 export const store = {

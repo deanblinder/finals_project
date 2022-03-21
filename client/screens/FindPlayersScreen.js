@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import {store} from '../../client/'
 import { StyleSheet} from 'react-native';
 import {
     NativeBaseProvider,
@@ -10,6 +9,7 @@ import {
     Button, Select, CheckIcon
 } from 'native-base';
 import AdministratorScreen from "./AdministratortScreen";
+import {store} from "../state/state";
 
 const FindPlayersScreen = (props) => {
 
@@ -20,7 +20,13 @@ const FindPlayersScreen = (props) => {
         }, 2000);
     });
     const press = () =>{
-        props.navigation.navigate({routeName:'Play'})
+        if (store.getExperimentType() === 'followerLeader'){
+            props.navigation.navigate({routeName:'LeaderFollowerPlay'})
+        }
+        else {
+            props.navigation.navigate({routeName:'LatencyPlay'})
+        }
+
     }
     return (
         <NativeBaseProvider>
