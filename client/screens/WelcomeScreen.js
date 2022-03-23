@@ -32,7 +32,7 @@ const WelcomeScreen = (props) => {
                     </View>
                 <View style={{flexDirection:'row',justifyContent:'space-between'}}>
                     <Button size={"lg"} style={{width:'45%',textAlign: 'right'}} onPress={onStartAdministrator}>כניסת מנהל מערכת</Button>
-                    <Button size={"lg"} style={{width:'45%',textAlign: 'right'}} onPress={onStartPress}>כניסת משתמש</Button>
+                    <Button size={"lg"} style={{width:'45%',textAlign: 'right'}} onPress={onStartPress}>המשך להוראות</Button>
                 </View>
 
             </View>

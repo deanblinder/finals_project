@@ -17,7 +17,7 @@ const FindPlayersScreen = (props) => {
     useEffect(() => {
         setTimeout(() => {
             setLoading(false)
-        }, 2000);
+        }, (Math.floor(Math.random() * 5)+1)*1000);
     });
     const press = () =>{
         if (store.getExperimentType() === 'followerLeader'){
@@ -40,7 +40,7 @@ const FindPlayersScreen = (props) => {
                             </Heading>
                     </View>: <View>
                         <Heading color="primary.500" fontSize="4xl">
-                        מצא!
+                        נמצא משתתף מרוחק
                     </Heading></View>}
                 </HStack>
             </View>
@@ -48,7 +48,7 @@ const FindPlayersScreen = (props) => {
             <View>
                 {!isLoading ?
                         <View>
-                            <Button onPress={press}>שחק</Button>
+                            <Button onPress={press}>התחל ניסוי</Button>
                         </View>
                     : null}
             </View>
@@ -59,8 +59,8 @@ const FindPlayersScreen = (props) => {
 
 FindPlayersScreen.navigationOptions = navigationData =>{
     return{
-        title: '',
-        // headerTitleAlign: 'center'
+        title: 'חיפוש משתתף',
+        headerTitleAlign: 'center'
         // headerTitleStyle: 'open-sans',
     }
 }

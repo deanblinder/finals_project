@@ -115,7 +115,7 @@ const QuestionnaireScreen =(props) => {
                         md: "40%",}}
                     totalLines={10}
                 />
-            {!(qDict.questionOne && qDict.questionTwo && qDict.questionThree && qDict.questionFour && qDict.questionFive && qDict.questionSix && textAreaValue) &&
+            {!(qDict.questionOne && qDict.questionTwo && qDict.questionThree && qDict.questionFour && qDict.questionFive && qDict.questionSix && qDict.questionSeven) &&
                 <View>
                         <Text fontSize={'lg'} style={{textAlign:'center',color: 'red'}}>נא הכנס את כל הפרטים</Text>
                 </View>
