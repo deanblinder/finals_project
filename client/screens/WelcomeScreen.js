@@ -26,7 +26,9 @@ const WelcomeScreen = (props) => {
                         height={400}
                     />
                     <View style={styles.TextContainer}>
-                            <Heading size={"lg"} style={{textAlign: 'right'}} >ברוך הבא לניסוי פעולה משותפת מרחוק</Heading>
+                            <Heading size={"md"} style={{textAlign: 'right'}} >ברוך הבא לניסוי פעולה משותפת מרחוק.</Heading>
+                            <Heading size={"md"} style={{textAlign: 'right'}} >בניסוי תפעלו יחד עם שלושה משתתפים מרוחקים, דרך הטלפון. </Heading>
+                            <Heading size={"md"} style={{textAlign: 'right'}} >אנא קראו את ההוראות בתשומת לב לפני שתתחילו. </Heading>
                     </View>
                 <View style={{flexDirection:'row',justifyContent:'space-between'}}>
                     <Button size={"lg"} style={{width:'45%',textAlign: 'right'}} onPress={onStartAdministrator}>כניסת מנהל מערכת</Button>
