@@ -38,6 +38,9 @@ app.use("/admin", admin);
 const agents = require("./routes/agents");
 app.use("/agents", agents);
 
+const params = require("./routes/params");
+app.use("/params", params);
+
 const errors = require("./routes/errors");
 app.use("/errors", errors);
 

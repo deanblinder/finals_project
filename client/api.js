@@ -33,6 +33,15 @@ const createApiClient = () => {
         changeAgentParams:(agent,latency,variance)=>{
             return axios.post(`http://10.0.2.2:3232/agents/updateAgentByAgentType/${agent}/${latency}/${variance}`).then((res) => res);
         },
+        getParamValue:(paramName)=>{
+            return axios.post(`http://10.0.2.2:3232/params/getParamValue/${paramName}`).then((res) => res);
+        },
+        getAllParamsValue:()=>{
+            return axios.post(`http://10.0.2.2:3232/params/getAllParamsValue`).then((res) => res);
+        },
+        changeParamValue:(paramName,value)=>{
+            return axios.post(`http://10.0.2.2:3232/params/updateParamValue/${paramName}/${value}`).then((res) => res);
+        },
         registerPlayer:(mail,age,gender,deviceUid,version)=>{
             return axios.post(`http://10.0.2.2:3232/users/addUser/${mail}/${age}/${gender}/${deviceUid}/${version}`).then((res) => res);
         },
