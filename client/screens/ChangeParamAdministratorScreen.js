@@ -155,6 +155,15 @@ const ChangeParamAdministratorScreen = (props) => {
 
     }
 
+    const chooseParamScreen = (value) => {
+        if(value === 'followerLeader'){
+            onPickFollowerLeaderExperiment()
+        }
+        else{
+            onPickLatencyExperiment()
+        }
+    }
+
     return (
         <NativeBaseProvider>
             <View style={styles.container}>
@@ -183,7 +192,7 @@ const ChangeParamAdministratorScreen = (props) => {
                                             startIcon: <CheckIcon size={5} />,
                                         }}
                                         mt="1"
-                                        onValueChange={(value) => store.setExperimentType(value)}
+                                        onValueChange={(value) => chooseParamScreen(value)}
                                 >
                                     <Select.Item label="מוביל מובל" value="followerLeader" onValueChange={() => onPickFollowerLeaderExperiment()}/>
                                     <Select.Item label="עכבה" value="latency" onValueChange={() => onPickLatencyExperiment()}/>
