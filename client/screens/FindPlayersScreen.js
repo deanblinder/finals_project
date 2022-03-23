@@ -36,7 +36,7 @@ const FindPlayersScreen = (props) => {
                     {isLoading ? <View>
                         <Spinner size="lg" accessibilityLabel="Loading posts" />
                             <Heading color="primary.500" fontSize="md">
-                                מחפש שחקן
+                                מחפש משתתפ/ת מרוחק/ת....
                             </Heading>
                     </View>: <View>
                         <Heading color="primary.500" fontSize="4xl">

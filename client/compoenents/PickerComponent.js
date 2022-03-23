@@ -4,7 +4,7 @@ import{View,Text} from 'react-native-ui-lib'
 import {Checkbox, FormControl, WarningOutlineIcon} from "native-base";
 
 
-const GuidelineComponent = (props) => {
+const PickerComponent = (props) => {
 
     const [rate, setRate] = useState(undefined)
     const onChangeBox = (val) => {
@@ -41,6 +41,11 @@ const GuidelineComponent = (props) => {
                         4
                     </Checkbox>
                 </View>
+                <View>
+                    <Checkbox isDisabled={rate && rate !== '5'} onChange={()=>onChangeBox('5')} value="5" my="1">
+                        5
+                    </Checkbox>
+                </View>
                 <Text style={{margin: 10}}>במידה רבה</Text>
             </View>
         // </View>
@@ -50,4 +55,4 @@ const GuidelineComponent = (props) => {
 // const styles = StyleSheet.create({
 //
 // });
-export default GuidelineComponent
+export default PickerComponent

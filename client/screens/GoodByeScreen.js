@@ -25,10 +25,12 @@ export default function GoodByeScreen() {
             {!isDone ? <View style={styles.container}>
                     <View>
                         <View style={{marginBottom:20}}>
-                            <Heading  style={{textAlign:'right'}} size='lg'>תודה על השתתפותך</Heading>
+                            <Heading  style={{textAlign:'right'}} size='lg'>תודה רבה על ההשתתפות בניסוי. </Heading>
                         </View>
                         <View style={{marginBottom:40}}>
-                            <Heading  style={{textAlign:'right'}} size='sm'>נשמח לשמוע על תחושותיך במהלך הניסוי</Heading>
+                            <Heading  style={{textAlign:'right'}} size='sm'>אם תרצי/ה, נשמח לשמוע אם תרצי לומר דבר מה על תחושותיך במהלך הניסוי.
+                                אנא כתב/י כאן:
+                            </Heading>
                         </View>
                         <TextArea
                             value={textAreaValue}
