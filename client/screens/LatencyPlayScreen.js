@@ -56,23 +56,25 @@ const LeaderFollowerPlayScreen = (props) =>{
     // }
     const agentPress = () => {
         let timeStamp = new Date().getTime()
-        let currTime = new Date().getTime()
+        // let currTime = new Date().getTime()
         console.log("timeStamp: ", timeStamp)
-        console.log("currTime: ",  currTime)
-        console.log("playerTimeStamp: ",  playerTimeStamp)
-        console.log("diff: ", currTime - playerTimeStamp)
-        if(currTime - playerTimeStamp >= MAX_DIFFERENCE_TIME) {
+        // console.log("currTime: ",  currTime)
+        console.log("playerTimeStamp: ", playerTimeStamp)
+        console.log("diff: ", timeStamp - playerTimeStamp)
+        if (timeStamp - playerTimeStamp >= MAX_DIFFERENCE_TIME) {
             console.log("in if")
             clearInterval(intervalID.current)
             clearInterval(intervalID2.current)
+            intervalID= 0
+            intervalID2 = 0
             console.log("in if after")
 
-        }else {
+        } else {
             agentButtonFadeOut()
             setTimeout(() => {
                 agentButtonFadeIn()
             }, 250)
-            }
+        }
             setAgentTimeStampArr([...agentTimeStampArr, timeStamp])
             let diffBetweenPresses
             if (numberOfAgentPresses >= 2) {
@@ -104,10 +106,11 @@ const LeaderFollowerPlayScreen = (props) =>{
             setNumberOfAgentPresses(numberOfAgentPresses + 1)
         }
 
+
     const playerPress = () => {
         // console.log("in player pess")
         let timeStamp = new Date().getTime()
-        setPlayerTimeStamp(timeStamp)
+        setPlayerTimeStamp(new Date().getTime())
         let percent = 0.5
         playerButtonFadeOut()
         setTimeout(() => {
@@ -128,9 +131,9 @@ const LeaderFollowerPlayScreen = (props) =>{
                 rndGitter = rndGitter*-1
             }
             const LatencyGitter = ((linsteningLevel + latency) + rndGitter)
-            console.log("rndGitter: ", rndGitter)
-            console.log("linsteningLevel: ", linsteningLevel)
-            console.log("LatencyGitter: ", LatencyGitter)
+            // console.log("rndGitter: ", rndGitter)
+            // console.log("linsteningLevel: ", linsteningLevel)
+            // console.log("LatencyGitter: ", LatencyGitter)
             // setLinsteningLevel(LatencyGitter)
             let timeStamp2 = new Date().getTime()
             let timePassed = timeStamp2 - timeStamp
