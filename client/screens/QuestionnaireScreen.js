@@ -1,5 +1,5 @@
 import React,{useState} from 'react';
-import { StyleSheet} from 'react-native';
+import {ScrollView, StyleSheet} from 'react-native';
 import {
     NativeBaseProvider,
     Button,
@@ -13,15 +13,16 @@ import uuid from "react-native-uuid";
 // import GuidelineComponent from "../compoenents/GuidelineComponent";
 
 const QuestionnaireScreen =(props) => {
+    const [textAreaValue, setTextAreaValue] = useState('')
     let [qDict, setQDict] = useState({
         questionOne:undefined,
         questionTwo:undefined,
         questionThree:undefined,
         questionFour:undefined,
         questionFive:undefined,
-        questionSix:undefined
+        questionSix:undefined,
+        questionSeven:''
     })
-    const [textAreaValue, setTextAreaValue] = useState('')
 
     const sendRating1 = (rating) => {
         const tempQDict = qDict
@@ -53,20 +54,27 @@ const QuestionnaireScreen =(props) => {
     const sendRating5 = (rating) => {
         const tempQDict = qDict
         console.log(tempQDict)
-        tempQDict.questionFour=rating
+        tempQDict.questionFive=rating
         setQDict(tempQDict)
     }
     const sendRating6 = (rating) => {
         const tempQDict = qDict
         console.log(tempQDict)
-        tempQDict.questionFour=rating
+        tempQDict.questionSix=rating
+        setQDict(tempQDict)
+    }
+    const sendText7 = (text) => {
+        setTextAreaValue(text)
+        const tempQDict = qDict
+        console.log(tempQDict)
+        tempQDict.questionSeven=textAreaValue
         setQDict(tempQDict)
     }
 
     const onNextPress = () =>{
         console.log(qDict)
         //send Qdict
-        if (qDict.questionOne && qDict.questionTwo && qDict.questionThree && qDict.questionFour && qDict.questionFive && qDict.questionSix && textAreaValue){
+        if (qDict.questionOne && qDict.questionTwo && qDict.questionThree && qDict.questionFour && qDict.questionFive && qDict.questionSix && qDict.questionSeven){
             const deviceUUID = uuid.v4()
             // api.sendQuestionnaireAnswers(qDict,deviceUUID) // send user id,
             props.navigation.navigate({routeName:'GoodBye'});
@@ -74,6 +82,7 @@ const QuestionnaireScreen =(props) => {
     }
     return (
         <NativeBaseProvider>
+            <ScrollView>
             <View style={styles.container}>
                 <Heading size={"md"}>אנא מלא את השאלון</Heading>
                 <Text style={{ paddingTop: 20}}> 1. באיזה מידה התרכזת במשימה?</Text>
@@ -97,14 +106,14 @@ const QuestionnaireScreen =(props) => {
                 <Text  style={{paddingTop:15}} >7. תאר/י בכמה מילים את חוווית המשחק מול משתתפ/ת 1  </Text>
                 <TextArea
                     value={textAreaValue}
-                    onChangeText={(text)=>{setTextAreaValue(text)}}
+                    onChangeText={(text)=>{sendText7(text)}}
                     // numberOfLines={10}
                     // h={100}
                     placeholder="מלא כאן"
                     w={{
                         base: "100%",
                         md: "40%",}}
-                    totalLines={1}
+                    totalLines={10}
                 />
             {!(qDict.questionOne && qDict.questionTwo && qDict.questionThree && qDict.questionFour && qDict.questionFive && qDict.questionSix && textAreaValue) &&
                 <View>
@@ -113,6 +122,7 @@ const QuestionnaireScreen =(props) => {
                 }
                 <Button onPress={onNextPress}>המשך</Button>
             </View>
+            </ScrollView>
         </NativeBaseProvider>
     );
 }
