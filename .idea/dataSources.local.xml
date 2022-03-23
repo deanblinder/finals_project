@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="dataSourceStorageLocal" created-in="WS-213.6777.57">
-    <data-source name="syncproject.database.windows.net" uuid="4d16f223-062d-4033-99ff-4f1fd94f167e">
+    <data-source name="syncproject.database.windows.net" uuid="8bec1a53-67d0-4db8-b04b-4c8f6c01feed">
       <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="AZURE" exact-version="0" />
-      <secret-storage>master_key</secret-storage>
-      <user-name>syncAdmin</user-name>
       <schema-mapping />
     </data-source>
   </component>

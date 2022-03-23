@@ -5,7 +5,7 @@ const initialState = {
     agentType: 0,
     avgOff:3,
     gameTime:30,
-    latency:0,
+    latency:10,
     gitter:0,
 };
 

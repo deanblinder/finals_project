@@ -34,6 +34,8 @@ const LeaderFollowerPlayScreen = (props) =>{
         setTimeout(() => {
             clearInterval(intervalID.current)
             clearInterval(intervalID2.current)
+            intervalID = 0  //DONT DELETE : GEP IT FROM CONTINUE
+            intervalID2 = 0 //DONT DELETE : GEP IT FROM CONTINUE
             setLoading(false)
         }, parseInt(store.getGameTime())*1000);
 
@@ -57,17 +59,17 @@ const LeaderFollowerPlayScreen = (props) =>{
     const agentPress = () => {
         let timeStamp = new Date().getTime()
         // let currTime = new Date().getTime()
-        console.log("timeStamp: ", timeStamp)
+        // console.log("timeStamp: ", timeStamp)
         // console.log("currTime: ",  currTime)
-        console.log("playerTimeStamp: ", playerTimeStamp)
-        console.log("diff: ", timeStamp - playerTimeStamp)
+        // console.log("playerTimeStamp: ", playerTimeStamp)
+        // console.log("diff: ", timeStamp - playerTimeStamp)
         if (timeStamp - playerTimeStamp >= MAX_DIFFERENCE_TIME) {
-            console.log("in if")
+            // console.log("in if")
             clearInterval(intervalID.current)
             clearInterval(intervalID2.current)
-            intervalID= 0
-            intervalID2 = 0
-            console.log("in if after")
+            intervalID= 0   //DONT DELETE : GEP IT FROM CONTINUE
+            intervalID2 = 0  //DONT DELETE : GEP IT FROM CONTINUE
+            // console.log("in if after")
 
         } else {
             agentButtonFadeOut()
@@ -75,35 +77,34 @@ const LeaderFollowerPlayScreen = (props) =>{
                 agentButtonFadeIn()
             }, 250)
         }
-            setAgentTimeStampArr([...agentTimeStampArr, timeStamp])
-            let diffBetweenPresses
-            if (numberOfAgentPresses >= 2) {
-                // let currTime = new Date().getTime()
-                // console.log("timeStamp: ", timeStamp)
-                // console.log("currTime: ",  currTime)
-                // console.log("playerTimeStamp: ",  playerTimeStamp)
-                // console.log("diff: ", currTime - playerTimeStamp)
-                // if(currTime - playerTimeStamp >= MAX_DIFFERENCE_TIME) {
-                //     console.log("in if")
-                //     clearInterval(intervalID.current)
-                //     clearInterval(intervalID2.current)
-                //     intervalID = 0
-                //     intervalID2 = 0
-                //     console.log("in if after")
-                //
-                // }
-                // differenceBetweenPressTime()
-                // console.log("timeStamp: ", timeStamp)
-                // console.log("currTime: ",  currTime)
-                // console.log("playerTimeStamp: ",  playerTimeStamp)
+        setAgentTimeStampArr([...agentTimeStampArr, timeStamp])
+        let diffBetweenPresses
+        if (numberOfAgentPresses >= 2) {
+            // let currTime = new Date().getTime()
+            // console.log("timeStamp: ", timeStamp)
+            // console.log("currTime: ",  currTime)
+            // console.log("playerTimeStamp: ",  playerTimeStamp)
+            // console.log("diff: ", currTime - playerTimeStamp)
+            // if(currTime - playerTimeStamp >= MAX_DIFFERENCE_TIME) {
+            //     console.log("in if")
+            //     clearInterval(intervalID.current)
+            //     clearInterval(intervalID2.current)
+            //     intervalID = 0
+            //     intervalID2 = 0
+            //     console.log("in if after")
+            // }
+            // differenceBetweenPressTime()
+            // console.log("timeStamp: ", timeStamp)
+            // console.log("currTime: ",  currTime)
+            // console.log("playerTimeStamp: ",  playerTimeStamp)
 
-                diffBetweenPresses = agentTimeStampArr[agentTimeStampArr.length - 1] - agentTimeStampArr[agentTimeStampArr.length - 2]
-                setAgentDiffPressArr([...agentDiffPressArr, diffBetweenPresses])
-                let sumOfAgentDiffPressArr = mySum(agentDiffPressArr, parseInt(store.getAvgOff()));
-                setAvgAgentPresses(sumOfAgentDiffPressArr / parseInt(store.getAvgOff()))
-            }
+            diffBetweenPresses = agentTimeStampArr[agentTimeStampArr.length - 1] - agentTimeStampArr[agentTimeStampArr.length - 2]
+            setAgentDiffPressArr([...agentDiffPressArr, diffBetweenPresses])
+            let sumOfAgentDiffPressArr = mySum(agentDiffPressArr, parseInt(store.getAvgOff()));
+            setAvgAgentPresses(sumOfAgentDiffPressArr / parseInt(store.getAvgOff()))
+        }
 
-            setNumberOfAgentPresses(numberOfAgentPresses + 1)
+        setNumberOfAgentPresses(numberOfAgentPresses + 1)
         }
 
 
