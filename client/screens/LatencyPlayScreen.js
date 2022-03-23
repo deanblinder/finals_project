@@ -55,37 +55,55 @@ const LeaderFollowerPlayScreen = (props) =>{
     //     }
     // }
     const agentPress = () => {
-        agentButtonFadeOut()
-        setTimeout(() => {
-            agentButtonFadeIn()
-        }, 250)
         let timeStamp = new Date().getTime()
-        setAgentTimeStampArr([...agentTimeStampArr,timeStamp])
-        let diffBetweenPresses
-        if (numberOfAgentPresses >= 2){
-            let currTime = new Date().getTime()
-            console.log("diff: ", currTime - playerTimeStamp)
-            if(currTime - playerTimeStamp >= MAX_DIFFERENCE_TIME) {
-                console.log("in if")
-                clearInterval(intervalID.current)
-                clearInterval(intervalID2.current)
-                console.log("in if after")
+        let currTime = new Date().getTime()
+        console.log("timeStamp: ", timeStamp)
+        console.log("currTime: ",  currTime)
+        console.log("playerTimeStamp: ",  playerTimeStamp)
+        console.log("diff: ", currTime - playerTimeStamp)
+        if(currTime - playerTimeStamp >= MAX_DIFFERENCE_TIME) {
+            console.log("in if")
+            clearInterval(intervalID.current)
+            clearInterval(intervalID2.current)
+            console.log("in if after")
 
+        }else {
+            agentButtonFadeOut()
+            setTimeout(() => {
+                agentButtonFadeIn()
+            }, 250)
             }
-            // differenceBetweenPressTime()
-            // console.log("timeStamp: ", timeStamp)
-            // console.log("currTime: ",  currTime)
-            // console.log("playerTimeStamp: ",  playerTimeStamp)
+            setAgentTimeStampArr([...agentTimeStampArr, timeStamp])
+            let diffBetweenPresses
+            if (numberOfAgentPresses >= 2) {
+                // let currTime = new Date().getTime()
+                // console.log("timeStamp: ", timeStamp)
+                // console.log("currTime: ",  currTime)
+                // console.log("playerTimeStamp: ",  playerTimeStamp)
+                // console.log("diff: ", currTime - playerTimeStamp)
+                // if(currTime - playerTimeStamp >= MAX_DIFFERENCE_TIME) {
+                //     console.log("in if")
+                //     clearInterval(intervalID.current)
+                //     clearInterval(intervalID2.current)
+                //     intervalID = 0
+                //     intervalID2 = 0
+                //     console.log("in if after")
+                //
+                // }
+                // differenceBetweenPressTime()
+                // console.log("timeStamp: ", timeStamp)
+                // console.log("currTime: ",  currTime)
+                // console.log("playerTimeStamp: ",  playerTimeStamp)
 
+                diffBetweenPresses = agentTimeStampArr[agentTimeStampArr.length - 1] - agentTimeStampArr[agentTimeStampArr.length - 2]
+                setAgentDiffPressArr([...agentDiffPressArr, diffBetweenPresses])
+                let sumOfAgentDiffPressArr = mySum(agentDiffPressArr, parseInt(store.getAvgOff()));
+                setAvgAgentPresses(sumOfAgentDiffPressArr / parseInt(store.getAvgOff()))
+            }
 
-            diffBetweenPresses = agentTimeStampArr[agentTimeStampArr.length-1]-agentTimeStampArr[agentTimeStampArr.length-2]
-            setAgentDiffPressArr([...agentDiffPressArr,diffBetweenPresses])
-            let sumOfAgentDiffPressArr = mySum(agentDiffPressArr,parseInt(store.getAvgOff()));
-            setAvgAgentPresses(sumOfAgentDiffPressArr/parseInt(store.getAvgOff()))
+            setNumberOfAgentPresses(numberOfAgentPresses + 1)
         }
 
-        setNumberOfAgentPresses(numberOfAgentPresses+1)
-    }
     const playerPress = () => {
         // console.log("in player pess")
         let timeStamp = new Date().getTime()
