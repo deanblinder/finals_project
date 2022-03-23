@@ -102,6 +102,7 @@ const LeaderFollowerPlayScreen = (props) =>{
             }
         }
         setNumberOfPresses(numberOfPresses +1)
+        console.log("numberOfPresses", numberOfPresses)
 
     }
 
@@ -180,7 +181,9 @@ const LeaderFollowerPlayScreen = (props) =>{
                         }
                     ]}
                 >
-                    <View style={styles.playerButton}></View>
+                    <View style={styles.playerButton}>
+                        <Text style={{textAlign: 'center',fontSize:20,color:'black',justifyContent:'center'}}>אני</Text>
+                    </View>
                 </Animated.View>
             </Pressable>
         )
@@ -210,7 +213,7 @@ const LeaderFollowerPlayScreen = (props) =>{
 
 LeaderFollowerPlayScreen.navigationOptions = navigationData =>{
     return{
-        title: 'game',
+        title: 'Leader-Follower Game',
         headerTitleAlign: 'center'
     }
 }
@@ -244,6 +247,7 @@ const styles = StyleSheet.create({
         borderRadius: (150 / 2),
         width: 150,
         height: 150,
+        textAlign:'center'
     },
     agentButton: {
         backgroundColor: '#ff7f50',

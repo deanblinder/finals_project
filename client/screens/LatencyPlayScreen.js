@@ -20,10 +20,13 @@ const LeaderFollowerPlayScreen = (props) =>{
     let [intervalID2,setMyInterval2] = useState(null)
     let [isIntervalID,setIsIntervalID] = useState(true)
     let [numberOfAgentPresses,setNumberOfAgentPresses] = useState(false)
-    let [linsteningLevel,setLinsteningLevel] = useState(0)
+    // let [linsteningLevel,setLinsteningLevel] = useState(0)
     let [gitter,setGitter] = useState(0)
     let [latency,setLatency] = useState(0)
+    let [playerTimeStamp, setPlayerTimeStamp] = useState(0)
+    let [agentTimeStamp, setAgentTimeStamp] = useState(0)
     let sumOfPlayerDiffPressArr = 0
+    const MAX_DIFFERENCE_TIME = 5000
     useEffect(() => {
         setLatency(store.getLatency())
         setGitter(store.getGitter())
@@ -41,15 +44,40 @@ const LeaderFollowerPlayScreen = (props) =>{
     const playAgain = () => {
         props.navigation.navigate({routeName:'FindPlayer'});
     }
+    // const differenceBetweenPressTime = () =>{
+    //     // console.log("playerTimeStamp",playerTimeStamp/1000)
+    //     // console.log("agentTimeStamp",agentTimeStamp/1000)
+    //     console.log("diff: ", agentTimeStamp - playerTimeStamp)
+    //
+    //     if(agentTimeStamp - playerTimeStamp >= MAX_DIFFERENCE_TIME){
+    //         clearInterval(intervalID)
+    //         clearInterval(intervalID2)
+    //     }
+    // }
     const agentPress = () => {
         agentButtonFadeOut()
         setTimeout(() => {
             agentButtonFadeIn()
         }, 250)
         let timeStamp = new Date().getTime()
+        setAgentTimeStamp(timeStamp)
         setAgentTimeStampArr([...agentTimeStampArr,timeStamp])
         let diffBetweenPresses
         if (numberOfAgentPresses >= 2){
+            // differenceBetweenPressTime()
+            let currTime = new Date().getTime()
+            console.log("timeStamp: ", timeStamp)
+            console.log("currTime: ",  currTime)
+            console.log("playerTimeStamp: ",  playerTimeStamp)
+            console.log("diff: ", currTime - playerTimeStamp)
+            if(currTime - playerTimeStamp >= MAX_DIFFERENCE_TIME){
+                console.log("in if")
+
+                clearInterval(intervalID)
+                clearInterval(intervalID2)
+
+            }
+
             diffBetweenPresses = agentTimeStampArr[agentTimeStampArr.length-1]-agentTimeStampArr[agentTimeStampArr.length-2]
             setAgentDiffPressArr([...agentDiffPressArr,diffBetweenPresses])
             let sumOfAgentDiffPressArr = mySum(agentDiffPressArr,parseInt(store.getAvgOff()));
@@ -58,7 +86,9 @@ const LeaderFollowerPlayScreen = (props) =>{
         setNumberOfAgentPresses(numberOfAgentPresses+1)
     }
     const playerPress = () => {
+        // console.log("in player pess")
         let timeStamp = new Date().getTime()
+        setPlayerTimeStamp(timeStamp)
         let percent = 0.5
         playerButtonFadeOut()
         setTimeout(() => {
@@ -66,6 +96,7 @@ const LeaderFollowerPlayScreen = (props) =>{
         }, 250)
         setPlayerTimeStampArr([...playerTimeStampArr, timeStamp])
         let diffBetweenPresses
+        console.log("type of :",  typeof (numberOfPresses))
         if (numberOfPresses > 2) {
             diffBetweenPresses = playerTimeStampArr[playerTimeStampArr.length - 1] - playerTimeStampArr[playerTimeStampArr.length - 2]
             setPlayerDiffPressArr([...playerDiffPressArr, diffBetweenPresses])
@@ -79,26 +110,31 @@ const LeaderFollowerPlayScreen = (props) =>{
                 rndGitter = rndGitter*-1
             }
             const LatencyGitter = ((linsteningLevel + latency) + rndGitter)
-            setLinsteningLevel(LatencyGitter)
+            console.log("rndGitter: ", rndGitter)
+            console.log("linsteningLevel: ", linsteningLevel)
+            console.log("LatencyGitter: ", LatencyGitter)
+            // setLinsteningLevel(LatencyGitter)
             let timeStamp2 = new Date().getTime()
             let timePassed = timeStamp2 - timeStamp
             if (isIntervalID) {
-                setMyInterval2(setInterval(agentPress, linsteningLevel))
+                setMyInterval2(setInterval(agentPress, LatencyGitter))
                 setTimeout(() => {
                     clearInterval(intervalID)
                 }, (linsteningLevel - (timePassed-110)))
                 setIsIntervalID(!isIntervalID)
             } else {
 
-                setMyInterval(setInterval(agentPress, linsteningLevel))
+                setMyInterval(setInterval(agentPress, LatencyGitter))
                 setTimeout(() => {
                     clearInterval(intervalID2)
                 }, (linsteningLevel - (timePassed-110)))
                 setIsIntervalID(!isIntervalID)
             }
+            // console.log('end if')
         }
+        // console.log("outside the end if");
         setNumberOfPresses(numberOfPresses +1)
-
+        console.log(numberOfPresses)
     }
 
     const agentButtonFadeIn = () => {
@@ -175,7 +211,9 @@ const LeaderFollowerPlayScreen = (props) =>{
                         }
                     ]}
                 >
-                    <View style={styles.playerButton}></View>
+                    <View style={styles.playerButton}>
+                        <Text style={{textAlign: 'center',fontSize:20,color:'black'}}>אני</Text>
+                    </View>
                 </Animated.View>
             </Pressable>
         )
@@ -205,7 +243,7 @@ const LeaderFollowerPlayScreen = (props) =>{
 
 LeaderFollowerPlayScreen.navigationOptions = navigationData =>{
     return{
-        title: 'game',
+        title: 'Latency Game',
         headerTitleAlign: 'center'
     }
 }
