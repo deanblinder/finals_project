@@ -21,8 +21,9 @@ const ChangeParamAdministratorScreen = (props) => {
     const [latency,setLatency] = useState(undefined)
     const [gitter,setGitter] = useState(undefined)
     const [showError, setShowError] = useState(false)
-    const [experimentType, setExperimentType] = useState(undefined)
+    const [experimentType, setExperimentType] = useState('')
     const onConfirmationPress = () => {
+
         // if (agent && latency && variance){
         // if (true){
         //     console.log("--1-1-1--")
@@ -98,24 +99,13 @@ const ChangeParamAdministratorScreen = (props) => {
                     <Text style={{textAlign:'right'}}>זמן משחק</Text>
                 </View>
                 <Input style={{textAlign:'right'}} onChangeText={(time)=>{store.setGameTime(parseInt(time))}} type="number" defaultValue="" placeholder="הכנס זמן משחק בשניות" />
-                <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>
-                    Atleast 6 characters are required.
-                </FormControl.ErrorMessage>
-                <FormControl isRequired isInvalid={false}>
 
-                    <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>
-                        Please make a selection!
-                    </FormControl.ErrorMessage>
-                </FormControl>
             </View>
         )
     }
     const renderLatencyExperiment = () => {
         return(
             <View>
-                <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>
-                    Atleast 6 characters are required.
-                </FormControl.ErrorMessage>
                 <View style={{margin:10,textAlign:'right',justifyContent: 'space-between'}}>
                     <Text style={{textAlign:'right'}}>עכבה (ms)</Text>
                 </View>
@@ -124,6 +114,33 @@ const ChangeParamAdministratorScreen = (props) => {
                     <Text style={{textAlign:'right'}}>שונות (ms)</Text>
                 </View>
                 <Input style={{textAlign:'right'}} onChangeText={(val)=>{store.setGitter(parseInt(val))}} defaultValue="" type="number" placeholder="הכנס שונות" />
+                <View style={{margin:10,textAlign:'right',justifyContent: 'space-between'}}>
+                    <Text style={{textAlign:'right'}}>בחר ממוצע</Text>
+                </View>
+                <Select style={{textAlign:'right'}}
+                        minWidth="200"
+                        accessibilityLabel="Choose Service"
+                        placeholder="ממוצע של x לחיצות"
+                        _selectedItem={{
+                            bg: "teal.600",
+                            startIcon: <CheckIcon size={5} />,
+                        }}
+                        mt="1"
+                        onValueChange={(avg) => store.setAvgOf(parseInt(avg))}
+                >
+                    <Select.Item label="1" value="0" onValueChange={() => setAvg(0)}/>
+                    <Select.Item label="2" value="1" onValueChange={() => setAvg(1)}/>
+                    <Select.Item label="3" value="2" onValueChange={() => setAvg(2)}/>
+                    <Select.Item label="4" value="3" onValueChange={() => setAvg(3)}/>
+                    <Select.Item label="5" value="4" onValueChange={() => setAvg(4)}/>
+                    <Select.Item label="6" value="5" onValueChange={() => setAvg(5)}/>
+                </Select>
+                <View style={{margin:10,textAlign:'right',justifyContent: 'space-between'}}>
+                    <Text style={{textAlign:'right'}}>זמן משחק</Text>
+                </View>
+                <Input style={{textAlign:'right'}} onChangeText={(time)=>{store.setGameTime(parseInt(time))}} type="number" defaultValue="" placeholder="הכנס זמן משחק בשניות" />
+
+
             </View>
         )
     }
@@ -166,7 +183,7 @@ const ChangeParamAdministratorScreen = (props) => {
                                             startIcon: <CheckIcon size={5} />,
                                         }}
                                         mt="1"
-                                        onValueChange={(value) => setExperimentType(value)}
+                                        onValueChange={(value) => store.setExperimentType(value)}
                                 >
                                     <Select.Item label="מוביל מובל" value="followerLeader" onValueChange={() => onPickFollowerLeaderExperiment()}/>
                                     <Select.Item label="עכבה" value="latency" onValueChange={() => onPickLatencyExperiment()}/>
