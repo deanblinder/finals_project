@@ -3,7 +3,7 @@ const bodyParser = require('body-parser')
 const app = express();
 
 const PORT = 3232;
-
+app.use(bodyParser({limit: '50mb'}));
 app.use(bodyParser.json());
 
 
@@ -37,6 +37,9 @@ app.use("/admin", admin);
 
 const agents = require("./routes/agents");
 app.use("/agents", agents);
+
+const params = require("./routes/params");
+app.use("/params", params);
 
 const errors = require("./routes/errors");
 app.use("/errors", errors);

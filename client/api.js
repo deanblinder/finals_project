@@ -26,21 +26,30 @@ const createApiClient = () => {
         //     }
         //     return axios.post(`http://172.20.10.3:3232/api/sendGameData`,data).then((res) => res.data);
         // }, v
-        administratorLogin: (username, password) => {
+        administratorLogin: async (username, password) => {
             console.log("in api administratorLogin");
-            return axios.get(`http://127.0.0.1:3232/admin/administratorLogin/${username}/${password}`).then((res) => res);
+            return await axios.get(`http://10.0.2.2:3232/admin/administratorLogin/${username}/${password}`).then((res) => res);
             },
         changeAgentParams:(agent,latency,variance)=>{
-            return axios.post(`http://127.0.0.1:3232/agents/updateAgentByAgentType/${agent}/${latency}/${variance}`).then((res) => res);
+            return axios.post(`http://10.0.2.2:3232/agents/updateAgentByAgentType/${agent}/${latency}/${variance}`).then((res) => res);
+        },
+        getParamValue:(paramName)=>{
+            return axios.post(`http://10.0.2.2:3232/params/getParamValue/${paramName}`).then((res) => res);
+        },
+        getAllParamsValue:()=>{
+            return axios.post(`http://10.0.2.2:3232/params/getAllParamsValue`).then((res) => res);
+        },
+        changeParamValue:(paramName,value)=>{
+            return axios.post(`http://10.0.2.2:3232/params/updateParamValue/${paramName}/${value}`).then((res) => res);
         },
         registerPlayer:(mail,age,gender,deviceUid,version)=>{
-            return axios.post(`http://127.0.0.1:3232/users/addUser/${mail}/${age}/${gender}/${deviceUid}/${version}`).then((res) => res);
+            return axios.post(`http://10.0.2.2:3232/users/addUser/${mail}/${age}/${gender}/${deviceUid}/${version}`).then((res) => res);
         },
         sendQuestionnaireAnswers:(qDict,agentType,deviceUid)=>{
-            return axios.post(`http://127.0.0.1:3232/userAnswers/addNewAnswer/${deviceUid}`,qDict).then((res) => res);
+            return axios.post(`http://10.0.2.2:3232/userAnswers/addNewAnswer/${deviceUid}`,qDict).then((res) => res);
         },
         sendFeedBack:(deviceUUID, feedBack)=>{
-            return axios.post(`http://127.0.0.1:3232/feedback/addFeedback/${deviceUUID}/${feedBack}`).then((res) => res);
+            return axios.post(`http://10.0.2.2:3232/feedback/addFeedback/${deviceUUID}/${feedBack}`).then((res) => res);
         },
         sendPressTimeStamp:(userId,actionOwner, pressTimeArr)=>{
             console.log(userId,actionOwner, pressTimeArr)

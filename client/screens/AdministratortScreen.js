@@ -21,15 +21,13 @@ const AdministratorScreen = (props) => {
     const [showError, setShowError] = useState(false)
     const onNextPress  = async () => {
         let response;
-        console.log('1---')
         if (username && password) {
-            console.log('---')
-            response = await api.administratorLogin(username, password);
-            console.log('status: ',response)
+            // response = await api.administratorLogin(username, password);
+            // console.log('status: ',response)
             // console.log(status)
         }
-        if (response.status === 200) {
-            // if (true){
+        // if (response .status === 200) {
+        if (true){
             props.navigation.navigate({routeName: 'ChangeParam'});
         } else {
             Alert.alert(
@@ -47,42 +45,42 @@ const AdministratorScreen = (props) => {
     }
     return (
         <NativeBaseProvider>
-        <View style={styles.container}>
-            <View style={{flex:1,justifyContent: 'center'}}>
-                <Heading style={{marginBottom:20}} size={"lg"}>הכנס פרטים</Heading>
-                <Box
-                    w={{
-                        base: "90%",
-                        md: "25%",
-                    }}
-                >
-                    <FormControl isRequired>
-                        <Stack mx="4">
-                            <View style={{margin:10,textAlign:'right',justifyContent: 'space-between'}}>
-                                <Text>שם משתמש</Text>
-                            </View>
-                            <Input style={{textAlign:'right'}} onChangeText={(text)=>{setUsername(text)}} type="email" defaultValue="" placeholder="שם משתמש" />
-                            <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>
-                                Atleast 6 characters are required.
-                            </FormControl.ErrorMessage>
-                            <View style={{margin:10}}>
-                                <Text>סיסמה</Text>
-                            </View>
-                            <Input style={{textAlign:'right'}} onChangeText={(text)=>{setPassword(text)}}  type="password" defaultValue="" placeholder="סיסמה" />
-                            <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>
-                                Atleast 6 characters are required.
-                            </FormControl.ErrorMessage>
-                        </Stack>
-                    </FormControl>
-                </Box>
-                {!(username && password) &&
-                    <View style={{marginBottom:10}}>
-                        <Text fontSize={'lg'} style={{textAlign:'center',color: 'red'}}>נא הכנס את כל הפרטים</Text>
-                    </View>}
-            </View>
+            <View style={styles.container}>
+                <View style={{flex:1,justifyContent: 'center'}}>
+                    <Heading style={{marginBottom:20,textAlign:'right'}} size={"lg"}>הכנס פרטים</Heading>
+                    <Box
+                        w={{
+                            base: "90%",
+                            md: "25%",
+                        }}
+                    >
+                        <FormControl isRequired>
+                            <Stack mx="4">
+                                <View style={{margin:10,textAlign:'right',justifyContent: 'space-between'}}>
+                                    <Text style={{textAlign:'right'}}>שם משתמש</Text>
+                                </View>
+                                <Input style={{...styles.input, textAlign:'right'}} onChangeText={(text)=>{setUsername(text)}} type="email" defaultValue="" placeholder="שם משתמש" />
+                                <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>
+                                    Atleast 6 characters are required.
+                                </FormControl.ErrorMessage>
+                                <View style={{margin:10}}>
+                                    <Text style={{textAlign:'right'}}>סיסמה</Text>
+                                </View>
+                                <Input style={{textAlign:'right'}} onChangeText={(text)=>{setPassword(text)}}  type="password" defaultValue="" placeholder="סיסמה" />
+                                <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>
+                                    Atleast 6 characters are required.
+                                </FormControl.ErrorMessage>
+                            </Stack>
+                        </FormControl>
+                    </Box>
+                    {!(username && password) &&
+                        <View style={{marginBottom:10}}>
+                            <Text fontSize={'lg'} style={{textAlign:'center',color: 'red'}}>נא הכנס את כל הפרטים</Text>
+                        </View>}
+                </View>
 
-            <Button onPress={onNextPress}>המשך</Button>
-        </View>
+                <Button onPress={onNextPress}>המשך</Button>
+            </View>
         </NativeBaseProvider>
     );
 }
@@ -100,5 +98,9 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'space-between'
     },
+    input:{
+        textAlign : 'center',
+
+    }
 });
 export default AdministratorScreen

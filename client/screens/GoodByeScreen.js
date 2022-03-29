@@ -25,10 +25,12 @@ export default function GoodByeScreen() {
             {!isDone ? <View style={styles.container}>
                     <View>
                         <View style={{marginBottom:20}}>
-                            <Heading size='lg'>תודה על השתתפותך</Heading>
+                            <Heading  style={{textAlign:'right'}} size='lg'>תודה רבה על ההשתתפות בניסוי. </Heading>
                         </View>
                         <View style={{marginBottom:40}}>
-                            <Heading size='sm'>נשמח לשמוע על תחושותיך במהלך הניסוי</Heading>
+                            <Heading  style={{textAlign:'right'}} size='sm'>אם תרצי/ה, נשמח לשמוע אם תרצי לומר דבר מה על תחושותיך במהלך הניסוי.
+                                אנא כתב/י כאן:
+                            </Heading>
                         </View>
                         <TextArea
                             value={textAreaValue}
@@ -44,8 +46,8 @@ export default function GoodByeScreen() {
                         />
                     </View>
                     <View style={{justifyContent:'space-between'}}>
-                    <Heading size='sm'>נשמח לשמוע ממך במייל זה: </Heading>
-                    <Heading size='sm'>test@gmail.com</Heading>
+                    <Heading style={{textAlign:'right'}} size='sm'>נשמח לשמוע ממך במייל זה: </Heading>
+                    <Heading style={{textAlign:'right'}} size='sm'>test@gmail.com</Heading>
                 </View>
                     <Button onPress={press}>סיים</Button>
             </View>:

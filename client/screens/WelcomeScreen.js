@@ -19,18 +19,20 @@ const WelcomeScreen = (props) => {
     }
     return (
         <NativeBaseProvider>
-            <View style={styles.Container}>
+            <View style={styles.Container} >
                     <Image
                         source={cardImage}
                         width={400}
                         height={400}
                     />
                     <View style={styles.TextContainer}>
-                            <Heading size={"lg"}>ברוך הבא לניסוי פעולה משותפת מרחוק</Heading>
+                            <Heading size={"md"} style={{textAlign: 'right'}} >ברוך הבא לניסוי פעולה משותפת מרחוק.</Heading>
+                            <Heading size={"md"} style={{textAlign: 'right'}} >בניסוי תפעלו יחד עם שלושה משתתפים מרוחקים, דרך הטלפון. </Heading>
+                            <Heading size={"md"} style={{textAlign: 'right'}} >אנא קראו את ההוראות בתשומת לב לפני שתתחילו. </Heading>
                     </View>
                 <View style={{flexDirection:'row',justifyContent:'space-between'}}>
-                    <Button size={"lg"} style={{width:'45%'}} onPress={onStartAdministrator}>כניסת מנהל מערכת</Button>
-                    <Button size={"lg"} style={{width:'45%'}} onPress={onStartPress}>כניסת משתמש</Button>
+                    <Button size={"lg"} style={{width:'45%',textAlign: 'right'}} onPress={onStartAdministrator}>כניסת מנהל מערכת</Button>
+                    <Button size={"lg"} style={{width:'45%',textAlign: 'right'}} onPress={onStartPress}>המשך להוראות</Button>
                 </View>
 
             </View>
@@ -39,7 +41,7 @@ const WelcomeScreen = (props) => {
 }
 WelcomeScreen.navigationOptions = navigationData =>{
     return{
-        title: 'ברוכים הבאיםםם',
+        title: 'ברוכים הבאים',
         headerTitleAlign: 'center'
     }
 }

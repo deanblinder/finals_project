@@ -6,9 +6,10 @@ import {
     HStack,
     Spinner,
     View,
-    Button
+    Button, Select, CheckIcon
 } from 'native-base';
 import AdministratorScreen from "./AdministratortScreen";
+import {store} from "../state/state";
 
 const FindPlayersScreen = (props) => {
 
@@ -16,10 +17,17 @@ const FindPlayersScreen = (props) => {
     useEffect(() => {
         setTimeout(() => {
             setLoading(false)
-        }, 2000);
+        }, (Math.floor(Math.random() * 5)+1)*1000);
     });
     const press = () =>{
-        props.navigation.navigate({routeName:'Play'})
+        if (store.getExperimentType() === 'followerLeader'){
+            props.navigation.navigate({routeName:'LeaderFollowerPlay'})
+        }
+        else {
+            props.navigation.navigate({routeName:'LatencyPlay'})
+        }
+        //     props.navigation.navigate({routeName:'Try'})
+
     }
     return (
         <NativeBaseProvider>
@@ -29,16 +37,21 @@ const FindPlayersScreen = (props) => {
                     {isLoading ? <View>
                         <Spinner size="lg" accessibilityLabel="Loading posts" />
                             <Heading color="primary.500" fontSize="md">
-                                מחפש שחקן
+                                מחפש משתתפ/ת מרוחק/ת....
                             </Heading>
                     </View>: <View>
                         <Heading color="primary.500" fontSize="4xl">
-                        מצא!
+                        נמצא משתתף מרוחק
                     </Heading></View>}
                 </HStack>
             </View>
+
             <View>
-                {!isLoading ? <Button onPress={press}>שחק</Button> : null}
+                {!isLoading ?
+                        <View>
+                            <Button onPress={press}>התחל ניסוי</Button>
+                        </View>
+                    : null}
             </View>
         </View>
         </NativeBaseProvider>
@@ -47,8 +60,8 @@ const FindPlayersScreen = (props) => {
 
 FindPlayersScreen.navigationOptions = navigationData =>{
     return{
-        title: '',
-        // headerTitleAlign: 'center'
+        title: 'חיפוש משתתף',
+        headerTitleAlign: 'center'
         // headerTitleStyle: 'open-sans',
     }
 }
