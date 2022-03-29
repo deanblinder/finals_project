@@ -26,6 +26,7 @@ const FindPlayersScreen = (props) => {
         else {
             props.navigation.navigate({routeName:'LatencyPlay'})
         }
+        //     props.navigation.navigate({routeName:'Try'})
 
     }
     return (

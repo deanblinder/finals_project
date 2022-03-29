@@ -1,10 +1,10 @@
 import * as remx from 'remx';
 
 const initialState = {
-    experimentType: 'latency',
+    experimentType: 'followerLeader',
     agentType: 0,
     avgOff:3,
-    gameTime:30,
+    gameTime:20,
     latency:10,
     gitter:0,
 };

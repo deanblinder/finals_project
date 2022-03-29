@@ -102,7 +102,7 @@ const LeaderFollowerPlayScreen = (props) =>{
             }
         }
         setNumberOfPresses(numberOfPresses +1)
-        console.log("numberOfPresses", numberOfPresses)
+        // console.log("numberOfPresses", numberOfPresses)
 
     }
 
@@ -138,7 +138,7 @@ const LeaderFollowerPlayScreen = (props) =>{
     };
     const mySum = (arr,num) => {
         let sum = 0;
-        console.log(arr.length,num)
+        // console.log(arr.length,num)
         if (arr.length-num < 0){
             for (let i = 0; i < arr.length; i++) {
                 sum += arr[i];
@@ -192,10 +192,10 @@ const LeaderFollowerPlayScreen = (props) =>{
         <NativeBaseProvider>
             { isLoading ?
                 <View style={styles.container}>
-                        <View style={styles.buttonsContainer}>
-                            {renderAgentCircle()}
-                            {renderPlayerCircle()}
-                        </View>
+                    <View style={styles.buttonsContainer}>
+                        {renderAgentCircle()}
+                        {renderPlayerCircle()}
+                    </View>
                 </View> :
                 <View style={styles.gameOverContainer}>
                     <View style={{alignItems: 'center',justifyContent:'center',flex:1}}>
