@@ -21,10 +21,13 @@ const LatencyPlayScreen = (props) =>{
     let [isIntervalID,setIsIntervalID] = useState(true)
     let [numberOfAgentPresses,setNumberOfAgentPresses] = useState(false)
     // let [linsteningLevel,setLinsteningLevel] = useState(0)
+    let [timePassedId,setTimePassedId] = useState(null)
     let [gitter,setGitter] = useState(0)
     let [latency,setLatency] = useState(0)
     let [playerTimeStamp, setPlayerTimeStamp] = useState(0)
     let [agentTimeStamp, setAgentTimeStamp] = useState(0)
+    let [isFinish,setIsFinish] = useState(false)
+    let [isTimePassed,setIsTimePassed] = useState(false)
     let sumOfPlayerDiffPressArr = 0
     const MAX_DIFFERENCE_TIME = 5000
     useEffect(() => {
@@ -32,28 +35,39 @@ const LatencyPlayScreen = (props) =>{
         setGitter(store.getGitter())
         setMyInterval(setInterval(agentPress,2000))
         setTimeout(() => {
-            setMyInterval(clearInterval(intervalID))
-            setMyInterval2(clearInterval(intervalID2))
-            setLoading(false)
+            setIsFinish(true)
         }, parseInt(store.getGameTime())*1000);
 
     },[]);
+
+    useEffect(()=>{
+        if (isFinish){
+            console.log({intervalID})
+            console.log({intervalID2})
+            clearInterval(intervalID)
+            clearInterval(intervalID2)
+            setLoading(false)
+        }
+    },    [isFinish])
+
+
+    useEffect(()=>{
+        if (isTimePassed){
+            console.log('isTimePassed')
+            console.log({intervalID})
+            console.log({intervalID2})
+            clearInterval(intervalID)
+            clearInterval(intervalID2)
+            setIsTimePassed(false)
+        }
+    },    [isTimePassed])
+
     const onNextPress = () => {
         props.navigation.navigate({routeName:'Questionnaire'});
     }
     const playAgain = () => {
         props.navigation.navigate({routeName:'FindPlayer'});
     }
-    // const differenceBetweenPressTime = () =>{
-    //     // console.log("playerTimeStamp",playerTimeStamp/1000)
-    //     // console.log("agentTimeStamp",agentTimeStamp/1000)
-    //     console.log("diff: ", agentTimeStamp - playerTimeStamp)
-    //
-    //     if(agentTimeStamp - playerTimeStamp >= MAX_DIFFERENCE_TIME){
-    //         clearInterval(intervalID)
-    //         clearInterval(intervalID2)
-    //     }
-    // }
     const agentPress = () => {
         agentButtonFadeOut()
         setTimeout(() => {
@@ -64,20 +78,6 @@ const LatencyPlayScreen = (props) =>{
         setAgentTimeStampArr([...agentTimeStampArr,timeStamp])
         let diffBetweenPresses
         if (numberOfAgentPresses >= 2){
-            // differenceBetweenPressTime()
-            let currTime = new Date().getTime()
-            // console.log("timeStamp: ", timeStamp)
-            // console.log("currTime: ",  currTime)
-            // console.log("playerTimeStamp: ",  playerTimeStamp)
-            // console.log("diff: ", currTime - playerTimeStamp)
-            // if(currTime - playerTimeStamp >= MAX_DIFFERENCE_TIME){
-            //     // console.log("in if")
-            //
-            //     clearInterval(intervalID)
-            //     clearInterval(intervalID2)
-            //
-            // }
-
             diffBetweenPresses = agentTimeStampArr[agentTimeStampArr.length-1]-agentTimeStampArr[agentTimeStampArr.length-2]
             setAgentDiffPressArr([...agentDiffPressArr,diffBetweenPresses])
             let sumOfAgentDiffPressArr = mySum(agentDiffPressArr,parseInt(store.getAvgOff()));
@@ -88,8 +88,13 @@ const LatencyPlayScreen = (props) =>{
 
 
     const playerPress = () => {
-
-        // console.log("in player pess")
+        clearTimeout(timePassedId)
+        console.log({timePassedId})
+        const fiveSecondsId = setTimeout(() => {
+            console.log({timePassedId})
+            setIsTimePassed(true)
+        }, 5000)
+        setTimePassedId(fiveSecondsId)
         let timeStamp = new Date().getTime()
         setPlayerTimeStamp(timeStamp)
         let percent = 0.5
@@ -99,7 +104,6 @@ const LatencyPlayScreen = (props) =>{
         }, 250)
         setPlayerTimeStampArr([...playerTimeStampArr, timeStamp])
         let diffBetweenPresses
-        // console.log("type of :",  typeof (numberOfPresses))
         if (numberOfPresses > 2) {
             diffBetweenPresses = playerTimeStampArr[playerTimeStampArr.length - 1] - playerTimeStampArr[playerTimeStampArr.length - 2]
             setPlayerDiffPressArr([...playerDiffPressArr, diffBetweenPresses])
@@ -113,10 +117,6 @@ const LatencyPlayScreen = (props) =>{
                 rndGitter = rndGitter*-1
             }
             const LatencyGitter = ((listeningLevel + latency) + rndGitter)
-            // console.log("rndGitter: ", rndGitter)
-            // console.log("listeningLevel: ", listeningLevel)
-            // console.log("LatencyGitter: ", LatencyGitter)
-            // setLinsteningLevel(LatencyGitter)
             let timeStamp2 = new Date().getTime()
             let timePassed = timeStamp2 - timeStamp
             if (isIntervalID) {

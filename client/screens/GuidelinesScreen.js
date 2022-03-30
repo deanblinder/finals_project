@@ -29,11 +29,11 @@ export const Guidelines = () => {
         // />
         <View style={styles.container}>
             <View>
-                <Text style={{marginTop: 15}}>בניסוי יוצגו על מהסך שני לחצנים. כפתור כחול עם כיתוב ״אני״, וכפתור אדום עם כיתוב ״משתתפ/ת מרוחק/ת״. אתם תחלצו על הכפתור ״אני״, והמשתתפ/ת מרוחק/ת על הכפתור השני.</Text>
-                <Text style={{fontWeight:'bold', marginTop:15}}>מטרתכם היא לנסות ללחוץ באותו זמן, ככל האפשר.</Text>
-                <Text style={{marginTop: 15}}>בניסוי יהיו שלושה משחקונים בני דקה. בכל שלב תפעו מול משתתפ/ת אחר/ת. בסיום כל משחקון - תתבקשו לענות על שאלון.</Text>
-                <Text style={{marginTop: 15}}> אנא הקפידו לסיים את כל המשחקונים. בסיום הניסוי יוצג מסך סיום המשחק.</Text>
-                <Text style={{marginTop: 15}}> תודה מראש על השתתפותכם! </Text>
+                <Text style={styles.Text}>בניסוי יוצגו על מהסך שני לחצנים. כפתור כחול עם כיתוב ״אני״, וכפתור אדום עם כיתוב ״משתתפ/ת מרוחק/ת״. אתם תחלצו על הכפתור ״אני״, והמשתתפ/ת מרוחק/ת על הכפתור השני.</Text>
+                <Text style={{fontWeight:'bold',...styles.Text}}>מטרתכם היא לנסות ללחוץ באותו זמן, ככל האפשר.</Text>
+                <Text style={styles.Text}>בניסוי יהיו שלושה משחקונים בני דקה. בכל שלב תפעו מול משתתפ/ת אחר/ת. בסיום כל משחקון - תתבקשו לענות על שאלון.</Text>
+                <Text style={styles.Text}> אנא הקפידו לסיים את כל המשחקונים. בסיום הניסוי יוצג מסך סיום המשחק.</Text>
+                <Text style={styles.Text}> תודה מראש על השתתפותכם! </Text>
             </View>
         </View>
     )
@@ -69,5 +69,10 @@ const styles = StyleSheet.create({
         // justifyContent:'space-around',
         // marginBottom:'70%'
     },
+    Text:{
+        textAlign:'right',
+        marginTop: 15,
+        fontSize:15
+    }
 });
 export default GuidelinesScreen

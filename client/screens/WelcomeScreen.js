@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet } from 'react-native';
+import {StyleSheet,Text } from 'react-native';
 const cardImage = require('../assets/photos/letsStart.jpg')
 import {
     NativeBaseProvider,
@@ -26,9 +26,9 @@ const WelcomeScreen = (props) => {
                         height={400}
                     />
                     <View style={styles.TextContainer}>
-                            <Heading size={"md"} style={{textAlign: 'right'}} >ברוך הבא לניסוי פעולה משותפת מרחוק.</Heading>
-                            <Heading size={"md"} style={{textAlign: 'right'}} >בניסוי תפעלו יחד עם שלושה משתתפים מרוחקים, דרך הטלפון. </Heading>
-                            <Heading size={"md"} style={{textAlign: 'right'}} >אנא קראו את ההוראות בתשומת לב לפני שתתחילו. </Heading>
+                            <Text size={"md"} style={styles.Text} >ברוך הבא לניסוי פעולה משותפת מרחוק.</Text>
+                            <Text size={"md"} style={styles.Text} >בניסוי תפעלו יחד עם שלושה משתתפים מרוחקים, דרך הטלפון. </Text>
+                            <Text size={"md"} style={styles.Text} >אנא קראו את ההוראות בתשומת לב לפני שתתחילו. </Text>
                     </View>
                 <View style={{flexDirection:'row',justifyContent:'space-between'}}>
                     <Button size={"lg"} style={{width:'45%',textAlign: 'right'}} onPress={onStartAdministrator}>כניסת מנהל מערכת</Button>
@@ -57,11 +57,17 @@ const styles = StyleSheet.create({
     ImageContainer: {
         width:'100%',
     },
+    Text:{
+      textAlign:'right',
+      fontWeight:'bold'
+    },
     TextContainer: {
+        fontWeight:'bold',
+        marginVertical:10,
         textAlign:'center',
         display:'flex',
         justifyContent: 'space-evenly',
-        flex:2
+        flex:3
     },
 });
 export default WelcomeScreen

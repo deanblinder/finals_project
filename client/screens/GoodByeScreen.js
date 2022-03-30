@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { StyleSheet} from 'react-native';
+import {StyleSheet, Keyboard, TouchableWithoutFeedback} from 'react-native';
 import {
     NativeBaseProvider,
     Button,
@@ -20,9 +20,16 @@ export default function GoodByeScreen() {
         // setIsDone(true)
 
     }
+    const DismissKeyboard = ({children})=>(
+        <TouchableWithoutFeedback onPress={()=>Keyboard.dismiss()}>
+            {children}
+        </TouchableWithoutFeedback>
+    );
+
     return (
         <NativeBaseProvider>
             {!isDone ? <View style={styles.container}>
+                <DismissKeyboard>
                     <View>
                         <View style={{marginBottom:20}}>
                             <Heading  style={{textAlign:'right'}} size='lg'>תודה רבה על ההשתתפות בניסוי. </Heading>
@@ -44,13 +51,16 @@ export default function GoodByeScreen() {
                             }}
                             // totalLines={100}
                         />
-                    </View>
+
+                </View>
                     <View style={{justifyContent:'space-between'}}>
                     <Heading style={{textAlign:'right'}} size='sm'>נשמח לשמוע ממך במייל זה: </Heading>
                     <Heading style={{textAlign:'right'}} size='sm'>test@gmail.com</Heading>
                 </View>
                     <Button onPress={press}>סיים</Button>
-            </View>:
+                </DismissKeyboard>
+            </View>
+                :
                 <View style={styles.textContainer}>
                     <Heading size='2xl'>תודה רבה!</Heading>
                 </View>}

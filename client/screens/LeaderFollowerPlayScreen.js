@@ -26,12 +26,10 @@ const LeaderFollowerPlayScreen = (props) =>{
     let [isTimePassed,setIsTimePassed] = useState(false)
     let sumOfPlayerDiffPressArr = 0
     useEffect(() => {
-        const id = setInterval(agentPress,2000);
-        setMyInterval(id)
-        console.log({id})
+        setMyInterval(setInterval(agentPress,2000));
         setTimeout(() => {
             setIsFinish(true)
-        }, parseInt(store.getGameTime())*1000*2);
+        }, parseInt(store.getGameTime())*1000);
 
     },[]);
     useEffect(()=>{

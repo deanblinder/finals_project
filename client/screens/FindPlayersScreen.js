@@ -40,7 +40,7 @@ const FindPlayersScreen = (props) => {
                                 מחפש משתתפ/ת מרוחק/ת....
                             </Heading>
                     </View>: <View>
-                        <Heading color="primary.500" fontSize="4xl">
+                        <Heading color="primary.500" fontSize="4xl" style={{textAlign:'right'}}>
                         נמצא משתתף מרוחק
                     </Heading></View>}
                 </HStack>

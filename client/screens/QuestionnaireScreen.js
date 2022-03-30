@@ -84,26 +84,26 @@ const QuestionnaireScreen =(props) => {
         <NativeBaseProvider>
             <ScrollView>
             <View style={styles.container}>
-                <Heading size={"md"}>אנא מלא את השאלון</Heading>
-                <Text style={{ paddingTop: 20}}> 1. באיזה מידה התרכזת במשימה?</Text>
+                <Heading size={"md"} style={{textAlign:'right'}}>אנא מלא את השאלון</Heading>
+                <Text style={{paddingTop: 20,...styles.text}}> 1. באיזה מידה התרכזת במשימה?</Text>
                 <PickerComponent title='באיזה מידה התרכזת במשימה? 1' rating={sendRating1}/>
 
-                <Text style={{ paddingTop: 15}}> 2. באיזה מידה  הרגשת שהלחיצות שלך תואמות את אלה של המשתתפ/ת 1? </Text>
+                <Text style={styles.text}> 2. באיזה מידה  הרגשת שהלחיצות שלך תואמות את אלה של המשתתפ/ת 1? </Text>
                 <PickerComponent title='באיזה מידה  הרגשת שהלחיצות שלך תואמות את אלה של המשתתפ/ת 1? 2' rating={sendRating2}/>
 
-                <Text style={{ paddingTop: 15}}>3. האם חשת ״תחושת ביחד״ כשלחצת עם המשתתפ/ת השני/יה? </Text>
+                <Text style={styles.text}>3. האם חשת ״תחושת ביחד״ כשלחצת עם המשתתפ/ת השני/יה? </Text>
                 <PickerComponent title='האם חשת ״תחושת ביחד״ כשלחצת עם המשתתפ/ת השני/יה? 3' rating={sendRating3}/>
 
-                <Text style={{ paddingTop: 15}}>4. באיזו מידה הרגשת שאת/ה והמשתתפ/ת השני/ה שיתפתם פעולה?</Text>
+                <Text style={styles.text}>4. באיזו מידה הרגשת שאת/ה והמשתתפ/ת השני/ה שיתפתם פעולה?</Text>
                 <PickerComponent title='באיזו מידה הרגשת שאת/ה והמשתתפ/ת השני/ה שיתפתם פעולה? 4' rating={sendRating4}/>
 
-                <Text style={{ paddingTop: 15}}>5. כמה קירבה את/ה מרגיש/ה כרגע למשתתפ/ת המרוחק/ת בניסוי:</Text>
+                <Text style={styles.text}>5. כמה קירבה את/ה מרגיש/ה כרגע למשתתפ/ת המרוחק/ת בניסוי:</Text>
                 <PickerComponent title='כמה קירבה את/ה מרגיש/ה כרגע למשתתפ/ת המרוחק/ת בניסוי: 5' rating={sendRating5}/>
 
-                <Text style={{ paddingTop: 15}}>6. באיזו מידה תהי/ה פתוח לשיתוף פעולה נוסף עם המשתתפ/ת המרוחק/ת הזה בניסוי המשך? </Text>
+                <Text style={styles.text}>6. באיזו מידה תהי/ה פתוח לשיתוף פעולה נוסף עם המשתתפ/ת המרוחק/ת הזה בניסוי המשך? </Text>
                 <PickerComponent title='באיזו מידה תהי/ה פתוח לשיתוף פעולה נוסף עם המשתתפ/ת המרוחק/ת הזה בניסוי המשך? 6' rating={sendRating6}/>
 
-                <Text  style={{paddingTop:15}} >7. תאר/י בכמה מילים את חוווית המשחק מול משתתפ/ת 1  </Text>
+                <Text  style={styles.text} >7. תאר/י בכמה מילים את חוווית המשחק מול משתתפ/ת 1  </Text>
                 <TextArea
                     value={textAreaValue}
                     onChangeText={(text)=>{sendText7(text)}}
@@ -138,7 +138,13 @@ const styles = StyleSheet.create({
     container: {
         padding:15,
         flex: 1,
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+
     },
+    text:{
+        textAlign:'right',
+        paddingTop: 15,
+        marginBottom:5
+    }
 });
 export default QuestionnaireScreen
