@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {StyleSheet, Keyboard, TouchableWithoutFeedback} from 'react-native';
+import {StyleSheet, Keyboard, TouchableWithoutFeedback, ScrollView} from 'react-native';
 import {
     NativeBaseProvider,
     Button,
@@ -14,10 +14,10 @@ export default function GoodByeScreen() {
     const [textAreaValue, setTextAreaValue] = useState('')
     const [isDone,setIsDone] = useState(false)
 
-    const press = async () => {
+    const press = () => {
         const deviceUUID = uuid.v4()
-        await api.sendFeedBack(textAreaValue,deviceUUID)
-        // setIsDone(true)
+        // await api.sendFeedBack(textAreaValue,deviceUUID)
+        setIsDone(true)
 
     }
     const DismissKeyboard = ({children})=>(
@@ -25,52 +25,62 @@ export default function GoodByeScreen() {
             {children}
         </TouchableWithoutFeedback>
     );
-
-    return (
-        <NativeBaseProvider>
-            {!isDone ? <View style={styles.container}>
-                <DismissKeyboard>
-                    <View>
-                        <View style={{marginBottom:20}}>
-                            <Heading  style={{textAlign:'right'}} size='lg'>תודה רבה על ההשתתפות בניסוי. </Heading>
-                        </View>
-                        <View style={{marginBottom:40}}>
-                            <Heading  style={{textAlign:'right'}} size='sm'>אם תרצי/ה, נשמח לשמוע אם תרצי לומר דבר מה על תחושותיך במהלך הניסוי.
-                                אנא כתב/י כאן:
-                            </Heading>
-                        </View>
-                        <TextArea
-                            value={textAreaValue}
-                            onChangeText={(text)=>{setTextAreaValue(text)}}
-                            // numberOfLines={10}
-                            h={100}
-                            placeholder="מלא כאן"
-                            w={{
-                                base: "100%",
-                                md: "40%",
-                            }}
-                            // totalLines={100}
-                        />
+    const renderFeedBack = () =>{
+        return(
+            <ScrollView style={styles.container}>
+            <View>
+                    <View style={{marginBottom:'10%'}}>
+                        <Heading  style={{textAlign:'right'}} size='lg'>תודה רבה על ההשתתפות בניסוי. </Heading>
+                    </View>
+                    <View style={{marginBottom:'10%'}}>
+                        <Heading  style={{textAlign:'right'}} size='sm'>אם תרצי/ה, נשמח לשמוע אם תרצי לומר דבר מה על תחושותיך במהלך הניסוי.
+                            אנא כתב/י כאן:
+                        </Heading>
+                    </View>
+                    <TextArea
+                        value={textAreaValue}
+                        onChangeText={(text)=>{setTextAreaValue(text)}}
+                        // numberOfLines={10}
+                        h={100}
+                        placeholder="מלא כאן"
+                        w={{
+                            base: "100%",
+                            md: "40%",
+                        }}
+                        // totalLines={100}
+                    />
 
                 </View>
-                    <View style={{justifyContent:'space-between'}}>
+                <View style={{justifyContent:'space-between',marginTop:'20%'}}>
                     <Heading style={{textAlign:'right'}} size='sm'>נשמח לשמוע ממך במייל זה: </Heading>
                     <Heading style={{textAlign:'right'}} size='sm'>test@gmail.com</Heading>
                 </View>
+                <View style={{marginTop:'50%'}}>
                     <Button onPress={press}>סיים</Button>
-                </DismissKeyboard>
+                </View>
+
+            </ScrollView>
+            )
+    }
+
+    const renderTanks = () =>{
+        return(
+            <View style={styles.textContainer}>
+                <Heading size='2xl'>תודה רבה!</Heading>
             </View>
-                :
-                <View style={styles.textContainer}>
-                    <Heading size='2xl'>תודה רבה!</Heading>
-                </View>}
+        )
+    }
+    return (
+        <NativeBaseProvider>
+            {isDone ? renderTanks() : renderFeedBack()}
         </NativeBaseProvider>
     );
 }
 GoodByeScreen.navigationOptions = navigationData =>{
     return{
         title: '',
-        headerTitleAlign: 'center'
+        headerTitleAlign: 'center',
+
     }
 }
 
@@ -78,7 +88,6 @@ const styles = StyleSheet.create({
     container: {
         padding:15,
         flex: 1,
-        justifyContent: 'space-between',
         // backgroundColor:'blue'
 
     },
