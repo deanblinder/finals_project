@@ -26,14 +26,12 @@ const QuestionnaireScreen =(props) => {
 
     const sendRating1 = (rating) => {
         const tempQDict = qDict
-        console.log(tempQDict)
 
         tempQDict.questionOne=rating
          setQDict(tempQDict)
     }
     const sendRating2 = (rating) => {
         const tempQDict = qDict
-        console.log(tempQDict)
 
 
         tempQDict.questionTwo=rating
@@ -41,32 +39,27 @@ const QuestionnaireScreen =(props) => {
     }
     const sendRating3 = (rating) => {
         const tempQDict = qDict
-        console.log(tempQDict)
         tempQDict.questionThree=rating
         setQDict(tempQDict)
     }
     const sendRating4 = (rating) => {
         const tempQDict = qDict
-        console.log(tempQDict)
         tempQDict.questionFour=rating
         setQDict(tempQDict)
     }
     const sendRating5 = (rating) => {
         const tempQDict = qDict
-        console.log(tempQDict)
         tempQDict.questionFive=rating
         setQDict(tempQDict)
     }
     const sendRating6 = (rating) => {
         const tempQDict = qDict
-        console.log(tempQDict)
         tempQDict.questionSix=rating
         setQDict(tempQDict)
     }
     const sendText7 = (text) => {
         setTextAreaValue(text)
         const tempQDict = qDict
-        console.log(tempQDict)
         tempQDict.questionSeven=textAreaValue
         setQDict(tempQDict)
     }

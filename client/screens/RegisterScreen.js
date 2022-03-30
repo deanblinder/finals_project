@@ -23,7 +23,6 @@ const RegisterScreen = (props) => {
    const onNextPress = () => {
         // if (validateAge(age) && validateEmail(mail) && gender){
        if (true){
-            console.log(deviceUid)
             // api.registerPlayer(mail,age,gender,deviceUid)
             props.navigation.navigate({routeName:'FindPlayer'});
         }
@@ -43,7 +42,6 @@ const RegisterScreen = (props) => {
 
     }
     useEffect(() => {
-        console.log('---')
     }, []);
 
     const validateEmail = (inputText) => {

@@ -23,8 +23,6 @@ const AdministratorScreen = (props) => {
         let response;
         if (username && password) {
             // response = await api.administratorLogin(username, password);
-            // console.log('status: ',response)
-            // console.log(status)
         }
         // if (response .status === 200) {
         if (true){

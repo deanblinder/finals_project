@@ -4,29 +4,7 @@ import {View,Center, Heading, SectionList,NativeBaseProvider,Text,Button} from "
 import AdministratorScreen from "../screens/AdministratortScreen";
 
 export const Guidelines = () => {
-    const data = [
-        {
-            title: "הנחיות",
-            data: [" בניסוי יוצגו על מהסך שני לחצנים. כפתור כחול עם כיתוב ״אני״, וכפתור כתום עם כיתוב ״משתתפ/ת מרוחק/ת״. אתם תחלצו על הכפתור ״אני״, והמשתתפ/ת מרוחק/ת על הכפתור השני.",
-                "מטרתכם היא לנסות ללחוץ באותו זמן, ככל האפשר.",
-                " בניסוי יהיו שלושה משחקונים בני דקה. בכל שלב תפעו מול משתתפ/ת אחר/ת. בסיום כל משחקון - תתבקשו לענות על שאלון.",
-                " אנא הקפידו לסיים את כל המשחקונים. בסיום הניסוי יוצג מסך סיום המשחק.",
-                " תודה מראש על השתתפותכם! "],
-        },
-    ]
     return (
-        // <SectionList
-        //     px="12"
-        //     mb="4"
-        //     style = {{paddingTop: 50}}
-        //     sections={data}
-        //     keyExtractor={(item, index) => item + index}
-        //     renderItem={({ item, index }) => (
-        //         <Text style={{textAlign:'center'}} py="4" minW="64" >
-        //             {item}
-        //         </Text>
-        //     )}
-        // />
         <View style={styles.container}>
             <View>
                 <Text style={styles.Text}>בניסוי יוצגו על מהסך שני לחצנים. כפתור כחול עם כיתוב ״אני״, וכפתור אדום עם כיתוב ״משתתפ/ת מרוחק/ת״. אתם תחלצו על הכפתור ״אני״, והמשתתפ/ת מרוחק/ת על הכפתור השני.</Text>
@@ -57,7 +35,6 @@ GuidelinesScreen.navigationOptions = navigationData =>{
     return{
         title: '',
         headerTitleAlign: 'center'
-        // headerTitleStyle: 'open-sans',
     }
 }
 
@@ -66,8 +43,6 @@ const styles = StyleSheet.create({
         padding:15,
         flex: 1,
         textAlign:'center',
-        // justifyContent:'space-around',
-        // marginBottom:'70%'
     },
     Text:{
         textAlign:'right',

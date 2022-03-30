@@ -26,7 +26,6 @@ const ChangeParamAdministratorScreen = (props) => {
 
         // if (agent && latency && variance){
         // if (true){
-        //     console.log("--1-1-1--")
         // await api.changeAgentParams(agent,latency,variance)
         props.navigation.navigate({routeName:'Welcome'})
         // }

@@ -16,17 +16,20 @@ const LeaderFollowerPlayScreen = (props) =>{
     let [numberOfPresses, setNumberOfPresses] = useState(0)
     let [avgPlayerPresses, setAvgPlayerPresses] = useState(0)
     let [avgAgentPresses, setAvgAgentPresses] = useState(2000)
-    let [intervalID,setMyInterval] = useState(null)
+    let [intervalID1,setMyInterval1] = useState(null)
     let [intervalID2,setMyInterval2] = useState(null)
-    let [isIntervalID,setIsIntervalID] = useState(true)
+    let [isIntervalID1,setIsIntervalID1] = useState(true)
     let [timePassedId,setTimePassedId] = useState(null)
     let [numberOfAgentPresses,setNumberOfAgentPresses] = useState(false)
     let [linsteningLevel,setLinsteningLevel] = useState(0)
     let [isFinish,setIsFinish] = useState(false)
     let [isTimePassed,setIsTimePassed] = useState(false)
+    let [percent, setPercent] = useState(0)
     let sumOfPlayerDiffPressArr = 0
+    const TIME_UNTIL_AGENT_STOP_PRESS = 7000
     useEffect(() => {
-        setMyInterval(setInterval(agentPress,2000));
+        setPercentForGame()
+        setMyInterval1(setInterval(agentPress,2000));
         setTimeout(() => {
             setIsFinish(true)
         }, parseInt(store.getGameTime())*1000);
@@ -34,9 +37,7 @@ const LeaderFollowerPlayScreen = (props) =>{
     },[]);
     useEffect(()=>{
         if (isFinish){
-            console.log({intervalID})
-            console.log({intervalID2})
-            clearInterval(intervalID)
+            clearInterval(intervalID1)
             clearInterval(intervalID2)
             setLoading(false)
         }
@@ -45,33 +46,64 @@ const LeaderFollowerPlayScreen = (props) =>{
 
     useEffect(()=>{
         if (isTimePassed){
-            console.log('isTimePassed')
-            console.log({intervalID})
-            console.log({intervalID2})
-            clearInterval(intervalID)
+            clearInterval(intervalID1)
             clearInterval(intervalID2)
             setIsTimePassed(false)
         }
-    },    [isTimePassed])
+    }, [isTimePassed])
+
+    const setPercentForGame = () => {
+        switch (store.getAgentType()) {
+            case 0:
+                setPercent(0.0)
+                break
+            case 1:
+                setPercent(0.2)
+                break
+            case 2:
+                setPercent(0.4)
+                break
+            case 3:
+                setPercent(0.6)
+                break
+            case 4:
+                setPercent(0.8)
+                break
+            case 5:
+                setPercent(1)
+                break
+            default:
+                setPercent(0.0)
+        }
+    }
     const onNextPress = () => {
         props.navigation.navigate({routeName:'Questionnaire'});
+    }
+    const buttonFadeFunc = ({isAgent}) => {
+      if (isAgent){
+          agentButtonFadeOut()
+          setTimeout(() => {
+              agentButtonFadeIn()
+          }, 250)
+      }
+      else{
+          playerButtonFadeOut()
+          setTimeout(() => {
+              playerButtonFadeIn()
+          }, 250)
+      }
     }
     const playAgain = () => {
         props.navigation.navigate({routeName:'FindPlayer'});
     }
     const agentPress = () => {
-        agentButtonFadeOut()
-        setTimeout(() => {
-            agentButtonFadeIn()
-        }, 250)
+        buttonFadeFunc({isAgent:true})
         let timeStamp = new Date().getTime()
-        console.log('timeStamp: ',timeStamp)
-
         setAgentTimeStampArr([...agentTimeStampArr,timeStamp])
-        let diffBetweenPresses
+        let diffBetweenAgentPresses
         if (numberOfAgentPresses >= 2){
-            diffBetweenPresses = agentTimeStampArr[agentTimeStampArr.length-1]-agentTimeStampArr[agentTimeStampArr.length-2]
-            setAgentDiffPressArr([...agentDiffPressArr,diffBetweenPresses])
+            diffBetweenAgentPresses = agentTimeStampArr[agentTimeStampArr.length-1]-agentTimeStampArr[agentTimeStampArr.length-2]
+            setAgentDiffPressArr([...agentDiffPressArr,diffBetweenAgentPresses])
             let sumOfAgentDiffPressArr = mySum(agentDiffPressArr,parseInt(store.getAvgOff()));
             setAvgAgentPresses(sumOfAgentDiffPressArr/parseInt(store.getAvgOff()))
         }
@@ -79,62 +111,39 @@ const LeaderFollowerPlayScreen = (props) =>{
     }
     const playerPress = () => {
         clearTimeout(timePassedId)
-        console.log({timePassedId})
-        const fiveSecondsId = setTimeout(() => {
-            console.log({timePassedId})
+        const timeUntilAgentStopPress = setTimeout(() => {
             setIsTimePassed(true)
-        }, 5000)
-        setTimePassedId(fiveSecondsId)
+        }, TIME_UNTIL_AGENT_STOP_PRESS)
+        setTimePassedId(timeUntilAgentStopPress)
         let timeStamp = new Date().getTime()
-        let percent = 0
-        if (store.getAgentType() === 0) {
-            percent = 0.0
-        } else if (store.getAgentType() === 1) {
-            percent = 0.2
-        } else if (store.getAgentType() === 2) {
-            percent = 0.4
-        } else if (store.getAgentType() === 3) {
-            percent = 0.6
-        } else if (store.getAgentType() === 4) {
-            percent = 0.8
-        } else if (store.getAgentType() === 5) {
-            percent = 1
-        }
-        playerButtonFadeOut()
-        setTimeout(() => {
-            playerButtonFadeIn()
-        }, 250)
+        buttonFadeFunc({isAgent:false})
         setPlayerTimeStampArr([...playerTimeStampArr, timeStamp])
-        let diffBetweenPresses
+        let diffBetweenPlayerPresses
         if (numberOfPresses > 2) {
-            diffBetweenPresses = playerTimeStampArr[playerTimeStampArr.length - 1] - playerTimeStampArr[playerTimeStampArr.length - 2]
-            setPlayerDiffPressArr([...playerDiffPressArr, diffBetweenPresses])
-            let num = parseInt(store.getAvgOff())
-            sumOfPlayerDiffPressArr = mySum(playerDiffPressArr, num);
-            setAvgPlayerPresses(sumOfPlayerDiffPressArr / (num === 0 ? 1 : num))
+            diffBetweenPlayerPresses = playerTimeStampArr[playerTimeStampArr.length - 1] - playerTimeStampArr[playerTimeStampArr.length - 2]
+            setPlayerDiffPressArr([...playerDiffPressArr, diffBetweenPlayerPresses])
+            let numOfLastPresses = parseInt(store.getAvgOff())
+            sumOfPlayerDiffPressArr = mySum(playerDiffPressArr, numOfLastPresses);
+            setAvgPlayerPresses(sumOfPlayerDiffPressArr / (numOfLastPresses === 0 ? 1 : numOfLastPresses))
             const linsteningLevel = (((1 - percent) * avgPlayerPresses) + (percent * avgAgentPresses))
-            //(linsteningLevel + letancy) +- gitter
             setLinsteningLevel(linsteningLevel)
             let timeStamp2 = new Date().getTime()
             let timePassed = timeStamp2 - timeStamp
-            if (isIntervalID) {
+            if (isIntervalID1) {
                 setMyInterval2(setInterval(agentPress, linsteningLevel))
                 setTimeout(() => {
-                    clearInterval(intervalID)
-                    console.log({intervalID})
+                    clearInterval(intervalID1)
                 }, (linsteningLevel - (timePassed-110)))
-                setIsIntervalID(!isIntervalID)
+                setIsIntervalID1(!isIntervalID1)
             } else {
-                setMyInterval(setInterval(agentPress, linsteningLevel))
+                setMyInterval1(setInterval(agentPress, linsteningLevel))
                 setTimeout(() => {
                     clearInterval(intervalID2)
-                    console.log({intervalID2})
                 }, (linsteningLevel - (timePassed-110)))
-                setIsIntervalID(!isIntervalID)
+                setIsIntervalID1(!isIntervalID1)
             }
         }
         setNumberOfPresses(numberOfPresses +1)
-        // console.log("numberOfPresses", numberOfPresses)
 
     }
 
@@ -190,7 +199,6 @@ const LeaderFollowerPlayScreen = (props) =>{
                     style={[
                         2 ,
                         {
-                            // Bind opacity to animated value
                             opacity: agentOpacity
                         }
                     ]}
@@ -208,7 +216,6 @@ const LeaderFollowerPlayScreen = (props) =>{
                     style={[
                         2 ,
                         {
-                            // Bind opacity to animated value
                             opacity: playerOpacity
                         }
                     ]}
