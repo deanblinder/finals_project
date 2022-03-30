@@ -85,7 +85,10 @@ const LatencyPlayScreen = (props) =>{
         }
         setNumberOfAgentPresses(numberOfAgentPresses+1)
     }
+
+
     const playerPress = () => {
+
         // console.log("in player pess")
         let timeStamp = new Date().getTime()
         setPlayerTimeStamp(timeStamp)

@@ -19,18 +19,42 @@ const LeaderFollowerPlayScreen = (props) =>{
     let [intervalID,setMyInterval] = useState(null)
     let [intervalID2,setMyInterval2] = useState(null)
     let [isIntervalID,setIsIntervalID] = useState(true)
+    let [timePassedId,setTimePassedId] = useState(null)
     let [numberOfAgentPresses,setNumberOfAgentPresses] = useState(false)
     let [linsteningLevel,setLinsteningLevel] = useState(0)
+    let [isFinish,setIsFinish] = useState(false)
+    let [isTimePassed,setIsTimePassed] = useState(false)
     let sumOfPlayerDiffPressArr = 0
     useEffect(() => {
-        setMyInterval(setInterval(agentPress,2000))
+        const id = setInterval(agentPress,2000);
+        setMyInterval(id)
+        console.log({id})
         setTimeout(() => {
-            setMyInterval(clearInterval(intervalID))
-            setMyInterval2(clearInterval(intervalID2))
-            setLoading(false)
-        }, parseInt(store.getGameTime())*1000);
+            setIsFinish(true)
+        }, parseInt(store.getGameTime())*1000*2);
 
     },[]);
+    useEffect(()=>{
+        if (isFinish){
+            console.log({intervalID})
+            console.log({intervalID2})
+            clearInterval(intervalID)
+            clearInterval(intervalID2)
+            setLoading(false)
+        }
+    },    [isFinish])
+
+
+    useEffect(()=>{
+        if (isTimePassed){
+            console.log('isTimePassed')
+            console.log({intervalID})
+            console.log({intervalID2})
+            clearInterval(intervalID)
+            clearInterval(intervalID2)
+            setIsTimePassed(false)
+        }
+    },    [isTimePassed])
     const onNextPress = () => {
         props.navigation.navigate({routeName:'Questionnaire'});
     }
@@ -43,6 +67,8 @@ const LeaderFollowerPlayScreen = (props) =>{
             agentButtonFadeIn()
         }, 250)
         let timeStamp = new Date().getTime()
+        console.log('timeStamp: ',timeStamp)
+
         setAgentTimeStampArr([...agentTimeStampArr,timeStamp])
         let diffBetweenPresses
         if (numberOfAgentPresses >= 2){
@@ -54,6 +80,13 @@ const LeaderFollowerPlayScreen = (props) =>{
         setNumberOfAgentPresses(numberOfAgentPresses+1)
     }
     const playerPress = () => {
+        clearTimeout(timePassedId)
+        console.log({timePassedId})
+        const fiveSecondsId = setTimeout(() => {
+            console.log({timePassedId})
+            setIsTimePassed(true)
+        }, 5000)
+        setTimePassedId(fiveSecondsId)
         let timeStamp = new Date().getTime()
         let percent = 0
         if (store.getAgentType() === 0) {
@@ -90,13 +123,14 @@ const LeaderFollowerPlayScreen = (props) =>{
                 setMyInterval2(setInterval(agentPress, linsteningLevel))
                 setTimeout(() => {
                     clearInterval(intervalID)
+                    console.log({intervalID})
                 }, (linsteningLevel - (timePassed-110)))
                 setIsIntervalID(!isIntervalID)
             } else {
-
                 setMyInterval(setInterval(agentPress, linsteningLevel))
                 setTimeout(() => {
                     clearInterval(intervalID2)
+                    console.log({intervalID2})
                 }, (linsteningLevel - (timePassed-110)))
                 setIsIntervalID(!isIntervalID)
             }
