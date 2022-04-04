@@ -119,19 +119,21 @@ const LatencyPlayScreen = (props) =>{
             const LatencyGitter = ((listeningLevel + latency) + rndGitter)
             let timeStamp2 = new Date().getTime()
             let timePassed = timeStamp2 - timeStamp
-            if (isIntervalID1) {
-                setMyInterval2(setInterval(agentPress, LatencyGitter))
-                setTimeout(() => {
-                    clearInterval(intervalID1)
-                }, (listeningLevel - (timePassed-110)))
-                setIsIntervalID1(!isIntervalID1)
-            } else {
+            if (listeningLevel !== 0){
+                if (isIntervalID1) {
+                    setMyInterval2(setInterval(agentPress, LatencyGitter))
+                    setTimeout(() => {
+                        clearInterval(intervalID1)
+                    }, (listeningLevel - (timePassed-110)))
+                    setIsIntervalID1(!isIntervalID1)
+                } else {
 
-                setMyInterval1(setInterval(agentPress, LatencyGitter))
-                setTimeout(() => {
-                    clearInterval(intervalID2)
-                }, (listeningLevel - (timePassed-110)))
-                setIsIntervalID1(!isIntervalID1)
+                    setMyInterval1(setInterval(agentPress, LatencyGitter))
+                    setTimeout(() => {
+                        clearInterval(intervalID2)
+                    }, (listeningLevel - (timePassed-110)))
+                    setIsIntervalID1(!isIntervalID1)
+                }
             }
         }
         setNumberOfPresses(numberOfPresses +1)

@@ -129,18 +129,20 @@ const LeaderFollowerPlayScreen = (props) =>{
             setLinsteningLevel(linsteningLevel)
             let timeStamp2 = new Date().getTime()
             let timePassed = timeStamp2 - timeStamp
-            if (isIntervalID1) {
-                setMyInterval2(setInterval(agentPress, linsteningLevel))
-                setTimeout(() => {
-                    clearInterval(intervalID1)
-                }, (linsteningLevel - (timePassed-110)))
-                setIsIntervalID1(!isIntervalID1)
-            } else {
-                setMyInterval1(setInterval(agentPress, linsteningLevel))
-                setTimeout(() => {
-                    clearInterval(intervalID2)
-                }, (linsteningLevel - (timePassed-110)))
-                setIsIntervalID1(!isIntervalID1)
+            if (linsteningLevel !== 0){
+                if (isIntervalID1) {
+                    setMyInterval2(setInterval(agentPress, linsteningLevel))
+                    setTimeout(() => {
+                        clearInterval(intervalID1)
+                    }, (linsteningLevel - (timePassed-110)))
+                    setIsIntervalID1(!isIntervalID1)
+                } else {
+                    setMyInterval1(setInterval(agentPress, linsteningLevel))
+                    setTimeout(() => {
+                        clearInterval(intervalID2)
+                    }, (linsteningLevel - (timePassed-110)))
+                    setIsIntervalID1(!isIntervalID1)
+                }
             }
         }
         setNumberOfPresses(numberOfPresses +1)
