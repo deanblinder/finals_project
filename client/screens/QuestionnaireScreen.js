@@ -69,7 +69,7 @@ const QuestionnaireScreen =(props) => {
         //send Qdict
         if (qDict.questionOne && qDict.questionTwo && qDict.questionThree && qDict.questionFour && qDict.questionFive && qDict.questionSix && qDict.questionSeven){
             const deviceUUID = uuid.v4()
-            // api.sendQuestionnaireAnswers(qDict,deviceUUID) // send user id,
+            api.sendQuestionnaireAnswers(qDict,deviceUUID) // send user id,
             props.navigation.navigate({routeName:'GoodBye'});
         }
     }

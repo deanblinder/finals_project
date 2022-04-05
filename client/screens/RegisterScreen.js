@@ -21,9 +21,9 @@ const RegisterScreen = (props) => {
     const [deviceUid,setDeviceUid] = useState(uuid.v4())
     const [showError,setShowError] = useState(false)
    const onNextPress = () => {
-        // if (validateAge(age) && validateEmail(mail) && gender){
-       if (true){
-            // api.registerPlayer(mail,age,gender,deviceUid)
+        if (validateAge(age) && validateEmail(mail) && gender){
+       // if (true){
+            api.registerPlayer(mail,age,gender,deviceUid)
             props.navigation.navigate({routeName:'FindPlayer'});
         }
         else {

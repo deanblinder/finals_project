@@ -53,7 +53,7 @@ const createApiClient = () => {
         },
         sendPressTimeStamp:(userId,actionOwner, pressTimeArr)=>{
             console.log(userId,actionOwner, pressTimeArr)
-            return axios.post(`http://127.0.0.1:3232/actions/addAction/${userId}/${actionOwner}/${pressTimeArr}`).then((res) => res);
+            return axios.post(`http://10.0.2.2:3232/actions/addAction/${userId}/${actionOwner}/${pressTimeArr}`).then((res) => res);
         },
     }
 

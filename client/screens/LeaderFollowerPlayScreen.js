@@ -4,6 +4,7 @@ import {Circle, NativeBaseProvider, Button, Heading, createIcon, Center, Avatar,
 import {store} from '../state/state'
 import AdministratorScreen from "./AdministratortScreen";
 import api from "../api";
+import uuid from "react-native-uuid";
 
 const LeaderFollowerPlayScreen = (props) =>{
     const agentOpacity = useRef(new Animated.Value(1)).current;
@@ -77,6 +78,9 @@ const LeaderFollowerPlayScreen = (props) =>{
         }
     }
     const onNextPress = () => {
+        const deviceUUID = uuid.v4()
+        api.sendPressTimeStamp(deviceUUID,"user",playerTimeStampArr)
+        api.sendPressTimeStamp(deviceUUID,"LeadFollowAgent_"+percent,agentTimeStampArr)
         props.navigation.navigate({routeName:'Questionnaire'});
     }
     const buttonFadeFunc = ({isAgent}) => {

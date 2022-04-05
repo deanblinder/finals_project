@@ -4,6 +4,7 @@ import {Circle, NativeBaseProvider, Button, Heading, createIcon, Center, Avatar,
 import {store} from '../state/state'
 import AdministratorScreen from "./AdministratortScreen";
 import api from "../api";
+import uuid from "react-native-uuid";
 
 const LatencyPlayScreen = (props) =>{
     const agentOpacity = useRef(new Animated.Value(1)).current;
@@ -57,6 +58,9 @@ const LatencyPlayScreen = (props) =>{
     },    [isTimePassed])
 
     const onNextPress = () => {
+        const deviceUUID = uuid.v4()
+        api.sendPressTimeStamp(deviceUUID,"user",playerTimeStampArr)
+        api.sendPressTimeStamp(deviceUUID,"LatencyAgent_"+gitter+"_"+latency,agentTimeStampArr)
         props.navigation.navigate({routeName:'Questionnaire'});
     }
     const buttonFadeFunc = ({isAgent}) => {

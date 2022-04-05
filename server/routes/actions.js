@@ -21,6 +21,7 @@ router.get("/getActionByUserId/:userId", async (req, res, next) => {
 
 router.post("/addAction/:userId/:actionOwner/:pressTimeArr", async (req, res, next) => {
     try {
+        console.log("in router addAction")
         const userSessionId = req.params.userId
         // const sessionId = req.params.sessionId
         const actionOwner = req.params.actionOwner
