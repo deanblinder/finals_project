@@ -1,5 +1,5 @@
 import React,{useState} from 'react';
-import {StyleSheet, View,Alert} from 'react-native';
+import {StyleSheet, View, Alert, ScrollView} from 'react-native';
 import {store} from '../state/state'
 import {
     Input,
@@ -51,7 +51,8 @@ const ChangeParamAdministratorScreen = (props) => {
     }
     const renderLeadExperiment = () => {
         return(
-            <View>
+            <ScrollView >
+            <View style={styles.container}>
                 <View style={{margin:10,textAlign:'right',justifyContent: 'space-between'}}>
                     <Text style={{textAlign:'right'}}>בחר סוכן</Text>
                 </View>
@@ -100,11 +101,13 @@ const ChangeParamAdministratorScreen = (props) => {
                 <Input style={{textAlign:'right'}} onChangeText={(time)=>{store.setGameTime(parseInt(time))}} type="number" defaultValue="" placeholder="הכנס זמן משחק בשניות" />
 
             </View>
+            </ScrollView>
         )
     }
     const renderLatencyExperiment = () => {
         return(
-            <View>
+            <ScrollView >
+            <View style={styles.container}>
                 <View style={{margin:10,textAlign:'right',justifyContent: 'space-between'}}>
                     <Text style={{textAlign:'right'}}>עכבה (ms)</Text>
                 </View>
@@ -138,9 +141,8 @@ const ChangeParamAdministratorScreen = (props) => {
                     <Text style={{textAlign:'right'}}>זמן משחק</Text>
                 </View>
                 <Input style={{textAlign:'right'}} onChangeText={(time)=>{store.setGameTime(parseInt(time))}} type="number" defaultValue="" placeholder="הכנס זמן משחק בשניות" />
-
-
             </View>
+            </ScrollView>
         )
     }
 
@@ -165,6 +167,7 @@ const ChangeParamAdministratorScreen = (props) => {
 
     return (
         <NativeBaseProvider>
+            <ScrollView >
             <View style={styles.container}>
                 <View>
                     <Heading size={"lg"}>בבקשה מלא את הפרטים שלך</Heading>
@@ -212,6 +215,7 @@ const ChangeParamAdministratorScreen = (props) => {
                 </View>
                 {/*<Button onPress={onEndPress}>סיום</Button>*/}
             </View>
+            </ScrollView>
         </NativeBaseProvider>
     );
 }
