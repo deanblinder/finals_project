@@ -24,6 +24,7 @@ const WelcomeScreen = (props) => {
                         source={cardImage}
                         width={400}
                         height={400}
+                        alt = {'myImage'}
                     />
                     <View style={styles.TextContainer}>
                             <Text size={"md"} style={styles.Text} >ברוך הבא לניסוי פעולה משותפת מרחוק.</Text>

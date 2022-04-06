@@ -14,11 +14,12 @@ async function getSessionIdByUserId(userId) {
 
 async function addAction(userSessionId,sessionId, actionOwner,pressTimeArr) {
     console.log("add action")
-    for(let i=0 ; i< pressTimeArr.length ; i++){
+    // for(let i=0 ; i< pressTimeArr.length ; i++){
+    const converToString = pressTimeArr.toString()
         await DButils.execQuery(
-            `INSERT INTO action VALUES ('${userSessionId}','${sessionId}','${actionOwner}','${pressTimeArr[i]}')`
+            `INSERT INTO action VALUES ('${userSessionId}','${sessionId}','${actionOwner}','${pressTimeArr}')`
         );
-    }
+    // }
 }
 
 async function deleteActionByUserSessionId(userId) {

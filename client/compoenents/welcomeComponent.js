@@ -6,7 +6,7 @@ const cardImage = require('../assets/photos/letsStart.jpg')
 const WelcomeComponent = props => {
     return (
         <View style={styles.Container}>
-            <Image style={styles.ImageContainer} source={cardImage}/>
+            <Image style={styles.ImageContainer} source={cardImage} alt = {'myImage'}/>
             <View style={styles.TextAndButtonContainer}>
                 <View style={styles.TextContainer}>
                     <Text style={{fontSize:20}} >ברוך הבא לניסוי פעולה משותפת מרחוק</Text>

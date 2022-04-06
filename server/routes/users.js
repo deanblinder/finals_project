@@ -47,9 +47,9 @@ router.post("/addUser/:mail/:age/:gender/:deviceUid/:version", async (req, res, 
         const mail = req.params.mail
         const age = req.params.age
         const gender = req.params.gender
-        const model = req.params.model
-        const version = req.params.version
-        await users_utils.addUser(mail, age, gender, model, version);
+        const model = req.params.deviceUid
+        const version = 1
+        await users_utils.addUser(model,mail, age, gender, model, version);
         res.status(200).send("The User added");
     } catch (error) {
         next(error);
