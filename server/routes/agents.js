@@ -38,7 +38,7 @@ router.post("/updateAgentByAgentType/:AgentType/:permanentDelay/:variance", asyn
         const variance = req.params.variance
 
         await agents_utils.updateAgent(AgentType,permanentDelay, variance);
-        console.log("after added")
+        console.log("after added updateAgentByAgentType")
         res.status(200).send("The Agent added");
     } catch (error) {
         next(error);

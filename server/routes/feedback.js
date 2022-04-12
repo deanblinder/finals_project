@@ -19,10 +19,12 @@ router.get("/getFeedbackByUserId/:userId", async (req, res, next) => {
 
 router.post("/addFeedback/:uuid/:feedback", async (req, res, next) => {
     try {
+        console.log('---in addFeedback---')
         const uuid = req.params.uuid
         const feedback = req.params.feedback
         const user_id = users_utils.getUserIdByUUID(uuid)
         await feedback_utils.addFeedback(user_id,feedback);
+        console.log("after addFeedback")
         res.status(201).send("The addFeedback added");
     } catch (error) {
         next(error);

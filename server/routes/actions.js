@@ -30,6 +30,7 @@ router.post("/addAction/:userId/:actionOwner/:pressTimeArr", async (req, res, ne
         // const timeRelese = new Date(req.params.timeRelese)
         const sessionId = actions_utils.getSessionIdByUserId(userSessionId);
         await actions_utils.addAction(userSessionId,sessionId, actionOwner,pressTimeArr);
+        console.log("after addAction")
         res.status(201).send("The addAction added");
     } catch (error) {
         next(error);

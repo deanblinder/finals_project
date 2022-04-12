@@ -33,12 +33,11 @@ const admin_utils = require("./utils/admin_utils");
 
 router.get("/administratorLogin/:name/:password", async (req, res, next) => {
     try {
-        console.log('---administratorLogin---')
+        console.log('---in administratorLogin---')
         const name = req.params.name
         const password = req.params.password
         const admin_details = await admin_utils.administratorLogin(name,password);
         console.log(admin_details)
-        console.log("--------")
         if (admin_details[0]) {
             console.log("in status 200")
             res.status(200).send('admin exists');

@@ -5,10 +5,11 @@ const params_utils = require("./utils/params_utils");
 
 router.get("/getParamValue/:paramName", async (req, res, next) => {
     try {
+        console.log('---in getParamValue---')
         const param_value = await params_utils.getParamValue(
             req.params.paramName
         );
-        console.log(param_value)
+        console.log("after get getParamValue: ",param_value)
         res.send(param_value).status(200);
     } catch (error) {
         next(error);
@@ -17,8 +18,9 @@ router.get("/getParamValue/:paramName", async (req, res, next) => {
 
 router.get("/getAllParamsValue", async (req, res, next) => {
     try {
+        console.log('---in getAllParamsValue---')
         const all_params_and_value = await params_utils.getAllParamsValue();
-        console.log(all_params_and_value)
+        console.log("after getAllParamsValue: ",all_params_and_value)
         res.send(all_params_and_value).status(200);
     } catch (error) {
         next(error);
@@ -45,7 +47,7 @@ router.post("/updateParamValue/:paramName/:value", async (req, res, next) => {
         const value = req.params.value
 
         await params_utils.updateParamValue(paramName,value);
-        console.log("after added")
+        console.log("after added updateParamValue")
         res.status(200).send("The param update");
     } catch (error) {
         next(error);

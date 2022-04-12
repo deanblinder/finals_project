@@ -43,10 +43,12 @@ router.get("/getAnswerByAgentType/:agent_type", async (req, res, next) => {
 
 router.post("/addNewAnswer/:user_id/:agent_type/:qDict", async (req, res, next) => {
     try {
+        console.log('---in addNewAnswer---')
         const user_id = req.params.user_id
         const agent_type = req.params.agent_type
         const qDict = req.body.qDict
         await userAnswers_utils.addNewAnswer(user_id, agent_type, qDict);
+        console.log("after addNewAnswer")
         res.status(201).send("The answers added");
     } catch (error) {
         next(error);

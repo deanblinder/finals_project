@@ -44,12 +44,14 @@ router.get("/getUserIdByUUID/:uuid", async (req, res, next) => {
 router.post("/addUser/:mail/:age/:gender/:deviceUid/:version", async (req, res, next) => {
     try {
         //id = uuid
+        console.log('---in addUser---')
         const mail = req.params.mail
         const age = req.params.age
         const gender = req.params.gender
         const model = req.params.deviceUid
         const version = 1
         await users_utils.addUser(model,mail, age, gender, model, version);
+        console.log("after added addUser")
         res.status(200).send("The User added");
     } catch (error) {
         next(error);
@@ -58,9 +60,11 @@ router.post("/addUser/:mail/:age/:gender/:deviceUid/:version", async (req, res, 
 
 router.delete("/deleteUserByEmail/:email", async (req, res, next) => {
     try {
-         await users_utils.deleteUserByEmail(
+        console.log('---in deleteUserByEmail---')
+        await users_utils.deleteUserByEmail(
             req.params.email
         );
+        console.log("after deleteUserByEmail")
         res.status(200);
     } catch (error) {
         next(error);
