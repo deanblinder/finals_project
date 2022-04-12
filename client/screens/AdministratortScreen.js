@@ -21,9 +21,9 @@ const AdministratorScreen = (props) => {
     const [showError, setShowError] = useState(false)
     const onNextPress  = async () => {
         let response;
-        if (username && password) {
-            // response = await api.administratorLogin(username, password);
-        }
+        // if (username && password) {
+        //     response = await api.administratorLogin(username, password);
+        // }
         // if (response .status === 200) {
         if (true){
             props.navigation.navigate({routeName: 'ChangeParam'});

@@ -16,7 +16,7 @@ export default function GoodByeScreen() {
 
     const press = () => {
         const deviceUUID = uuid.v4()
-        api.sendFeedBack(textAreaValue,deviceUUID)
+        api.sendFeedBack(deviceUUID,textAreaValue)
         setIsDone(true)
 
     }

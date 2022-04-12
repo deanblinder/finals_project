@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react';
-import {Alert, StyleSheet, View} from 'react-native';
+import {Alert, StyleSheet, View, Platform} from 'react-native';
 import {
     Input,
     NativeBaseProvider,
@@ -19,12 +19,19 @@ const RegisterScreen = (props) => {
     const [age,setAge] = useState(undefined)
     const [gender,setGender] = useState(undefined)
     const [deviceUid,setDeviceUid] = useState(uuid.v4())
+    const [version, setVersion] = useState(Platform.constants['Release'])
     const [showError,setShowError] = useState(false)
    const onNextPress = () => {
         if (validateAge(age) && validateEmail(mail) && gender){
        // if (true){
-            const deviceUUID = uuid.v4()
-            api.registerPlayer(mail,age,gender,deviceUid)
+       //      const deviceUUID = uuid.v4()
+       //      if (Platform.OS === 'ios'){
+       //          api.registerPlayer(mail,age,gender,deviceUid,'iso_'+version)
+       //      }
+       //      else{
+       //          api.registerPlayer(mail,age,gender,deviceUid,'android_'+version)
+       //      }
+            api.registerPlayer(mail,age,gender,deviceUid,version)
             props.navigation.navigate({routeName:'FindPlayer'});
         }
         else {
