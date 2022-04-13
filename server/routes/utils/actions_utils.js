@@ -12,12 +12,12 @@ async function getSessionIdByUserId(userId) {
     );
 }
 
-async function addAction(userSessionId,sessionId, actionOwner,pressTimeArr) {
+async function addAction(user_session_id, user_press_time,agent_press_time,experiment_info) {
     console.log("add action")
     // for(let i=0 ; i< pressTimeArr.length ; i++){
-    const converToString = pressTimeArr.toString()
+    // const converToString = pressTimeArr.toString()
         await DButils.execQuery(
-            `INSERT INTO action VALUES ('${userSessionId}','${sessionId}','${actionOwner}','${pressTimeArr}')`
+            `INSERT INTO action (user_session_id,user_press_time,agent_press_time,experiment_info) VALUES ('${user_session_id}','${user_press_time}','${agent_press_time}','${experiment_info}')`
         );
     // }
 }

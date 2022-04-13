@@ -59,8 +59,10 @@ const LatencyPlayScreen = (props) =>{
 
     const onNextPress = () => {
         const deviceUUID = uuid.v4()
-        api.sendPressTimeStamp(deviceUUID,"user",playerTimeStampArr)
-        api.sendPressTimeStamp(deviceUUID,"LatencyAgent_"+gitter+"_"+latency,agentTimeStampArr)
+        api.sendPressTimeStamp(deviceUUID,playerTimeStampArr, agentTimeStampArr, "LatencyAgent_"+gitter+"_"+latency)
+
+        // api.sendPressTimeStamp(deviceUUID,"user",playerTimeStampArr)
+        // api.sendPressTimeStamp(deviceUUID,"LatencyAgent_"+gitter+"_"+latency,agentTimeStampArr)
         props.navigation.navigate({routeName:'Questionnaire'});
     }
     const buttonFadeFunc = ({isAgent}) => {

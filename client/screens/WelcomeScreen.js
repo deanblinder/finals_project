@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet,Text } from 'react-native';
+import {Platform, StyleSheet, Text} from 'react-native';
 const cardImage = require('../assets/photos/letsStart.jpg')
 import {
     NativeBaseProvider,

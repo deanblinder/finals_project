@@ -11,9 +11,13 @@ import AdministratorScreen from "./AdministratortScreen";
 import api from "../api";
 import uuid from "react-native-uuid";
 // import GuidelineComponent from "../compoenents/GuidelineComponent";
+import {store} from '../state/state'
 
 const QuestionnaireScreen =(props) => {
     const [textAreaValue, setTextAreaValue] = useState('')
+    const [agentType,setAgentType] = useState('')
+    let [percent, setPercent] = useState(0)
+
     let [qDict, setQDict] = useState({
         questionOne:undefined,
         questionTwo:undefined,
@@ -63,13 +67,54 @@ const QuestionnaireScreen =(props) => {
         tempQDict.questionSeven=textAreaValue
         setQDict(tempQDict)
     }
+    const setPercentForGame = () => {
+        switch (store.getAgentType()) {
+            case 0:
+                setPercent(0.0)
+                break
+            case 1:
+                setPercent(0.2)
+                break
+            case 2:
+                setPercent(0.4)
+                break
+            case 3:
+                setPercent(0.6)
+                break
+            case 4:
+                setPercent(0.8)
+                break
+            case 5:
+                setPercent(1)
+                break
+            default:
+                setPercent(0.0)
+        }
+    }
+    const updateAgentType = () => {
+        // console.log("here")
+        if (store.getExperimentType() === 'followerLeader'){
+            console.log("Im in if")
 
+            setPercentForGame()
+            setAgentType("LeadFollowAgent_" + percent)
+        }
+        else{
+            console.log("Im in else")
+            setAgentType("LatencyAgent_"+store.getGitter()+"_"+store.getLatency())
+            console.log("agentType", agentType)
+        }
+    }
     const onNextPress = () =>{
         console.log(qDict)
         //send Qdict
+
         if (qDict.questionOne && qDict.questionTwo && qDict.questionThree && qDict.questionFour && qDict.questionFive && qDict.questionSix && qDict.questionSeven){
             const deviceUUID = uuid.v4()
-            api.sendQuestionnaireAnswers(qDict,deviceUUID) // send user id,
+            updateAgentType()
+            console.log("agentType", agentType)
+            api.sendAnswers(deviceUUID,agentType,qDict)
+            // api.sendQuestionnaireAnswers(qDict,agentType,deviceUUID) // send user id,
             props.navigation.navigate({routeName:'GoodBye'});
         }
     }

@@ -19,17 +19,19 @@ router.get("/getActionByUserId/:userId", async (req, res, next) => {
     }
 });
 
-router.post("/addAction/:userId/:actionOwner/:pressTimeArr", async (req, res, next) => {
+router.post("/addAction/:user_session_id/:user_press_time/:agent_press_time/:experiment_info", async (req, res, next) => {
     try {
         console.log("in router addAction")
-        const userSessionId = req.params.userId
+        const user_session_id = req.params.user_session_id
         // const sessionId = req.params.sessionId
-        const actionOwner = req.params.actionOwner
-        const  pressTimeArr = req.params.pressTimeArr
+        const user_press_time = req.params.user_press_time
+        const  agent_press_time = req.params.agent_press_time
+        const  experiment_info = req.params.experiment_info
+
         // const timePress = new Date(req.params.timePress)
         // const timeRelese = new Date(req.params.timeRelese)
-        const sessionId = actions_utils.getSessionIdByUserId(userSessionId);
-        await actions_utils.addAction(userSessionId,sessionId, actionOwner,pressTimeArr);
+        // const sessionId = actions_utils.getSessionIdByUserId(userSessionId);
+        await actions_utils.addAction(user_session_id, user_press_time,agent_press_time,experiment_info);
         console.log("after addAction")
         res.status(201).send("The addAction added");
     } catch (error) {

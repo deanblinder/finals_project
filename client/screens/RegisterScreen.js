@@ -31,6 +31,8 @@ const RegisterScreen = (props) => {
        //      else{
        //          api.registerPlayer(mail,age,gender,deviceUid,'android_'+version)
        //      }
+       // api.registerPlayer("try@try.com",28,'maale','fjdkd654',11)
+
             api.registerPlayer(mail,age,gender,deviceUid,version)
             props.navigation.navigate({routeName:'FindPlayer'});
         }

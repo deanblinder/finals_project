@@ -79,8 +79,7 @@ const LeaderFollowerPlayScreen = (props) =>{
     }
     const onNextPress = () => {
         const deviceUUID = uuid.v4()
-        api.sendPressTimeStamp(deviceUUID,"user",playerTimeStampArr)
-        api.sendPressTimeStamp(deviceUUID,"LeadFollowAgent_"+percent,agentTimeStampArr)
+        api.sendPressTimeStamp(deviceUUID,playerTimeStampArr, agentTimeStampArr, "LeadFollowAgent_"+percent)
         props.navigation.navigate({routeName:'Questionnaire'});
     }
     const buttonFadeFunc = ({isAgent}) => {

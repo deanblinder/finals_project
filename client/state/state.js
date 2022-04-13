@@ -7,6 +7,7 @@ const initialState = {
     gameTime:20,
     latency:10,
     gitter:0,
+    agentTypeForQuestionnaire: "",
 };
 
 const setters = remx.setters({
@@ -28,6 +29,9 @@ const setters = remx.setters({
     setGitter(gitter) {
         state.gitter = gitter;
     },
+    setAgentTypeForQuestionnaire(agentTypeForQuestionnaire) {
+        state.agentTypeForQuestionnaire = agentTypeForQuestionnaire;
+    },
 });
 
 const getters = remx.getters({
@@ -48,6 +52,9 @@ const getters = remx.getters({
     },
     getGitter() {
         return state.gitter;
+    },
+    getAgentTypeForQuestionnaire() {
+        return state.agentTypeForQuestionnaire;
     },
 });
 

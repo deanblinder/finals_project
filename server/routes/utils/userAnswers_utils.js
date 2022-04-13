@@ -19,13 +19,13 @@ async function getAnswerByQuestionNumber(question_number) {
     );
 }
 
-async function addNewAnswer(user_id, agent_type,qDict) {
+async function addNewAnswer(user_id, agent_type, ans_1) {
     console.log(" in addNewAnswer")
-    for (let i = 0 ; i< qDict.length ; i++){
-        await DButils.execQuery(
-            `INSERT INTO userAnswers VALUES ('${user_id}','${agent_type}','${i+1}','${qDict[i]}')`
-        );
-    }
+    // console.log(qDict)
+    // console.log("length: ", Object.keys(qDict).length)
+    await DButils.execQuery(
+        `INSERT INTO userAnswers VALUES ('${user_id}','${agent_type}','${ans_1}','${2}','${3}','${4}','${5}','${6}','${7}')`
+    );
 }
 
 async function deleteAnswerByUserId(user_id) {
