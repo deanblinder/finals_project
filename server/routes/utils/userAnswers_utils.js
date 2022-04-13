@@ -19,12 +19,12 @@ async function getAnswerByQuestionNumber(question_number) {
     );
 }
 
-async function addNewAnswer(user_id, agent_type, ans_1) {
+async function addNewAnswer(deviceUUID,agentType,ans_1,ans_2,ans_3,ans_4,ans_5,ans_6,ans_7) {
     console.log(" in addNewAnswer")
     // console.log(qDict)
     // console.log("length: ", Object.keys(qDict).length)
     await DButils.execQuery(
-        `INSERT INTO userAnswers VALUES ('${user_id}','${agent_type}','${ans_1}','${2}','${3}','${4}','${5}','${6}','${7}')`
+        `INSERT INTO userAnswers VALUES ('${user_id}','${agent_type}','${ans_1}','${ans_2}','${ans_3}','${ans_4}','${ans_5}','${ans_6}','${ans_7}')`
     );
 }
 

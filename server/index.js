@@ -21,17 +21,20 @@ app.use((_, res, next) => {
 const users = require("./routes/users");
 app.use("/users", users);
 
-const sessionsNetworkAlgo = require("./routes/sessionsNetworkAlgo");
-app.use("/sessionsNetworkAlgo", sessionsNetworkAlgo);
-
-const sessionAgentLeader = require("./routes/sessionAgentLeader");
-app.use("/sessionAgentLeader", sessionAgentLeader);
-
-const sessionsAgentFollowerAlgo = require("./routes/sessionsAgentFollowerAlgo");
-app.use("/sessionsAgentFollowerAlgo", sessionsAgentFollowerAlgo);
+// const sessionsNetworkAlgo = require("./routes/sessionsNetworkAlgo");
+// app.use("/sessionsNetworkAlgo", sessionsNetworkAlgo);
+//
+// const sessionAgentLeader = require("./routes/sessionAgentLeader");
+// app.use("/sessionAgentLeader", sessionAgentLeader);
+//
+// const sessionsAgentFollowerAlgo = require("./routes/sessionsAgentFollowerAlgo");
+// app.use("/sessionsAgentFollowerAlgo", sessionsAgentFollowerAlgo);
 
 const actions = require("./routes/actions");
 app.use("/actions", actions);
+
+const dictAns = require("./routes/dictAns");
+app.use("/dictAns", dictAns);
 
 const userAnswers = require("./routes/userAnswers");
 app.use("/userAnswers", userAnswers);

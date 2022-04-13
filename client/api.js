@@ -68,10 +68,16 @@ const createApiClient = () => {
             return axios.post(`http://192.168.98.35:3232/users/addUser/${mail}/${age}/${gender}/${deviceUid}/${version}`).then((res) => res);
         },
         sendAnswers:(deviceUUID,agentType,qDict)=>{
-            // console.log("in api registerPlayer- mail: ", mail," age: ",age, " gender: ", gender, " deviceUid: ",deviceUid, "version: ",version);
+            console.log("in api sendAnswers- qDict: ", qDict," agentType: ",agentType, "deviceUid: ",deviceUUID);
             console.log("in sendAnswers")
-            const ans_1 = qDict["questionOne"];
-            return axios.post(`http://192.168.98.35:3232/userAnswers/addAnswers/${deviceUUID}/${agentType}/${1}`).then((res) => res);
+            const ans1 = qDict["questionOne"];
+            const ans2 = qDict["questionTwo"];
+            const ans3 = qDict["questionThree"];
+            const ans4 = qDict["questionFour"];
+            const ans5 = qDict["questionFive"];
+            const ans6 = qDict["questionSix"];
+            const ans7 = qDict["questionSeven"];
+            return axios.post(`http://192.168.98.35:3232/dictAns/addAnswers/${deviceUUID}/${agentType}/${ans1}/${ans2}/${ans3}/${ans4}/${ans5}/${ans6}/${ans7}`).then((res) => res);
         },
         sendQuestionnaireAnswers:(qDict,agentType,deviceUid)=>{
             console.log("in api sendQuestionnaireAnswers- qDict[questionOne]: ", qDict["questionOne"]," agentType: ",agentType, "deviceUid: ",deviceUid);
