@@ -3,7 +3,6 @@ var router = express.Router();
 const userAnswers_utils = require("./utils/userAnswers_utils");
 const users_utils = require("./utils/users_utils");
 
-console.log("yessss")
 // router.get("/getAnswerByUserId/:userId", async (req, res, next) => {
 //     try {
 //         const user_answers_details = await userAnswers_utils.getAnswerByUserId(

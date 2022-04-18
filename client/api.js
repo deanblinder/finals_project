@@ -65,10 +65,15 @@ const createApiClient = () => {
         registerPlayer:(mail,age,gender,deviceUid,version)=>{
             // console.log("in api registerPlayer- mail: ", mail," age: ",age, " gender: ", gender, " deviceUid: ",deviceUid, "version: ",version);
 
-            return axios.post(`http://192.168.98.35:3232/users/addUser/${mail}/${age}/${gender}/${deviceUid}/${version}`).then((res) => res);
+            return axios.post(`http://192.168.98.35:3232/users/addUser/${mail}/${age}/${gender}/${deviceUid}/${version}`)
+                .then((res) => res);
         },
-        sendAnswers:(deviceUUID,agentType,qDict)=>{
-            console.log("in api sendAnswers- qDict: ", qDict," agentType: ",agentType, "deviceUid: ",deviceUUID);
+        sendAnswers: (user_id, agent_type, qDict) => {
+            // console.log("in api sendAnswers- qDict: ", qDict," agent_type: ",agent_type, "deviceUid: ",user_id);
+            agent_type = 'LeadFollow_0.2'
+            // console.log(agent_type)
+            // console.log(user_id)
+            // console.log(qDict["questionOne"])
             console.log("in sendAnswers")
             const ans1 = qDict["questionOne"];
             const ans2 = qDict["questionTwo"];
@@ -77,12 +82,13 @@ const createApiClient = () => {
             const ans5 = qDict["questionFive"];
             const ans6 = qDict["questionSix"];
             const ans7 = qDict["questionSeven"];
-            return axios.post(`http://192.168.98.35:3232/dictAns/addAnswers/${deviceUUID}/${agentType}/${ans1}/${ans2}/${ans3}/${ans4}/${ans5}/${ans6}/${ans7}`).then((res) => res);
+            return axios.get(`http://192.168.98.35:3232/dictAns/addAnswers/${user_id}/${agent_type}/${ans1}/${ans2}/${ans3}/${ans4}/${ans5}/${ans6}/${ans7}`)
+                .then((res) => res);
         },
         sendQuestionnaireAnswers:(qDict,agentType,deviceUid)=>{
             console.log("in api sendQuestionnaireAnswers- qDict[questionOne]: ", qDict["questionOne"]," agentType: ",agentType, "deviceUid: ",deviceUid);
-            return axios.post(`http://192.168.98.35:3232/feedback/addFeedback/${deviceUid}/${agentType}`).then((res) => res);
-            // return axios.post(`http://192.168.98.35:3232/userAnswers/addNewAnswer/${deviceUid}/${agentType}/${qDict['questionOne']}/${qDict['questionTwo']}/${qDict['questionThree']}/${qDict['questionFour']}/${qDict['questionFive']}/${qDict['questionSix']}/${qDict['questionSeven']}`).then((res) => res);
+            // return axios.post(`http://192.168.98.35:3232/feedback/addFeedback/${deviceUid}/${agentType}`).then((res) => res);
+            return axios.post(`http://192.168.98.35:3232/userAnswers/addNewAnswer/${deviceUid}/${agentType}/${qDict['questionOne']}/${qDict['questionTwo']}/${qDict['questionThree']}/${qDict['questionFour']}/${qDict['questionFive']}/${qDict['questionSix']}/${qDict['questionSeven']}`).then((res) => res);
         },
         sendFeedBack:(deviceUUID, feedBack)=>{
             console.log("in api sendFeedBack- deviceUUID: ", deviceUUID," feedBack: ",feedBack);

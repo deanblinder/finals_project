@@ -15,7 +15,7 @@ import {store} from '../state/state'
 
 const QuestionnaireScreen =(props) => {
     const [textAreaValue, setTextAreaValue] = useState('')
-    const [agentType,setAgentType] = useState('')
+    const [agent_type,setAgent_type] = useState('')
     let [percent, setPercent] = useState(0)
 
     let [qDict, setQDict] = useState({
@@ -94,27 +94,27 @@ const QuestionnaireScreen =(props) => {
     const updateAgentType = () => {
         // console.log("here")
         if (store.getExperimentType() === 'followerLeader'){
-            console.log("Im in if")
+            // console.log("Im in if")
 
             setPercentForGame()
-            setAgentType("LeadFollowAgent_" + percent)
+            setAgent_type("LeadFollowAgent_" + percent)
         }
         else{
-            console.log("Im in else")
-            setAgentType("LatencyAgent_"+store.getGitter()+"_"+store.getLatency())
-            console.log("agentType", agentType)
+            // console.log("Im in else")
+            setAgent_type("LatencyAgent_"+store.getGitter()+"_"+store.getLatency())
+            // console.log("agentType", agent_type)
         }
     }
     const onNextPress = () =>{
-        console.log(qDict)
+        // console.log(qDict)
         //send Qdict
 
         if (qDict.questionOne && qDict.questionTwo && qDict.questionThree && qDict.questionFour && qDict.questionFive && qDict.questionSix && qDict.questionSeven){
-            const deviceUUID = uuid.v4()
+            const user_id = uuid.v4()
             updateAgentType()
-            console.log("agentType", agentType)
-            api.sendAnswers(deviceUUID,agentType,qDict)
-            // api.sendQuestionnaireAnswers(qDict,agentType,deviceUUID) // send user id,
+            console.log("agent_type", agent_type)
+            api.sendAnswers(user_id,agent_type,qDict)
+            // api.sendQuestionnaireAnswers(qDict,agent_type,deviceUUID) // send user id,
             props.navigation.navigate({routeName:'GoodBye'});
         }
     }

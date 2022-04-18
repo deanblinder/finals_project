@@ -1,10 +1,12 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const app = express();
+var cors = require('cors')
 
+app.use(cors())
 const PORT = 3232;
 // app.use(bodyParser({limit: '50mb'}));
-// app.use(bodyParser.json());
+app.use(bodyParser.json());
 // app.use(bodyParser.urlencoded());
 
 // app.use(bodyParser.json());
@@ -17,7 +19,11 @@ app.use((_, res, next) => {
     res.setHeader('Access-Control-Allow-Headers', '*');
     next();
 });
-
+// app.use('*',(req, res, next) => {
+//     console.log(req.originalUrl)
+//     console.log(req.url)
+//
+// })
 const users = require("./routes/users");
 app.use("/users", users);
 
@@ -29,12 +35,14 @@ app.use("/users", users);
 //
 // const sessionsAgentFollowerAlgo = require("./routes/sessionsAgentFollowerAlgo");
 // app.use("/sessionsAgentFollowerAlgo", sessionsAgentFollowerAlgo);
+const dictAns = require("./routes/dictAns");
+app.use("/dictAns", dictAns);
 
 const actions = require("./routes/actions");
 app.use("/actions", actions);
 
-const dictAns = require("./routes/dictAns");
-app.use("/dictAns", dictAns);
+// const dictAns = require("./routes/dictAns");
+// app.use("/dictAns", dictAns);
 
 const userAnswers = require("./routes/userAnswers");
 app.use("/userAnswers", userAnswers);
