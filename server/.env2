@@ -1,0 +1,19 @@
+server='132.72.116.72'
+database=projectDB
+  options: {
+    trustedConnection: true,
+    enableArithAbort: true,
+    instanceName: 'ISE-INTNET-W39 '
+  }
+port: 3039
+
+
+tedious_userName=syncAdmin
+tedious_password=A12345a!
+tedious_server=syncproject.database.windows.net
+tedious_database=projectDB
+  options: {
+    encrypt: true,
+    enableArithAbort: true
+  }
+

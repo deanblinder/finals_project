@@ -2,12 +2,14 @@ require("dotenv").config();
 const sql = require("mssql");
 
 const config = {
-    server: process.env.tedious_server,
-    database: process.env.tedious_database,
+    server: process.env.server,
+    database: process.env.database,
     options: {
         trustedConnection: true,
-        enableArithAbort: true
+        enableArithAbort: true,
+        instanceName: 'ISE-INTNET-W39 '
     },
+    port:3039
 };
 
 const pool = new sql.ConnectionPool(config);
