@@ -1,9 +1,9 @@
 const DButils = require("./DButils");
 
-async function getUserById(user_id) {
+async function getUserById() {
     console.log(" in getUserById")
     return await DButils.execQuery(
-        `select * from Users where id='${user_id}'`
+        '* from Users'
     );
 }
 async function getUserByEmail(email) {
@@ -20,10 +20,10 @@ async function getUserIdByUUID(uuid) {
     );
 }
 
-async function addUser(id,email, age,gender, model,version ) {
+async function addUser(email, age,gender, model,version ) {
     console.log("in addUser")
     await DButils.execQuery(
-        `INSERT INTO Users VALUES ('${id}','${email}','${age}','${gender}', '${model}', '${version}' )`
+        `INSERT INTO Users VALUES ('${email}','${age}','${gender}', '${model}', '${version}' )`
     );
 }
 
