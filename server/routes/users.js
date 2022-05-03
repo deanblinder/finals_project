@@ -4,11 +4,9 @@ const users_utils = require("./utils/users_utils");
 
 
 
-router.get("/getUserById/:userId", async (req, res, next) => {
+router.get("/getUserById", async (req, res, next) => {
     try {
-        const user_details = await users_utils.getUserById(
-            req.params.userId
-        );
+        const user_details = await users_utils.getUserById();
         console.log(user_details)
         res.send(user_details).status(200);
     } catch (error) {
@@ -50,7 +48,7 @@ router.post("/addUser/:mail/:age/:gender/:deviceUid/:version", async (req, res, 
         const gender = req.params.gender
         const model = req.params.deviceUid
         const version = 1
-        await users_utils.addUser(model,mail, age, gender, model, version);
+        await users_utils.addUser(mail, age, gender, model, version);
         console.log("after added addUser")
         res.status(200).send("The User added");
     } catch (error) {

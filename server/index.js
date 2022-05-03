@@ -2,12 +2,10 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const app = express();
 
-const PORT = 3232;
+const PORT = 1433;
 // app.use(bodyParser({limit: '50mb'}));
 // app.use(bodyParser.json());
-// app.use(bodyParser.urlencoded());
 
-// app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: true
 }));
@@ -20,15 +18,6 @@ app.use((_, res, next) => {
 
 const users = require("./routes/users");
 app.use("/users", users);
-
-// const sessionsNetworkAlgo = require("./routes/sessionsNetworkAlgo");
-// app.use("/sessionsNetworkAlgo", sessionsNetworkAlgo);
-//
-// const sessionAgentLeader = require("./routes/sessionAgentLeader");
-// app.use("/sessionAgentLeader", sessionAgentLeader);
-//
-// const sessionsAgentFollowerAlgo = require("./routes/sessionsAgentFollowerAlgo");
-// app.use("/sessionsAgentFollowerAlgo", sessionsAgentFollowerAlgo);
 
 const actions = require("./routes/actions");
 app.use("/actions", actions);
