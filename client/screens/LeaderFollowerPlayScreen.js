@@ -71,7 +71,7 @@ const LeaderFollowerPlayScreen = (props) =>{
         // const deviceUUID = uuid.v4()
         console.log("agent pressed: ", numberOfAgentPresses, " times")
         console.log("player pressed: ", numberOfPresses, " times")
-        // api.sendPressTimeStamp(store.getModel(),playerTimeStampArr, agentTimeStampArr, "LeadFollowAgent_"+store.getWeight())
+        api.sendPressTimeStamp(store.getModel(),playerTimeStampArr, agentTimeStampArr, "LeadFollowAgent_"+store.getWeight())
         props.navigation.navigate({routeName:'Questionnaire'});
     }
     const buttonFadeFunc = ({isAgent}) => {
@@ -89,8 +89,8 @@ const LeaderFollowerPlayScreen = (props) =>{
       }
     }
     const playAgain = () => {
-        console.log("agent pressed: ", numberOfAgentPresses, " times")
-        console.log("player pressed: ", numberOfPresses, " times")
+        // console.log("agent pressed: ", numberOfAgentPresses, " times")
+        // console.log("player pressed: ", numberOfPresses, " times")
         // console.log(agentTimeStampArr)
         props.navigation.navigate({routeName:'FindPlayer'});
     }
@@ -99,8 +99,11 @@ const LeaderFollowerPlayScreen = (props) =>{
         let timeStamp = new Date().getTime()
         // console.log("timestamp ", timeStamp)
         buttonFadeFunc({isAgent:true})
-        agentTimeStampArr.push(timeStamp)
-        // setAgentTimeStampArr([...agentTimeStampArr,timeStamp])
+        const arr = agentTimeStampArr
+        arr.push(timeStamp)
+        // agentTimeStampArr.push(timeStamp)
+
+        setAgentTimeStampArr(arr)
         // console.log("first array: ", agentTimeStampArr)
 
         // console.log("agent array ", agentTimeStampArr)
@@ -109,10 +112,14 @@ const LeaderFollowerPlayScreen = (props) =>{
         // console.log("number of agent pressed ", numberOfAgentPresses)
 
         if (numberOfAgentPresses >= 2) {
+
             let diffBetweenAgentPresses = agentTimeStampArr[agentTimeStampArr.length - 1] - agentTimeStampArr[agentTimeStampArr.length - 2]
             // setAgentDiffPressArr([...agentDiffPressArr,diffBetweenAgentPresses])
-            agentDiffPressArr.push(diffBetweenAgentPresses)
-            console.log("diff array:", agentDiffPressArr)
+            const diff_arr = agentDiffPressArr
+            diff_arr.push(diffBetweenAgentPresses)
+            setAgentDiffPressArr(diff_arr)
+            // agentDiffPressArr.push(diffBetweenAgentPresses)
+            // console.log("diff array:", agentDiffPressArr)
             let sumOfAgentDiffPressArr = mySum(agentDiffPressArr, parseInt(store.getAvgOff()));
             // setAvgAgentPresses(sumOfAgentDiffPressArr/parseInt(store.getAvgOff()))
             avgAgentPresses = sumOfAgentDiffPressArr / parseInt(store.getAvgOff())
@@ -121,7 +128,7 @@ const LeaderFollowerPlayScreen = (props) =>{
             // console.log("agent pressed in the second: ", sumOfAgentDiffPressArr, " times")
         }
         setNumberOfAgentPresses(numberOfAgentPresses + 1)
-        console.log("numberOfAgentPresses" ,numberOfAgentPresses)
+        // console.log("numberOfAgentPresses" ,numberOfAgentPresses)
         // }
 
     }
@@ -147,10 +154,10 @@ const LeaderFollowerPlayScreen = (props) =>{
             avgPlayerPresses = sumOfPlayerDiffPressArr / (numOfLastPresses === 0 ? 1 : numOfLastPresses)
             // setAvgPlayerPresses(sumOfPlayerDiffPressArr / (numOfLastPresses === 0 ? 1 : numOfLastPresses))
             // console.log("avgPlayerPresses: ", avgPlayerPresses)
-            // const listeningLevel = (((1 - store.getWeight()) * avgPlayerPresses) + (store.getWeight() * avgAgentPresses))
-            const listeningLevel_new = (((1) * avgPlayerPresses) + (0 * avgAgentPresses))
-            listeningLevel = listeningLevel_new
-            // setLinsteningLevel(listeningLevel)
+            const listeningLevel_new = (((1 - store.getWeight()) * avgPlayerPresses) + (store.getWeight() * avgAgentPresses))
+            // const listeningLevel_new = (((1) * avgPlayerPresses) + (0 * avgAgentPresses))
+            // listeningLevel = listeningLevel_new
+            setLinsteningLevel(listeningLevel_new)
             // console.log("listen", listeningLevel)
             let timeStamp2 = new Date().getTime()
             let timePassed = timeStamp2 - timeStamp
