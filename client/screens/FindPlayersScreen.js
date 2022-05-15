@@ -20,14 +20,13 @@ const FindPlayersScreen = (props) => {
         }, (Math.floor(Math.random() * 5)+1)*1000);
     });
     const press = () =>{
+        store.setCountMiniGames(store.getCountMiniGames()+1)
         if (store.getExperimentType() === 'followerLeader'){
             props.navigation.navigate({routeName:'LeaderFollowerPlay'})
         }
         else {
             props.navigation.navigate({routeName:'LatencyPlay'})
         }
-        //     props.navigation.navigate({routeName:'Try'})
-
     }
     return (
         <NativeBaseProvider>

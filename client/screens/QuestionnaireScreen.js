@@ -12,11 +12,17 @@ import api from "../api";
 import uuid from "react-native-uuid";
 // import GuidelineComponent from "../compoenents/GuidelineComponent";
 import {store} from '../state/state'
+// import {state} from "remx";
 
 const QuestionnaireScreen =(props) => {
     const [textAreaValue, setTextAreaValue] = useState('')
-    const [agent_type,setAgent_type] = useState('')
-    let [percent, setPercent] = useState(0)
+    let [agent_type,setAgent_type] = useState('')
+    // const [deviceUid,setDeviceUid] = useState(uuid.v4())
+
+    // let [percent, setPercent] = useState(0)
+    // let countMiniGames = 0
+    // let [countMiniGames, setCountMiniGames] = useState(0)
+
 
     let [qDict, setQDict] = useState({
         questionOne:undefined,
@@ -67,37 +73,40 @@ const QuestionnaireScreen =(props) => {
         tempQDict.questionSeven=textAreaValue
         setQDict(tempQDict)
     }
-    const setPercentForGame = () => {
-        switch (store.getAgentType()) {
-            case 0:
-                setPercent(0.0)
-                break
-            case 1:
-                setPercent(0.2)
-                break
-            case 2:
-                setPercent(0.4)
-                break
-            case 3:
-                setPercent(0.6)
-                break
-            case 4:
-                setPercent(0.8)
-                break
-            case 5:
-                setPercent(1)
-                break
-            default:
-                setPercent(0.0)
-        }
-    }
+    // const setPercentForGame = () => {
+    //     switch (store.getAgentType()) {
+    //         case 0:
+    //             setPercent(0.0)
+    //             break
+    //         case 1:
+    //             setPercent(0.2)
+    //             break
+    //         case 2:
+    //             setPercent(0.4)
+    //             break
+    //         case 3:
+    //             setPercent(0.6)
+    //             break
+    //         case 4:
+    //             setPercent(0.8)
+    //             break
+    //         case 5:
+    //             setPercent(1)
+    //             break
+    //         default:
+    //             setPercent(0.0)
+    //     }
+    // }
     const updateAgentType = () => {
         // console.log("here")
         if (store.getExperimentType() === 'followerLeader'){
             // console.log("Im in if")
 
-            setPercentForGame()
-            setAgent_type("LeadFollowAgent_" + percent)
+            // setPercentForGame()
+            //old one -  setAgent_type("LeadFollowAgent_" + percent)
+            // setAgent_type("LeadFollowAgent_" + store.getWeight())
+            agent_type = "LeadFollowAgent_" + store.getWeight()
+            console.log("agent_type:", agent_type)
         }
         else{
             // console.log("Im in else")
@@ -110,12 +119,34 @@ const QuestionnaireScreen =(props) => {
         //send Qdict
 
         if (qDict.questionOne && qDict.questionTwo && qDict.questionThree && qDict.questionFour && qDict.questionFive && qDict.questionSix && qDict.questionSeven){
-            const user_id = uuid.v4()
+            // const user_id = uuid.v4()
             updateAgentType()
-            console.log("agent_type", agent_type)
-            api.sendAnswers(user_id,agent_type,qDict)
+            // console.log("agent_type", agent_type)
+            api.sendAnswers(store.getModel(),agent_type,qDict)
             // api.sendQuestionnaireAnswers(qDict,agent_type,deviceUUID) // send user id,
-            props.navigation.navigate({routeName:'GoodBye'});
+            console.log("count before is now: ", store.getCountMiniGames())
+            if(store.getCountMiniGames()<3){
+                // let temp = store.getcountMiniGames() + 1
+                // store.setcountMiniGames(temp)
+                // setCountMiniGames(countMiniGames++)
+                // countMiniGames = countMiniGames + 1
+                // console.log("Finished Game. count after is now: ", store.getcountMiniGames())
+
+                props.navigation.navigate({routeName:'FindPlayer'});
+
+                // if (store.getExperimentType() === 'followerLeader'){
+                //     props.navigation.navigate({routeName:'LeaderFollowerPlay'})
+                // }
+                // else {
+                //     props.navigation.navigate({routeName:'LatencyPlay'})
+                // }
+            }
+            else {
+                // console.log("last game, count now: ", store.getcountMiniGames())
+                // store.setcountMiniGames(0)
+                // countMiniGames = 0
+                props.navigation.navigate({routeName: 'GoodBye'});
+            }
         }
     }
     return (

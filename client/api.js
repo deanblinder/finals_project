@@ -69,12 +69,14 @@ const createApiClient = () => {
                 .then((res) => res);
         },
         sendAnswers: (user_id, agent_type, qDict) => {
+
             // console.log("in api sendAnswers- qDict: ", qDict," agent_type: ",agent_type, "deviceUid: ",user_id);
-            agent_type = 'LeadFollow_0.2'
+            // agent_type = 'LeadFollow_0.2'
             // console.log(agent_type)
             // console.log(user_id)
             // console.log(qDict["questionOne"])
             console.log("in sendAnswers")
+            console.log(user_id," ", agent_type," ", qDict)
             const ans1 = qDict["questionOne"];
             const ans2 = qDict["questionTwo"];
             const ans3 = qDict["questionThree"];

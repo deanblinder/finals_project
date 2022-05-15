@@ -11,6 +11,8 @@ import {
     Button,
     Select, CheckIcon, Text
 } from 'native-base';
+import {store} from '../state/state'
+
 import api from "../api";
 import uuid from 'react-native-uuid';
 
@@ -18,8 +20,8 @@ const RegisterScreen = (props) => {
     const [mail,setMail] = useState(undefined)
     const [age,setAge] = useState(undefined)
     const [gender,setGender] = useState(undefined)
-    const [deviceUid,setDeviceUid] = useState(uuid.v4())
-    const [version, setVersion] = useState(Platform.constants['Release'])
+    // const [deviceUid,setDeviceUid] = useState(uuid.v4())
+    // const [version, setVersion] = useState(Platform.constants['Release'])
     const [showError,setShowError] = useState(false)
    const onNextPress = () => {
         if (validateAge(age) && validateEmail(mail) && gender){
@@ -32,8 +34,8 @@ const RegisterScreen = (props) => {
        //          api.registerPlayer(mail,age,gender,deviceUid,'android_'+version)
        //      }
        // api.registerPlayer("try@try.com",28,'maale','fjdkd654',11)
-
-            api.registerPlayer(mail,age,gender,deviceUid,version)
+            console.log("version:", store.getVersion())
+            api.registerPlayer(mail,age,gender,store.getModel(),store.getVersion())
             props.navigation.navigate({routeName:'FindPlayer'});
         }
         else {

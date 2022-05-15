@@ -22,8 +22,8 @@ const LatencyPlayScreen = (props) =>{
     let [isIntervalID1,setIsIntervalID1] = useState(true)
     let [numberOfAgentPresses,setNumberOfAgentPresses] = useState(false)
     let [timePassedId,setTimePassedId] = useState(null)
-    let [gitter,setGitter] = useState(0)
-    let [latency,setLatency] = useState(0)
+    // let [gitter,setGitter] = useState(0)
+    // let [latency,setLatency] = useState(0)
     let [playerTimeStamp, setPlayerTimeStamp] = useState(0)
     let [agentTimeStamp, setAgentTimeStamp] = useState(0)
     let [isFinish,setIsFinish] = useState(false)
@@ -31,8 +31,9 @@ const LatencyPlayScreen = (props) =>{
     let sumOfPlayerDiffPressArr = 0
     const TIME_UNTIL_AGENT_STOP_PRESS = 7000
     useEffect(() => {
-        setLatency(store.getLatency())
-        setGitter(store.getGitter())
+        setGitterLatencyForGame()
+        // setLatency(store.getLatency())
+        // setGitter(store.getGitter())
         setMyInterval1(setInterval(agentPress,2000))
         setTimeout(() => {
             setIsFinish(true)
@@ -59,10 +60,10 @@ const LatencyPlayScreen = (props) =>{
 
     const onNextPress = () => {
         const deviceUUID = uuid.v4()
-        api.sendPressTimeStamp(deviceUUID,playerTimeStampArr, agentTimeStampArr, "LatencyAgent_"+gitter+"_"+latency)
+        api.sendPressTimeStamp(deviceUUID,playerTimeStampArr, agentTimeStampArr, "LatencyAgent_"+store.getGitter()+"_"+store.getLatency())
 
-        // api.sendPressTimeStamp(deviceUUID,"user",playerTimeStampArr)
-        // api.sendPressTimeStamp(deviceUUID,"LatencyAgent_"+gitter+"_"+latency,agentTimeStampArr)
+        ////// api.sendPressTimeStamp(deviceUUID,"user",playerTimeStampArr)
+        ////// api.sendPressTimeStamp(deviceUUID,"LatencyAgent_"+gitter+"_"+latency,agentTimeStampArr)
         props.navigation.navigate({routeName:'Questionnaire'});
     }
     const buttonFadeFunc = ({isAgent}) => {
@@ -117,12 +118,14 @@ const LatencyPlayScreen = (props) =>{
             sumOfPlayerDiffPressArr = mySum(playerDiffPressArr, num);
             setAvgPlayerPresses(sumOfPlayerDiffPressArr / (num === 0 ? 1 : num))
             const listeningLevel = (((1 - percent) * avgPlayerPresses) + (percent * avgAgentPresses))
-            let rndGitter = Math.floor(Math.random() * gitter)
+            // console.log("gitter", gitter)
+            // console.log("latency", latency)
+            let rndGitter = Math.floor(Math.random() * store.getGitter())
             const rand = Math.random()
             if (rand >= 0.5){
                 rndGitter = rndGitter*-1
             }
-            const LatencyGitter = ((listeningLevel + latency) + rndGitter)
+            const LatencyGitter = ((listeningLevel + store.getLatency()) + rndGitter)
             let timeStamp2 = new Date().getTime()
             let timePassed = timeStamp2 - timeStamp
             if (listeningLevel !== 0){
@@ -144,7 +147,17 @@ const LatencyPlayScreen = (props) =>{
         }
         setNumberOfPresses(numberOfPresses +1)
     }
-
+    const setGitterLatencyForGame = () => {
+        let randomIndex = getRndInteger(0,store.getGitterParams().length)
+        let gitterExperience = store.getGitterParams()[randomIndex]
+        let latencyExperience = store.getLatencyParams()[randomIndex]
+        store.setGitter(gitterExperience)
+        store.setLatency(latencyExperience)
+        console.log("gitterAfter: ", store.getGitter())
+        console.log("latencyAfter: ", store.getLatency())
+        store.setDeleteGitterParams(randomIndex)
+        store.setDeleteLatencyParams(randomIndex)
+    }
     const agentButtonFadeIn = () => {
         // Will change fadeAnim value to 1 in 5 seconds
         Animated.timing(agentOpacity, {
@@ -175,6 +188,9 @@ const LatencyPlayScreen = (props) =>{
             useNativeDriver:true
         }).start();
     };
+    const getRndInteger = (min,max) => {
+        return Math.floor(Math.random() * (max - min)) + min;
+    }
     const mySum = (arr,num) => {
         let sum = 0;
         if (arr.length-num < 0){

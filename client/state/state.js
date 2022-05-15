@@ -1,4 +1,7 @@
 import * as remx from 'remx';
+///latency, followerLeader
+import uuid from 'react-native-uuid';
+import {Platform} from "react-native";
 
 const initialState = {
     experimentType: 'followerLeader',
@@ -7,7 +10,18 @@ const initialState = {
     gameTime:20,
     latency:10,
     gitter:0,
+    weight:0,
     agentTypeForQuestionnaire: "",
+    weightExp:[0.2,0.4,0.6],
+    // weightExpRandom:[],
+    gitterParams:[10,100,150],
+    // gitterParamsRandom:[],
+    latencyParams:[30,80,400],
+    modelDevice:uuid.v4(),
+    versionDevice:Platform.constants['Release'],
+    // latencyParamsRandom:[],
+
+    countMiniGames:0
 };
 
 const setters = remx.setters({
@@ -29,8 +43,29 @@ const setters = remx.setters({
     setGitter(gitter) {
         state.gitter = gitter;
     },
+    setDeleteWeightExp(weightIndex) {
+        state.weightExp.splice(weightIndex,1)
+    },
+    setWeight(weight) {
+        state.weight = weight
+    },
+    // setGitterParamsRandom(gitterParam) {
+    //     state.gitterParamsRandom.push(gitterParam)
+    // },
+    setDeleteGitterParams(gitterIndex) {
+        state.gitterParams.splice(gitterIndex,1)
+    },
+    setDeleteLatencyParams(latencyIndex) {
+        state.latencyParams.splice(latencyIndex,1)
+    },
+    // setLatencyParamsRandom(latencyParam) {
+    //     state.latencyParamsRandom.push(latencyParam)
+    // },
     setAgentTypeForQuestionnaire(agentTypeForQuestionnaire) {
         state.agentTypeForQuestionnaire = agentTypeForQuestionnaire;
+    },
+    setCountMiniGames(countMiniGames) {
+        state.countMiniGames = countMiniGames;
     },
 });
 
@@ -43,7 +78,7 @@ const getters = remx.getters({
     },
     getGameTime() {
         return state.gameTime;
-        },
+    },
     getExperimentType() {
         return state.experimentType;
     },
@@ -55,6 +90,33 @@ const getters = remx.getters({
     },
     getAgentTypeForQuestionnaire() {
         return state.agentTypeForQuestionnaire;
+    },
+    getWeightExp() {
+        return state.weightExp;
+    },
+    getGitterParams() {
+        return state.gitterParams;
+    },
+    getLatencyParams() {
+        return state.latencyParams;
+    },
+    getWeight() {
+        return state.weight;
+    },
+    getModel() {
+        return state.modelDevice;
+    },
+    getVersion() {
+        return state.versionDevice;
+    },
+    // getGitterParamsRandom() {
+    //     return state.gitterParamsRandom;
+    // },
+    // getLatencyParamsRandom() {
+    //     return state.latencyParamsRandom;
+    // },
+    getCountMiniGames() {
+        return state.countMiniGames;
     },
 });
 

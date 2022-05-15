@@ -13,10 +13,11 @@ import api from "../api";
 export default function GoodByeScreen() {
     const [textAreaValue, setTextAreaValue] = useState('')
     const [isDone,setIsDone] = useState(false)
+    const [deviceUid,setDeviceUid] = useState(uuid.v4())
 
     const press = () => {
-        const deviceUUID = uuid.v4()
-        api.sendFeedBack(deviceUUID,textAreaValue)
+        // const deviceUUID = uuid.v4()
+        api.sendFeedBack(deviceUid,textAreaValue)
         setIsDone(true)
 
     }

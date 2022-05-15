@@ -18,7 +18,7 @@
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-native": "0.64.3",
-    "react-native-device-info": "^8.4.8",
+    "react-native-device-info": "^8.7.1",
     "react-native-device-uuid": "^1.2.0",
     "react-native-deviceinfo": "^0.10.4",
     "react-native-gesture-handler": "~1.10.2",
@@ -32,6 +32,7 @@
     "react-native-web": "0.17.1",
     "react-navigation": "^4.4.4",
     "react-navigation-header-buttons": "^6.3.1",
+    "react-uuid": "^1.0.2",
     "remx": "^4.0.108-rc.4",
     "use-interval": "^1.4.0"
   },
