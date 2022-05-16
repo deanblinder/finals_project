@@ -69,8 +69,8 @@ const LeaderFollowerPlayScreen = (props) =>{
     }
     const onNextPress = () => {
         // const deviceUUID = uuid.v4()
-        console.log("agent pressed: ", numberOfAgentPresses, " times")
-        console.log("player pressed: ", numberOfPresses, " times")
+        // console.log("agent pressed: ", numberOfAgentPresses, " times")
+        // console.log("player pressed: ", numberOfPresses, " times")
         api.sendPressTimeStamp(store.getModel(),playerTimeStampArr, agentTimeStampArr, "LeadFollowAgent_"+store.getWeight())
         props.navigation.navigate({routeName:'Questionnaire'});
     }
@@ -95,21 +95,16 @@ const LeaderFollowerPlayScreen = (props) =>{
         props.navigation.navigate({routeName:'FindPlayer'});
     }
     const agentPress = () => {
-        // if((isIntervalID1 === true && isIntervalID2 === false) || (isIntervalID1 === false && isIntervalID2 === true)) {
         let timeStamp = new Date().getTime()
-        // console.log("timestamp ", timeStamp)
         buttonFadeFunc({isAgent:true})
         const arr = agentTimeStampArr
         arr.push(timeStamp)
         // agentTimeStampArr.push(timeStamp)
 
         setAgentTimeStampArr(arr)
-        // console.log("first array: ", agentTimeStampArr)
 
-        // console.log("agent array ", agentTimeStampArr)
         // let diffBetweenAgentPresses
         // numberOfAgentPresses = numberOfAgentPresses+1
-        // console.log("number of agent pressed ", numberOfAgentPresses)
 
         if (numberOfAgentPresses >= 2) {
 
@@ -119,18 +114,13 @@ const LeaderFollowerPlayScreen = (props) =>{
             diff_arr.push(diffBetweenAgentPresses)
             setAgentDiffPressArr(diff_arr)
             // agentDiffPressArr.push(diffBetweenAgentPresses)
-            // console.log("diff array:", agentDiffPressArr)
             let sumOfAgentDiffPressArr = mySum(agentDiffPressArr, parseInt(store.getAvgOff()));
             // setAvgAgentPresses(sumOfAgentDiffPressArr/parseInt(store.getAvgOff()))
             avgAgentPresses = sumOfAgentDiffPressArr / parseInt(store.getAvgOff())
-            // console.log("setAvgAgentPresses:", avgAgentPresses)
 
-            // console.log("agent pressed in the second: ", sumOfAgentDiffPressArr, " times")
         }
-        setNumberOfAgentPresses(numberOfAgentPresses + 1)
-        // console.log("numberOfAgentPresses" ,numberOfAgentPresses)
-        // }
-
+        setNumberOfAgentPresses(numberOfAgentPresses => numberOfAgentPresses + 1)
+        console.log("numberPress: ", numberOfAgentPresses)
     }
     const playerPress = () => {
         clearTimeout(timePassedId)
@@ -163,7 +153,7 @@ const LeaderFollowerPlayScreen = (props) =>{
             let timePassed = timeStamp2 - timeStamp
             if (listeningLevel !== 0){
                 if (isIntervalID1) {
-                    // setMyInterval2(setInterval(agentPress, listeningLevel))
+                    setMyInterval2(setInterval(agentPress, listeningLevel))
                     setTimeout(() => {
                         clearInterval(intervalID1)
                     }, (listeningLevel - (timePassed - 100)))
@@ -179,7 +169,7 @@ const LeaderFollowerPlayScreen = (props) =>{
                 // setIsIntervalID2(!isIntervalID2)
             }
         }
-        setNumberOfPresses(numberOfPresses +1)
+        setNumberOfPresses(numberOfPresses => numberOfPresses +1)
 
     }
 

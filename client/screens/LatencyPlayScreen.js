@@ -81,21 +81,30 @@ const LatencyPlayScreen = (props) =>{
         }
     }
     const playAgain = () => {
+        console.log("agentARR: ", agentTimeStampArr.length)
+        console.log("playerARR: ", playerTimeStampArr.length)
         props.navigation.navigate({routeName:'FindPlayer'});
     }
     const agentPress = () => {
         buttonFadeFunc({isAgent:true})
         let timeStamp = new Date().getTime()
-        setAgentTimeStamp(timeStamp)
-        setAgentTimeStampArr([...agentTimeStampArr,timeStamp])
-        let diffBetweenAgentPresses
+        const arr = agentTimeStampArr
+        arr.push(timeStamp)
+        setAgentTimeStampArr(arr)
+
+        // setAgentTimeStamp(timeStamp)
+        // setAgentTimeStampArr([...agentTimeStampArr,timeStamp])
+        // let diffBetweenAgentPresses
         if (numberOfAgentPresses >= 2){
-            diffBetweenAgentPresses = agentTimeStampArr[agentTimeStampArr.length-1]-agentTimeStampArr[agentTimeStampArr.length-2]
-            setAgentDiffPressArr([...agentDiffPressArr,diffBetweenAgentPresses])
+            let diffBetweenAgentPresses = agentTimeStampArr[agentTimeStampArr.length-1]-agentTimeStampArr[agentTimeStampArr.length-2]
+            const diff_arr = agentDiffPressArr
+            diff_arr.push(diffBetweenAgentPresses)
+            setAgentDiffPressArr(diff_arr)
+            // setAgentDiffPressArr([...agentDiffPressArr,diffBetweenAgentPresses])
             let sumOfAgentDiffPressArr = mySum(agentDiffPressArr,parseInt(store.getAvgOff()));
             setAvgAgentPresses(sumOfAgentDiffPressArr/parseInt(store.getAvgOff()))
         }
-        setNumberOfAgentPresses(numberOfAgentPresses+1)
+        setNumberOfAgentPresses(numberOfAgentPresses => numberOfAgentPresses+1)
     }
 
 
@@ -110,10 +119,11 @@ const LatencyPlayScreen = (props) =>{
         let percent = 0.5
         buttonFadeFunc({isAgent:false})
         setPlayerTimeStampArr([...playerTimeStampArr, timeStamp])
-        let diffBetweenPlayerPresses
         if (numberOfPresses > 2) {
-            diffBetweenPlayerPresses = playerTimeStampArr[playerTimeStampArr.length - 1] - playerTimeStampArr[playerTimeStampArr.length - 2]
-            setPlayerDiffPressArr([...playerDiffPressArr, diffBetweenPlayerPresses])
+            let diffBetweenPlayerPresses = playerTimeStampArr[playerTimeStampArr.length - 1] - playerTimeStampArr[playerTimeStampArr.length - 2]
+            playerDiffPressArr.push(diffBetweenPlayerPresses)
+
+            // setPlayerDiffPressArr([...playerDiffPressArr, diffBetweenPlayerPresses])
             let num = parseInt(store.getAvgOff())
             sumOfPlayerDiffPressArr = mySum(playerDiffPressArr, num);
             setAvgPlayerPresses(sumOfPlayerDiffPressArr / (num === 0 ? 1 : num))
@@ -133,19 +143,19 @@ const LatencyPlayScreen = (props) =>{
                     setMyInterval2(setInterval(agentPress, LatencyGitter))
                     setTimeout(() => {
                         clearInterval(intervalID1)
-                    }, (LatencyGitter - (timePassed-110)))
+                    }, (LatencyGitter - (timePassed-100)))
                     setIsIntervalID1(!isIntervalID1)
                 } else {
 
                     setMyInterval1(setInterval(agentPress, LatencyGitter))
                     setTimeout(() => {
                         clearInterval(intervalID2)
-                    }, (LatencyGitter - (timePassed-110)))
+                    }, (LatencyGitter - (timePassed-100)))
                     setIsIntervalID1(!isIntervalID1)
                 }
             }
         }
-        setNumberOfPresses(numberOfPresses +1)
+        setNumberOfPresses(numberOfPresses => numberOfPresses +1)
     }
     const setGitterLatencyForGame = () => {
         let randomIndex = getRndInteger(0,store.getGitterParams().length)
@@ -153,8 +163,8 @@ const LatencyPlayScreen = (props) =>{
         let latencyExperience = store.getLatencyParams()[randomIndex]
         store.setGitter(gitterExperience)
         store.setLatency(latencyExperience)
-        console.log("gitterAfter: ", store.getGitter())
-        console.log("latencyAfter: ", store.getLatency())
+        // console.log("gitterAfter: ", store.getGitter())
+        // console.log("latencyAfter: ", store.getLatency())
         store.setDeleteGitterParams(randomIndex)
         store.setDeleteLatencyParams(randomIndex)
     }

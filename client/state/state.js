@@ -4,10 +4,10 @@ import uuid from 'react-native-uuid';
 import {Platform} from "react-native";
 
 const initialState = {
-    experimentType: 'followerLeader',
+    experimentType: 'latency',
     agentType: 0,
     avgOff:3,
-    gameTime:30,
+    gameTime:20,
     latency:10,
     gitter:0,
     weight:0,
