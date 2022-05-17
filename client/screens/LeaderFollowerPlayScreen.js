@@ -156,14 +156,14 @@ const LeaderFollowerPlayScreen = (props) =>{
                     setMyInterval2(setInterval(agentPress, listeningLevel))
                     setTimeout(() => {
                         clearInterval(intervalID1)
-                    }, (listeningLevel - (timePassed - 100)))
+                    }, (listeningLevel - (timePassed - 110)))
                     setIsIntervalID1(!isIntervalID1)
                     // setIsIntervalID2(!isIntervalID2)
                 } else {
                     setMyInterval1(setInterval(agentPress, listeningLevel))
                     setTimeout(() => {
                         clearInterval(intervalID2)
-                    }, (listeningLevel - (timePassed - 100)))
+                    }, (listeningLevel - (timePassed - 110)))
             }
                 setIsIntervalID1(!isIntervalID1)
                 // setIsIntervalID2(!isIntervalID2)

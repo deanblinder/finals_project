@@ -143,14 +143,14 @@ const LatencyPlayScreen = (props) =>{
                     setMyInterval2(setInterval(agentPress, LatencyGitter))
                     setTimeout(() => {
                         clearInterval(intervalID1)
-                    }, (LatencyGitter - (timePassed-100)))
+                    }, (LatencyGitter - (timePassed-110)))
                     setIsIntervalID1(!isIntervalID1)
                 } else {
 
                     setMyInterval1(setInterval(agentPress, LatencyGitter))
                     setTimeout(() => {
                         clearInterval(intervalID2)
-                    }, (LatencyGitter - (timePassed-100)))
+                    }, (LatencyGitter - (timePassed-110)))
                     setIsIntervalID1(!isIntervalID1)
                 }
             }
