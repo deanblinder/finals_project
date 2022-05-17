@@ -60,12 +60,11 @@ const LatencyPlayScreen = (props) =>{
 
     const onNextPress = () => {
         const deviceUUID = uuid.v4()
-        // api.sendPressTimeStamp(deviceUUID,playerTimeStampArr, agentTimeStampArr, "LatencyAgent_"+store.getGitter()+"_"+store.getLatency())
+        api.sendPressTimeStamp(deviceUUID,playerTimeStampArr, agentTimeStampArr, "LatencyAgent_"+store.getGitter()+"_"+store.getLatency())
 
         ////// api.sendPressTimeStamp(deviceUUID,"user",playerTimeStampArr)
         ////// api.sendPressTimeStamp(deviceUUID,"LatencyAgent_"+gitter+"_"+latency,agentTimeStampArr)
-        // props.navigation.navigate({routeName:'Questionnaire'});
-        props.navigation.navigate({routeName:'FindPlayer'});
+        props.navigation.navigate({routeName:'Questionnaire'});
     }
     const buttonFadeFunc = ({isAgent}) => {
         if (isAgent){
@@ -89,6 +88,7 @@ const LatencyPlayScreen = (props) =>{
     const agentPress = () => {
         let timeStamp = new Date().getTime()
         buttonFadeFunc({isAgent:true})
+        // let timeStamp = new Date().getTime()
         const arr = agentTimeStampArr
         arr.push(timeStamp)
         setAgentTimeStampArr(arr)
@@ -108,7 +108,6 @@ const LatencyPlayScreen = (props) =>{
             // setAvgAgentPresses(avgAgentPresses => (sumOfAgentDiffPressArr/parseInt(store.getAvgOff())))
         }
         setNumberOfAgentPresses(numberOfAgentPresses => numberOfAgentPresses+1)
-        // console.log("numberPress: ", numberOfAgentPresses)
     }
 
 
@@ -119,9 +118,9 @@ const LatencyPlayScreen = (props) =>{
         }, TIME_UNTIL_AGENT_STOP_PRESS)
         setTimePassedId(timeUntilAgentStopPress)
         let timeStamp = new Date().getTime()
-        buttonFadeFunc({isAgent:false})
-        // setPlayerTimeStamp(timeStamp)
+        setPlayerTimeStamp(timeStamp)
         let percent = 0.5
+        buttonFadeFunc({isAgent:false})
         setPlayerTimeStampArr([...playerTimeStampArr, timeStamp])
         if (numberOfPresses > 2) {
             let diffBetweenPlayerPresses = playerTimeStampArr[playerTimeStampArr.length - 1] - playerTimeStampArr[playerTimeStampArr.length - 2]
@@ -154,6 +153,7 @@ const LatencyPlayScreen = (props) =>{
                     }, (LatencyGitter - (timePassed-110)))
                     // setIsIntervalID1(!isIntervalID1)
                 } else {
+
                     setMyInterval1(setInterval(agentPress, LatencyGitter))
                     setTimeout(() => {
                         clearInterval(intervalID2)
