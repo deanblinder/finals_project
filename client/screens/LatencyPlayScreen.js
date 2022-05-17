@@ -24,8 +24,8 @@ const LatencyPlayScreen = (props) =>{
     let [timePassedId,setTimePassedId] = useState(null)
     // let [gitter,setGitter] = useState(0)
     // let [latency,setLatency] = useState(0)
-    let [playerTimeStamp, setPlayerTimeStamp] = useState(0)
-    let [agentTimeStamp, setAgentTimeStamp] = useState(0)
+    // let [playerTimeStamp, setPlayerTimeStamp] = useState(0)
+    // let [agentTimeStamp, setAgentTimeStamp] = useState(0)
     let [isFinish,setIsFinish] = useState(false)
     let [isTimePassed,setIsTimePassed] = useState(false)
     let sumOfPlayerDiffPressArr = 0
@@ -60,11 +60,12 @@ const LatencyPlayScreen = (props) =>{
 
     const onNextPress = () => {
         const deviceUUID = uuid.v4()
-        api.sendPressTimeStamp(deviceUUID,playerTimeStampArr, agentTimeStampArr, "LatencyAgent_"+store.getGitter()+"_"+store.getLatency())
+        // api.sendPressTimeStamp(deviceUUID,playerTimeStampArr, agentTimeStampArr, "LatencyAgent_"+store.getGitter()+"_"+store.getLatency())
 
         ////// api.sendPressTimeStamp(deviceUUID,"user",playerTimeStampArr)
         ////// api.sendPressTimeStamp(deviceUUID,"LatencyAgent_"+gitter+"_"+latency,agentTimeStampArr)
-        props.navigation.navigate({routeName:'Questionnaire'});
+        // props.navigation.navigate({routeName:'Questionnaire'});
+        props.navigation.navigate({routeName:'FindPlayer'});
     }
     const buttonFadeFunc = ({isAgent}) => {
         if (isAgent){
@@ -81,13 +82,13 @@ const LatencyPlayScreen = (props) =>{
         }
     }
     const playAgain = () => {
-        console.log("agentARR: ", agentTimeStampArr.length)
-        console.log("playerARR: ", playerTimeStampArr.length)
+        // console.log("agentARR: ", agentTimeStampArr.length)
+        // console.log("playerARR: ", playerTimeStampArr.length)
         props.navigation.navigate({routeName:'FindPlayer'});
     }
     const agentPress = () => {
-        buttonFadeFunc({isAgent:true})
         let timeStamp = new Date().getTime()
+        buttonFadeFunc({isAgent:true})
         const arr = agentTimeStampArr
         arr.push(timeStamp)
         setAgentTimeStampArr(arr)
@@ -102,9 +103,12 @@ const LatencyPlayScreen = (props) =>{
             setAgentDiffPressArr(diff_arr)
             // setAgentDiffPressArr([...agentDiffPressArr,diffBetweenAgentPresses])
             let sumOfAgentDiffPressArr = mySum(agentDiffPressArr,parseInt(store.getAvgOff()));
-            setAvgAgentPresses(sumOfAgentDiffPressArr/parseInt(store.getAvgOff()))
+            avgAgentPresses = sumOfAgentDiffPressArr / parseInt(store.getAvgOff())
+
+            // setAvgAgentPresses(avgAgentPresses => (sumOfAgentDiffPressArr/parseInt(store.getAvgOff())))
         }
         setNumberOfAgentPresses(numberOfAgentPresses => numberOfAgentPresses+1)
+        // console.log("numberPress: ", numberOfAgentPresses)
     }
 
 
@@ -115,9 +119,9 @@ const LatencyPlayScreen = (props) =>{
         }, TIME_UNTIL_AGENT_STOP_PRESS)
         setTimePassedId(timeUntilAgentStopPress)
         let timeStamp = new Date().getTime()
-        setPlayerTimeStamp(timeStamp)
-        let percent = 0.5
         buttonFadeFunc({isAgent:false})
+        // setPlayerTimeStamp(timeStamp)
+        let percent = 0.5
         setPlayerTimeStampArr([...playerTimeStampArr, timeStamp])
         if (numberOfPresses > 2) {
             let diffBetweenPlayerPresses = playerTimeStampArr[playerTimeStampArr.length - 1] - playerTimeStampArr[playerTimeStampArr.length - 2]
@@ -126,7 +130,11 @@ const LatencyPlayScreen = (props) =>{
             // setPlayerDiffPressArr([...playerDiffPressArr, diffBetweenPlayerPresses])
             let num = parseInt(store.getAvgOff())
             sumOfPlayerDiffPressArr = mySum(playerDiffPressArr, num);
-            setAvgPlayerPresses(sumOfPlayerDiffPressArr / (num === 0 ? 1 : num))
+            avgPlayerPresses = sumOfPlayerDiffPressArr / (num === 0 ? 1 : num)
+
+            // setAvgPlayerPresses(avgPlayerPresses => (sumOfPlayerDiffPressArr / (num === 0 ? 1 : num)))
+            // console.log("avgPlayerPresses: ", avgPlayerPresses)
+
             const listeningLevel = (((1 - percent) * avgPlayerPresses) + (percent * avgAgentPresses))
             // console.log("gitter", gitter)
             // console.log("latency", latency)
@@ -143,16 +151,18 @@ const LatencyPlayScreen = (props) =>{
                     setMyInterval2(setInterval(agentPress, LatencyGitter))
                     setTimeout(() => {
                         clearInterval(intervalID1)
-                    }, (LatencyGitter - (timePassed-100)))
-                    setIsIntervalID1(!isIntervalID1)
+                    }, (LatencyGitter - (timePassed-110)))
+                    // setIsIntervalID1(!isIntervalID1)
                 } else {
-
                     setMyInterval1(setInterval(agentPress, LatencyGitter))
                     setTimeout(() => {
                         clearInterval(intervalID2)
-                    }, (LatencyGitter - (timePassed-100)))
-                    setIsIntervalID1(!isIntervalID1)
+                    }, (LatencyGitter - (timePassed-110)))
+                    // setIsIntervalID1(!isIntervalID1)
+
                 }
+                setIsIntervalID1(!isIntervalID1)
+
             }
         }
         setNumberOfPresses(numberOfPresses => numberOfPresses +1)

@@ -22,7 +22,7 @@ export const AppNavigator = createStackNavigator({
     Welcome:WelcomeScreen,
     Guidelines:GuidelinesScreen,
     Register:RegisterScreen,
-    // FindPlayer:FindPlayersScreen,
+    // FindPlayer:FindPlayersScrreen,
     LatencyPlay:LatencyPlayScreen,
     LeaderFollowerPlay:LeaderFollowerPlayScreen,
     GoodBye:GoodByeScreen,
