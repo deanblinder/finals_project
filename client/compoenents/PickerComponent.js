@@ -26,25 +26,31 @@ const PickerComponent = (props) => {
                         <View style={{justifyContent:'center',marginRight:5}}>
                             <Text>בכלל לא</Text>
                         </View>
-                        <Checkbox isDisabled={rate && rate !== '1'}  onChange={()=>onChangeBox('1')}  value="1" my="1">
-                            1
-                        </Checkbox>
+                        <View style={{display:"flex",justifyContent:'center',flexDirection:"row"}}>
+                            <Text style={{marginTop:"auto",marginBottom:"auto"}}>{'  '}1</Text>
+                                <Checkbox isDisabled={rate && rate !== '1'}  onChange={()=>onChangeBox('1')}  value="1" my="1"/>
+                        </View>
 
-                    <Checkbox isDisabled={rate && rate !== '2'} onChange={()=>onChangeBox('2')} value="2" my="1">
-                        2
-                    </Checkbox>
+                        <View style={{display:"flex",justifyContent:'center',flexDirection:"row"}}>
+                            <Text style={{marginTop:"auto",marginBottom:"auto"}}>{'  '}2</Text>
+                                <Checkbox isDisabled={rate && rate !== '2'} onChange={()=>onChangeBox('2')} value="2" my="1"/>
+                        </View>
 
-                    <Checkbox isDisabled={rate && rate !== '3'} onChange={()=>onChangeBox('3')} value="3" my="1">
-                        3
-                    </Checkbox>
+                        <View style={{display:"flex",justifyContent:'center',flexDirection:"row"}}>
+                            <Text style={{marginTop:"auto",marginBottom:"auto"}}>{'  '}3</Text>
+                                <Checkbox isDisabled={rate && rate !== '3'} onChange={()=>onChangeBox('3')} value="3" my="1"/>
+                            </View>
 
-                    <Checkbox isDisabled={rate && rate !== '4'} onChange={()=>onChangeBox('4')} value="4" my="1">
-                        4
-                    </Checkbox>
+                        <View style={{display:"flex",justifyContent:'center',flexDirection:"row"}}>
+                            <Text style={{marginTop:"auto",marginBottom:"auto"}}>{'  '}4</Text>
+                                <Checkbox isDisabled={rate && rate !== '4'} onChange={()=>onChangeBox('4')} value="4" my="1"/>
+                            </View>
+                        <View style={{display:"flex",justifyContent:'center',flexDirection:"row"}}>
+                            <Text style={{marginTop:"auto",marginBottom:"auto"}}>{'  '}5</Text>
+                            <Checkbox isDisabled={rate && rate !== '5'} onChange={()=>onChangeBox('5')} value="5" my="1"/>
+                        </View>
 
-                    <Checkbox isDisabled={rate && rate !== '5'} onChange={()=>onChangeBox('5')} value="5" my="1">
-                        5
-                    </Checkbox>
+
                         <View style={{justifyContent:'center',marginLeft:5}}>
                             <Text>במידה רבה</Text>
                         </View>
