@@ -24,7 +24,7 @@ const LeaderFollowerPlayScreen = (props) =>{
     let [isIntervalID1,setIsIntervalID1] = useState(true)
     // let [isIntervalID2,setIsIntervalID2]= useState(false)
 
-    let [timePassedId,setTimePassedId] = useState(null)
+    let [timePassedId,setTimePassedId] = useState(0)
     let [numberOfAgentPresses,setNumberOfAgentPresses] = useState(0)
     let [listeningLevel,setLinsteningLevel] = useState(0)
     let [isFinish,setIsFinish] = useState(false)
@@ -61,17 +61,10 @@ const LeaderFollowerPlayScreen = (props) =>{
         let randomIndex = getRndInteger(0,store.getWeightExp().length)
         let weightExperience = store.getWeightExp()[randomIndex]
         store.setWeight(weightExperience)
-        // console.log("weight:", weightExperience)
-        // console.log("randomIndex:", randomIndex)
-        // setPercent(store.getweightExp[randomIndex])
-        // console.log("percent:", percent)
         store.setDeleteWeightExp(randomIndex)
     }
     const onNextPress = () => {
-        // const deviceUUID = uuid.v4()
-        // console.log("agent pressed: ", numberOfAgentPresses, " times")
-        // console.log("player pressed: ", numberOfPresses, " times")
-        api.sendPressTimeStamp(store.getModel(),playerTimeStampArr, agentTimeStampArr, "LeadFollowAgent_"+store.getWeight())
+        api.sendPressTimeStamp(store.getModel(),playerTimeStampArr, agentTimeStampArr, "LeadFollowAgent_AgentWeight_"+store.getWeight())
         props.navigation.navigate({routeName:'Questionnaire'});
     }
     const buttonFadeFunc = ({isAgent}) => {
@@ -89,9 +82,6 @@ const LeaderFollowerPlayScreen = (props) =>{
       }
     }
     const playAgain = () => {
-        // console.log("agent pressed: ", numberOfAgentPresses, " times")
-        // console.log("player pressed: ", numberOfPresses, " times")
-        // console.log(agentTimeStampArr)
         props.navigation.navigate({routeName:'FindPlayer'});
     }
     const agentPress = () => {
@@ -99,29 +89,47 @@ const LeaderFollowerPlayScreen = (props) =>{
         buttonFadeFunc({isAgent:true})
         const arr = agentTimeStampArr
         arr.push(timeStamp)
-        // agentTimeStampArr.push(timeStamp)
-
         setAgentTimeStampArr(arr)
+        const num = parseInt(store.getAvgOff())
+        let diffBetweenAgentPresses;
+        numberOfAgentPresses = numberOfAgentPresses + 1
+        setNumberOfAgentPresses(numberOfAgentPresses)
 
-        // let diffBetweenAgentPresses
-        // numberOfAgentPresses = numberOfAgentPresses+1
-
-        if (numberOfAgentPresses >= 2) {
-
-            let diffBetweenAgentPresses = agentTimeStampArr[agentTimeStampArr.length - 1] - agentTimeStampArr[agentTimeStampArr.length - 2]
-            // setAgentDiffPressArr([...agentDiffPressArr,diffBetweenAgentPresses])
-            const diff_arr = agentDiffPressArr
-            diff_arr.push(diffBetweenAgentPresses)
-            setAgentDiffPressArr(diff_arr)
-            // agentDiffPressArr.push(diffBetweenAgentPresses)
-            let sumOfAgentDiffPressArr = mySum(agentDiffPressArr, parseInt(store.getAvgOff()));
-            // setAvgAgentPresses(sumOfAgentDiffPressArr/parseInt(store.getAvgOff()))
-            avgAgentPresses = sumOfAgentDiffPressArr / parseInt(store.getAvgOff())
-
+        if (numberOfAgentPresses > num) {
+            diffBetweenAgentPresses = agentTimeStampArr[agentTimeStampArr.length - 1] - agentTimeStampArr[agentTimeStampArr.length - 2]
+            if (diffBetweenAgentPresses > 250) {
+                const diff_arr = agentDiffPressArr
+                diff_arr.push(diffBetweenAgentPresses)
+                setAgentDiffPressArr(diff_arr)
+                let sumOfAgentDiffPress = mySum(agentDiffPressArr, parseInt(store.getAvgOff()));
+                avgAgentPresses = sumOfAgentDiffPress / (num === 0 ? 1 : (agentDiffPressArr.length<num?agentDiffPressArr.length:num))
+            }
+            else{
+                const arr_pop = agentTimeStampArr
+                arr_pop.pop()
+                setAgentTimeStampArr(arr_pop)
+                numberOfAgentPresses = numberOfAgentPresses - 1
+                setNumberOfAgentPresses(numberOfAgentPresses)
+            }
+        }else{
+            if(numberOfAgentPresses > 1) {
+                diffBetweenAgentPresses = agentTimeStampArr[agentTimeStampArr.length-1] - agentTimeStampArr[agentTimeStampArr.length - 2]
+                if (diffBetweenAgentPresses > 250) {
+                    const diff_arr = agentDiffPressArr
+                    diff_arr.push(diffBetweenAgentPresses)
+                    setAgentDiffPressArr(diff_arr)
+                }
+                else{
+                    const arr_pop = agentTimeStampArr
+                    arr_pop.pop()
+                    setAgentTimeStampArr(arr_pop)
+                    numberOfAgentPresses = numberOfAgentPresses - 1
+                    setNumberOfAgentPresses(numberOfAgentPresses)
+                }
+            }
         }
-        setNumberOfAgentPresses(numberOfAgentPresses => numberOfAgentPresses + 1)
-        console.log("numberPress: ", numberOfAgentPresses)
     }
+
     const playerPress = () => {
         clearTimeout(timePassedId)
         const timeUntilAgentStopPress = setTimeout(() => {
@@ -130,47 +138,64 @@ const LeaderFollowerPlayScreen = (props) =>{
         setTimePassedId(timeUntilAgentStopPress)
         let timeStamp = new Date().getTime()
         buttonFadeFunc({isAgent:false})
-        setPlayerTimeStampArr([...playerTimeStampArr, timeStamp])
-        // console.log("Player array ", playerTimeStampArr)
-        if (numberOfPresses > 2) {
+        const arrPlayerTimeStamp = playerTimeStampArr
+        arrPlayerTimeStamp.push(timeStamp)
+        setPlayerTimeStampArr(arrPlayerTimeStamp)
+        const num = parseInt(store.getAvgOff())
+        numberOfPresses = numberOfPresses + 1
+        setNumberOfPresses(numberOfPresses)
+        if (numberOfPresses > num) {
             let diffBetweenPlayerPresses = playerTimeStampArr[playerTimeStampArr.length - 1] - playerTimeStampArr[playerTimeStampArr.length - 2]
-            // console.log("playerTimeStampArr[playerTimeStampArr.length - 1] is:", playerTimeStampArr[playerTimeStampArr.length - 1])
-            // console.log("playerTimeStampArr[playerTimeStampArr.length - 2] is:", playerTimeStampArr[playerTimeStampArr.length - 2])
-            // setPlayerDiffPressArr([...playerDiffPressArr, diffBetweenPlayerPresses])
-            playerDiffPressArr.push(diffBetweenPlayerPresses)
-            // console.log("playerDiffPressArr ",playerDiffPressArr)
-            let numOfLastPresses = parseInt(store.getAvgOff())
-            sumOfPlayerDiffPressArr = mySum(playerDiffPressArr, numOfLastPresses);
-            avgPlayerPresses = sumOfPlayerDiffPressArr / (numOfLastPresses === 0 ? 1 : numOfLastPresses)
-            // setAvgPlayerPresses(sumOfPlayerDiffPressArr / (numOfLastPresses === 0 ? 1 : numOfLastPresses))
-            // console.log("avgPlayerPresses: ", avgPlayerPresses)
-            const listeningLevel_new = (((1 - store.getWeight()) * avgPlayerPresses) + (store.getWeight() * avgAgentPresses))
-            // const listeningLevel_new = (((1) * avgPlayerPresses) + (0 * avgAgentPresses))
-            // listeningLevel = listeningLevel_new
-            setLinsteningLevel(listeningLevel_new)
-            // console.log("listen", listeningLevel)
-            let timeStamp2 = new Date().getTime()
-            let timePassed = timeStamp2 - timeStamp
-            if (listeningLevel !== 0){
-                if (isIntervalID1) {
-                    setMyInterval2(setInterval(agentPress, listeningLevel))
-                    setTimeout(() => {
-                        clearInterval(intervalID1)
-                    }, (listeningLevel - (timePassed - 110)))
-                    setIsIntervalID1(!isIntervalID1)
-                    // setIsIntervalID2(!isIntervalID2)
-                } else {
-                    setMyInterval1(setInterval(agentPress, listeningLevel))
-                    setTimeout(() => {
-                        clearInterval(intervalID2)
-                    }, (listeningLevel - (timePassed - 110)))
-            }
-                setIsIntervalID1(!isIntervalID1)
-                // setIsIntervalID2(!isIntervalID2)
+            if (diffBetweenPlayerPresses > 130) {
+                const diffArrayPlayer = playerDiffPressArr
+                diffArrayPlayer.push(diffBetweenPlayerPresses)
+                setPlayerDiffPressArr(diffArrayPlayer)
+                sumOfPlayerDiffPressArr = mySum(playerDiffPressArr, num);
+                avgPlayerPresses = sumOfPlayerDiffPressArr / (num === 0 ? 1 : (playerDiffPressArr.length < num ? playerDiffPressArr.length : num))
+                const listeningLevel_new = (((1 - store.getWeight()) * avgPlayerPresses) + (store.getWeight() * avgAgentPresses))
+                setLinsteningLevel(listeningLevel_new)
+                let timeStamp2 = new Date().getTime()
+                let timePassed = timeStamp2 - timeStamp
+                if (listeningLevel !== 0) {
+                    if (isIntervalID1) {
+                        setMyInterval2(setInterval(agentPress, listeningLevel- (timePassed - 120)))
+                        setTimeout(() => {
+                            clearInterval(intervalID1)
+                        }, (listeningLevel - (timePassed - 120)))
+                    } else {
+                        setMyInterval1(setInterval(agentPress, listeningLevel - (timePassed - 120)))
+                        setTimeout(() => {
+                            clearInterval(intervalID2)
+                        }, (listeningLevel - (timePassed - 120)))
+                    }
+                    isIntervalID1 = !isIntervalID1
+                    setIsIntervalID1(isIntervalID1)
+                }
+        }
+            else{
+                const arr_pop = playerTimeStampArr
+                arr_pop.pop()
+                setPlayerTimeStampArr(arr_pop)
+                numberOfPresses = numberOfPresses - 1
+                setNumberOfPresses(numberOfPresses)
             }
         }
-        setNumberOfPresses(numberOfPresses => numberOfPresses +1)
-
+        else {
+            if (numberOfPresses > 1) {
+                let diffBetweenPlayerPresses = playerTimeStampArr[playerTimeStampArr.length - 1] - playerTimeStampArr[playerTimeStampArr.length - 2]
+                if (diffBetweenPlayerPresses > 250) {
+                    const diffArrayPlayer = playerDiffPressArr
+                    diffArrayPlayer.push(diffBetweenPlayerPresses)
+                    setPlayerDiffPressArr(diffArrayPlayer)
+                } else {
+                    const arr_pop = playerTimeStampArr
+                    arr_pop.pop()
+                    setPlayerTimeStampArr(arr_pop)
+                    numberOfPresses = numberOfPresses - 1
+                    setNumberOfPresses(numberOfPresses)
+                }
+            }
+        }
     }
 
     const agentButtonFadeIn = () => {
@@ -223,7 +248,8 @@ const LeaderFollowerPlayScreen = (props) =>{
     }
     const renderAgentCircle = () =>{
         return(
-            <View>
+            <View style={styles.circleBorderAgent}>
+
                 <Animated.View
                     style={[
                         2 ,
@@ -238,22 +264,25 @@ const LeaderFollowerPlayScreen = (props) =>{
 
         )
     }
+
     const renderPlayerCircle = () =>{
         return(
-            <Pressable onPressIn={playerPress}>
-                <Animated.View
-                    style={[
-                        2 ,
-                        {
-                            opacity: playerOpacity
-                        }
-                    ]}
-                >
-                    <View style={styles.playerButton}>
-                        <Text style={{textAlign: 'center',fontSize:20,color:'black',justifyContent:'center'}}>אני</Text>
-                    </View>
-                </Animated.View>
-            </Pressable>
+            <View style={styles.circleBorder}>
+                <Pressable onPressIn={playerPress}>
+                    <Animated.View
+                        style={[
+                            2 ,
+                            {
+                                opacity: playerOpacity
+                            }
+                        ]}
+                    >
+                        <View style={styles.playerButton}>
+                            <Text style={{textAlign: 'center',fontSize:20,color:'black',justifyContent:'center'}}>אני</Text>
+                        </View>
+                    </Animated.View>
+                </Pressable>
+            </View>
         )
     }
     return (
@@ -327,5 +356,21 @@ const styles = StyleSheet.create({
         height: 150,
 
     },
+    circleBorder: {
+        borderWidth: 3,
+        borderRadius: (150 / 2),
+        width: 153,
+        height: 153,
+        justifyContent: 'center',
+        alignContent: 'center',
+    },
+    circleBorderAgent:{
+        borderWidth: 3,
+        borderRadius: (150 / 2),
+        width: 155,
+        height: 154,
+        justifyContent: 'center',
+        alignContent: 'center',
+    }
 });
 export default LeaderFollowerPlayScreen

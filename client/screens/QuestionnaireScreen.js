@@ -125,7 +125,7 @@ const QuestionnaireScreen =(props) => {
             api.sendAnswers(store.getModel(),agent_type,qDict)
             // api.sendQuestionnaireAnswers(qDict,agent_type,deviceUUID) // send user id,
             console.log("count before is now: ", store.getCountMiniGames())
-            if(store.getCountMiniGames()<3){
+            if(store.getCountMiniGames() < 9){
                 // let temp = store.getcountMiniGames() + 1
                 // store.setcountMiniGames(temp)
                 // setCountMiniGames(countMiniGames++)

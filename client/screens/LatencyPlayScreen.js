@@ -20,20 +20,14 @@ const LatencyPlayScreen = (props) =>{
     let [intervalID1,setMyInterval1] = useState(null)
     let [intervalID2,setMyInterval2] = useState(null)
     let [isIntervalID1,setIsIntervalID1] = useState(true)
-    let [numberOfAgentPresses,setNumberOfAgentPresses] = useState(false)
-    let [timePassedId,setTimePassedId] = useState(null)
-    // let [gitter,setGitter] = useState(0)
-    // let [latency,setLatency] = useState(0)
-    // let [playerTimeStamp, setPlayerTimeStamp] = useState(0)
-    // let [agentTimeStamp, setAgentTimeStamp] = useState(0)
+    let [numberOfAgentPresses,setNumberOfAgentPresses] = useState(0)
+    let [timePassedId,setTimePassedId] = useState(0)
     let [isFinish,setIsFinish] = useState(false)
     let [isTimePassed,setIsTimePassed] = useState(false)
-    let sumOfPlayerDiffPressArr = 0
-    const TIME_UNTIL_AGENT_STOP_PRESS = 7000
+    let sumOfPlayerDiffPress = 0
+    const TIME_UNTIL_AGENT_STOP_PRESS = 4000
     useEffect(() => {
         setGitterLatencyForGame()
-        // setLatency(store.getLatency())
-        // setGitter(store.getGitter())
         setMyInterval1(setInterval(agentPress,2000))
         setTimeout(() => {
             setIsFinish(true)
@@ -59,12 +53,9 @@ const LatencyPlayScreen = (props) =>{
     },    [isTimePassed])
 
     const onNextPress = () => {
-        const deviceUUID = uuid.v4()
-        api.sendPressTimeStamp(deviceUUID,playerTimeStampArr, agentTimeStampArr, "LatencyAgent_"+store.getGitter()+"_"+store.getLatency())
-
-        ////// api.sendPressTimeStamp(deviceUUID,"user",playerTimeStampArr)
-        ////// api.sendPressTimeStamp(deviceUUID,"LatencyAgent_"+gitter+"_"+latency,agentTimeStampArr)
+        api.sendPressTimeStamp(store.getModel(),playerTimeStampArr, agentTimeStampArr, "LatencyAgent_Gitter_"+store.getGitter()+"_Latency_"+store.getLatency())
         props.navigation.navigate({routeName:'Questionnaire'});
+
     }
     const buttonFadeFunc = ({isAgent}) => {
         if (isAgent){
@@ -81,33 +72,55 @@ const LatencyPlayScreen = (props) =>{
         }
     }
     const playAgain = () => {
-        // console.log("agentARR: ", agentTimeStampArr.length)
-        // console.log("playerARR: ", playerTimeStampArr.length)
         props.navigation.navigate({routeName:'FindPlayer'});
     }
     const agentPress = () => {
         let timeStamp = new Date().getTime()
         buttonFadeFunc({isAgent:true})
-        // let timeStamp = new Date().getTime()
         const arr = agentTimeStampArr
         arr.push(timeStamp)
         setAgentTimeStampArr(arr)
+        const num = parseInt(store.getAvgOff())
+        let diffBetweenAgentPresses;
+        // console.log("diff_arr_agent: ", agentDiffPressArr)
+        numberOfAgentPresses = numberOfAgentPresses + 1
+        setNumberOfAgentPresses(numberOfAgentPresses)
 
-        // setAgentTimeStamp(timeStamp)
-        // setAgentTimeStampArr([...agentTimeStampArr,timeStamp])
-        // let diffBetweenAgentPresses
-        if (numberOfAgentPresses >= 2){
-            let diffBetweenAgentPresses = agentTimeStampArr[agentTimeStampArr.length-1]-agentTimeStampArr[agentTimeStampArr.length-2]
-            const diff_arr = agentDiffPressArr
-            diff_arr.push(diffBetweenAgentPresses)
-            setAgentDiffPressArr(diff_arr)
-            // setAgentDiffPressArr([...agentDiffPressArr,diffBetweenAgentPresses])
-            let sumOfAgentDiffPressArr = mySum(agentDiffPressArr,parseInt(store.getAvgOff()));
-            avgAgentPresses = sumOfAgentDiffPressArr / parseInt(store.getAvgOff())
+        if (numberOfAgentPresses > num){
+            diffBetweenAgentPresses = agentTimeStampArr[agentTimeStampArr.length-1]-agentTimeStampArr[agentTimeStampArr.length-2]
+            if(diffBetweenAgentPresses > 250){
+                const diff_arr = agentDiffPressArr
+                diff_arr.push(diffBetweenAgentPresses)
+                setAgentDiffPressArr(diff_arr)
+                let sumOfAgentDiffPress = mySum(agentDiffPressArr,num);
+                avgAgentPresses = sumOfAgentDiffPress / (num === 0 ? 1 : (agentDiffPressArr.length<num?agentDiffPressArr.length:num))
+            }
+            else{
+                const arr_pop = agentTimeStampArr
+                arr_pop.pop()
+                setAgentTimeStampArr(arr_pop)
+                numberOfAgentPresses = numberOfAgentPresses - 1
+                setNumberOfAgentPresses(numberOfAgentPresses)
+            }
 
-            // setAvgAgentPresses(avgAgentPresses => (sumOfAgentDiffPressArr/parseInt(store.getAvgOff())))
         }
-        setNumberOfAgentPresses(numberOfAgentPresses => numberOfAgentPresses+1)
+        else{
+            if(numberOfAgentPresses > 1) {
+                diffBetweenAgentPresses = agentTimeStampArr[agentTimeStampArr.length-1] - agentTimeStampArr[agentTimeStampArr.length - 2]
+                if (diffBetweenAgentPresses > 250) {
+                    const diff_arr = agentDiffPressArr
+                    diff_arr.push(diffBetweenAgentPresses)
+                    setAgentDiffPressArr(diff_arr)
+                }
+                else{
+                    const arr_pop = agentTimeStampArr
+                    arr_pop.pop()
+                    setAgentTimeStampArr(arr_pop)
+                    numberOfAgentPresses = numberOfAgentPresses - 1
+                    setNumberOfAgentPresses(numberOfAgentPresses)
+                }
+            }
+        }
     }
 
 
@@ -118,55 +131,75 @@ const LatencyPlayScreen = (props) =>{
         }, TIME_UNTIL_AGENT_STOP_PRESS)
         setTimePassedId(timeUntilAgentStopPress)
         let timeStamp = new Date().getTime()
-        setPlayerTimeStamp(timeStamp)
         let percent = 0.5
         buttonFadeFunc({isAgent:false})
-        setPlayerTimeStampArr([...playerTimeStampArr, timeStamp])
-        if (numberOfPresses > 2) {
+        const arrPlayerTimeStamp = playerTimeStampArr
+        arrPlayerTimeStamp.push(timeStamp)
+        setPlayerTimeStampArr(arrPlayerTimeStamp)
+        const num = parseInt(store.getAvgOff())
+        numberOfPresses = numberOfPresses + 1
+        setNumberOfPresses(numberOfPresses)
+        if (numberOfPresses > num) {
             let diffBetweenPlayerPresses = playerTimeStampArr[playerTimeStampArr.length - 1] - playerTimeStampArr[playerTimeStampArr.length - 2]
-            playerDiffPressArr.push(diffBetweenPlayerPresses)
-
-            // setPlayerDiffPressArr([...playerDiffPressArr, diffBetweenPlayerPresses])
-            let num = parseInt(store.getAvgOff())
-            sumOfPlayerDiffPressArr = mySum(playerDiffPressArr, num);
-            avgPlayerPresses = sumOfPlayerDiffPressArr / (num === 0 ? 1 : num)
-
-            // setAvgPlayerPresses(avgPlayerPresses => (sumOfPlayerDiffPressArr / (num === 0 ? 1 : num)))
-            // console.log("avgPlayerPresses: ", avgPlayerPresses)
-
-            const listeningLevel = (((1 - percent) * avgPlayerPresses) + (percent * avgAgentPresses))
-            // console.log("gitter", gitter)
-            // console.log("latency", latency)
-            let rndGitter = Math.floor(Math.random() * store.getGitter())
-            const rand = Math.random()
-            if (rand >= 0.5){
-                rndGitter = rndGitter*-1
-            }
-            const LatencyGitter = ((listeningLevel + store.getLatency()) + rndGitter)
-            let timeStamp2 = new Date().getTime()
-            let timePassed = timeStamp2 - timeStamp
-            if (listeningLevel !== 0){
-                if (isIntervalID1) {
-                    setMyInterval2(setInterval(agentPress, LatencyGitter))
-                    setTimeout(() => {
-                        clearInterval(intervalID1)
-                    }, (LatencyGitter - (timePassed-110)))
-                    // setIsIntervalID1(!isIntervalID1)
-                } else {
-
-                    setMyInterval1(setInterval(agentPress, LatencyGitter))
-                    setTimeout(() => {
-                        clearInterval(intervalID2)
-                    }, (LatencyGitter - (timePassed-110)))
-                    // setIsIntervalID1(!isIntervalID1)
-
+            if (diffBetweenPlayerPresses > 130) {
+                const diffArrayPlayer = playerDiffPressArr
+                diffArrayPlayer.push(diffBetweenPlayerPresses)
+                setPlayerDiffPressArr(diffArrayPlayer)
+                sumOfPlayerDiffPress = mySum(playerDiffPressArr, num);
+                avgPlayerPresses = sumOfPlayerDiffPress / (num === 0 ? 1 : (playerDiffPressArr.length < num ? playerDiffPressArr.length : num))
+                const listeningLevel = (((1 - percent) * avgPlayerPresses) + (percent * avgAgentPresses))
+                let rndGitter = Math.floor(Math.random() * store.getGitter())
+                const rand = Math.random()
+                if (rand >= 0.5) {
+                    rndGitter = rndGitter * -1
                 }
-                setIsIntervalID1(!isIntervalID1)
+                const LatencyGitter = ((listeningLevel + store.getLatency()) + rndGitter)
 
+                let timeStamp2 = new Date().getTime()
+                let timePassed = timeStamp2 - timeStamp
+                if (listeningLevel !== 0) {
+                    if (isIntervalID1) {
+                        setMyInterval2(setInterval(agentPress, LatencyGitter - (timePassed - 120)))
+                        setTimeout(() => {
+                            clearInterval(intervalID1)
+                        }, (LatencyGitter - (timePassed - 120)))
+                    } else {
+                        setMyInterval1(setInterval(agentPress, LatencyGitter - (timePassed - 120)))
+                        setTimeout(() => {
+                            clearInterval(intervalID2)
+                        }, (LatencyGitter - (timePassed - 120)))
+
+                    }
+                    isIntervalID1 = !isIntervalID1
+                    setIsIntervalID1(isIntervalID1)
+                }
+            }
+            else{
+                const arr_pop = playerTimeStampArr
+                arr_pop.pop()
+                setPlayerTimeStampArr(arr_pop)
+                numberOfPresses = numberOfPresses - 1
+                setNumberOfPresses(numberOfPresses)
             }
         }
-        setNumberOfPresses(numberOfPresses => numberOfPresses +1)
+        else {
+            if (numberOfPresses > 1) {
+                let diffBetweenPlayerPresses = playerTimeStampArr[playerTimeStampArr.length - 1] - playerTimeStampArr[playerTimeStampArr.length - 2]
+                if (diffBetweenPlayerPresses > 250) {
+                    const diffArrayPlayer = playerDiffPressArr
+                    diffArrayPlayer.push(diffBetweenPlayerPresses)
+                    setPlayerDiffPressArr(diffArrayPlayer)
+                } else {
+                    const arr_pop = playerTimeStampArr
+                    arr_pop.pop()
+                    setPlayerTimeStampArr(arr_pop)
+                    numberOfPresses = numberOfPresses - 1
+                    setNumberOfPresses(numberOfPresses)
+                }
+            }
+        }
     }
+
     const setGitterLatencyForGame = () => {
         let randomIndex = getRndInteger(0,store.getGitterParams().length)
         let gitterExperience = store.getGitterParams()[randomIndex]
@@ -213,7 +246,7 @@ const LatencyPlayScreen = (props) =>{
     }
     const mySum = (arr,num) => {
         let sum = 0;
-        if (arr.length-num < 0){
+        if (arr.length-num <= 0){
             for (let i = 0; i < arr.length; i++) {
                 sum += arr[i];
             }
@@ -227,7 +260,7 @@ const LatencyPlayScreen = (props) =>{
     }
     const renderAgentCircle = () =>{
         return(
-            <View>
+            <View style={styles.circleBorderAgent}>
                 <Animated.View
                     style={[
                         2 ,
@@ -244,20 +277,22 @@ const LatencyPlayScreen = (props) =>{
     }
     const renderPlayerCircle = () =>{
         return(
-            <Pressable onPressIn={playerPress}>
-                <Animated.View
-                    style={[
-                        2 ,
-                        {
-                            opacity: playerOpacity
-                        }
-                    ]}
-                >
-                    <View style={styles.playerButton}>
-                        <Text style={{textAlign: 'center',fontSize:20,color:'black'}}>אני</Text>
-                    </View>
-                </Animated.View>
-            </Pressable>
+            <View style={styles.circleBorder}>
+                <Pressable onPressIn={playerPress}>
+                    <Animated.View
+                        style={[
+                            2 ,
+                            {
+                                opacity: playerOpacity
+                            }
+                        ]}
+                    >
+                        <View style={styles.playerButton}>
+                            <Text style={{textAlign: 'center',fontSize:20,color:'black'}}>אני</Text>
+                        </View>
+                    </Animated.View>
+                </Pressable>
+            </View>
         )
     }
     return (
@@ -330,5 +365,21 @@ const styles = StyleSheet.create({
         height: 150,
 
     },
+    circleBorder: {
+        borderWidth: 3,
+        borderRadius: (150 / 2),
+        width: 153,
+        height: 153,
+        justifyContent: 'center',
+        alignContent: 'center',
+    },
+    circleBorderAgent:{
+        borderWidth: 3,
+        borderRadius: (150 / 2),
+        width: 155,
+        height: 154,
+        justifyContent: 'center',
+        alignContent: 'center',
+    }
 });
 export default LatencyPlayScreen
