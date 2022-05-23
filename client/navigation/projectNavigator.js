@@ -17,7 +17,9 @@ import ChangeParamAdministratorScreen from "../screens/ChangeParamAdministratorS
 
 export const AppNavigator = createStackNavigator({
     // Questionnaire:QuestionnaireScreen,
-    FindPlayer:FindPlayersScreen,
+    // FindPlayer:FindPlayersScreen,
+    // Questionnaire:QuestionnaireScreen,
+    // LatencyPlay:LatencyPlayScreen,
 
     Welcome:WelcomeScreen,
     Guidelines:GuidelinesScreen,
@@ -25,6 +27,7 @@ export const AppNavigator = createStackNavigator({
     // FindPlayer:FindPlayersScreen,
     LatencyPlay:LatencyPlayScreen,
     LeaderFollowerPlay:LeaderFollowerPlayScreen,
+
     GoodBye:GoodByeScreen,
     Questionnaire:QuestionnaireScreen,
     Administrator:AdministratorScreen,

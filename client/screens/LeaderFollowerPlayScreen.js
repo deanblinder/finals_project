@@ -1,6 +1,6 @@
 import React, {useEffect, useState,useRef} from 'react';
 import { StyleSheet, View,TouchableOpacity,Animated} from 'react-native';
-import {Circle, NativeBaseProvider, Button, Heading, createIcon, Center, Avatar,Pressable,Text} from 'native-base';
+import {Circle, NativeBaseProvider, Button, Heading, createIcon, Center, Avatar,Pressable,Text, Alert} from 'native-base';
 import {store} from '../state/state'
 import AdministratorScreen from "./AdministratortScreen";
 import api from "../api";
@@ -66,6 +66,7 @@ const LeaderFollowerPlayScreen = (props) =>{
     const onNextPress = () => {
         api.sendPressTimeStamp(store.getModel(),playerTimeStampArr, agentTimeStampArr, "LeadFollowAgent_AgentWeight_"+store.getWeight())
         props.navigation.navigate({routeName:'Questionnaire'});
+        // props.navigation.navigate({routeName:'FindPlayer'});
     }
     const buttonFadeFunc = ({isAgent}) => {
       if (isAgent){
@@ -81,6 +82,7 @@ const LeaderFollowerPlayScreen = (props) =>{
           }, 250)
       }
     }
+
     const playAgain = () => {
         props.navigation.navigate({routeName:'FindPlayer'});
     }
@@ -258,7 +260,10 @@ const LeaderFollowerPlayScreen = (props) =>{
                         }
                     ]}
                 >
-                    <View style={styles.agentButton} />
+                    {/*<View style={styles.agentButton} />*/}
+                    <View style={styles.agentButton}>
+                        <Text style={{textAlign: 'center',fontSize:20,color:'black',justifyContent:'center'}}>משתתף רחוק</Text>
+                    </View>
                 </Animated.View>
             </View>
 
@@ -296,10 +301,10 @@ const LeaderFollowerPlayScreen = (props) =>{
                 </View> :
                 <View style={styles.gameOverContainer}>
                     <View style={{alignItems: 'center',justifyContent:'center',flex:1}}>
-                        <Heading>המשחק נגמר!</Heading>
+                        <Heading> הסתיים משחקון {store.getCountMiniGames()+1} מתוך 3 </Heading>
                     </View>
                     <View style={{flexDirection:'row',justifyContent:'space-between'}}>
-                        <Button size={"lg"} style={{width:'45%'}} onPress={onNextPress}>המשך</Button>
+                        <Button size={"lg"} style={{width:'45%'}} onPress={onNextPress}>המשך לשאלון</Button>
                         <Button size={"lg"} style={{width:'45%'}} onPress={playAgain}>שחק שוב</Button>
                     </View>
                 </View>}
@@ -340,7 +345,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(20,174,255,0.51)',
         justifyContent: 'center',
         alignContent: 'center',
-        borderWidth: 3,
+        // borderWidth: 3,
         borderRadius: (150 / 2),
         width: 150,
         height: 150,
@@ -350,7 +355,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#ff7f50',
         justifyContent: 'center',
         alignContent: 'center',
-        borderWidth: 3,
+        // borderWidth: 3,
         borderRadius: (150 / 2),
         width: 150,
         height: 150,

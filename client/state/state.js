@@ -4,10 +4,11 @@ import uuid from 'react-native-uuid';
 import {Platform} from "react-native";
 
 const initialState = {
+    isLoading: true,
     experimentType: 'followerLeader',
     agentType: 0,
     avgOff:3,
-    gameTime:20,
+    gameTime:30,
     latency:0,
     gitter:0,
     weight:0,
@@ -29,6 +30,9 @@ const initialState = {
 };
 
 const setters = remx.setters({
+    setIsLoading(isLoading) {
+        state.isLoading = isLoading;
+    },
     setAgentType(agentType) {
         state.agentType = agentType;
     },
@@ -74,6 +78,9 @@ const setters = remx.setters({
 });
 
 const getters = remx.getters({
+    getIsLoading() {
+        return state.isLoading;
+    },
     getAgentType() {
         return state.agentType;
     },

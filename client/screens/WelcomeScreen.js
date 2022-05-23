@@ -1,8 +1,9 @@
 import React from 'react';
-import {Platform, StyleSheet, Text} from 'react-native';
+import {Platform, StyleSheet} from 'react-native';
 const cardImage = require('../assets/photos/letsStart.jpg')
 import {
     NativeBaseProvider,
+    Text,
     Heading,
     Image,
     View,
@@ -20,16 +21,10 @@ const WelcomeScreen = (props) => {
     return (
         <NativeBaseProvider>
             <View style={styles.Container} >
-                    <Image
-                        source={cardImage}
-                        width={400}
-                        height={400}
-                        alt = {'myImage'}
-                    />
                     <View style={styles.TextContainer}>
-                            <Text size={"md"} style={styles.Text} >ברוך הבא לניסוי פעולה משותפת מרחוק.</Text>
-                            <Text size={"md"} style={styles.Text} >בניסוי תפעלו יחד עם שלושה משתתפים מרוחקים, דרך הטלפון. </Text>
-                            <Text size={"md"} style={styles.Text} >אנא קראו את ההוראות בתשומת לב לפני שתתחילו. </Text>
+                            <Text style={{...styles.Text, textAlign: 'right'}} >ברוכים הבאים לניסוי פעולה משותפת מרחוק.</Text>
+                            <Text style={{...styles.Text, textAlign: 'right'}} >בניסוי תפעלו יחד עם משתתפים מרוחקים, דרך הטלפון. </Text>
+                            <Text style={styles.Text} >אנא קראו את ההוראות בתשומת לב לפני שתתחילו. </Text>
                     </View>
                 <View style={{flexDirection:'row',justifyContent:'space-between'}}>
                     <Button size={"lg"} style={{width:'45%',textAlign: 'right'}} onPress={onStartAdministrator}>כניסת מנהל מערכת</Button>
@@ -60,15 +55,18 @@ const styles = StyleSheet.create({
     },
     Text:{
       textAlign:'right',
-      fontWeight:'bold'
+      fontWeight:'bold',
+        fontSize: 20,
+        marginBottom: 20
     },
     TextContainer: {
-        fontWeight:'bold',
-        marginVertical:10,
-        textAlign:'center',
-        display:'flex',
-        justifyContent: 'space-evenly',
-        flex:3
+        // fontWeight:'bold',
+        // marginVertical:10,
+        // textAlign:'right',
+        // display:'flex',
+        justifyContent: 'center',
+        flex:1,
+        // direction: "rtl"
     },
 });
 export default WelcomeScreen

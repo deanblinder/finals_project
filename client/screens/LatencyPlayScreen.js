@@ -269,7 +269,9 @@ const LatencyPlayScreen = (props) =>{
                         }
                     ]}
                 >
-                    <View style={styles.agentButton} />
+                    <View style={styles.agentButton} >
+                        <Text style={{textAlign: 'center',fontSize:20,color:'black'}}>משתתף רחוק</Text>
+                    </View>
                 </Animated.View>
             </View>
 
@@ -306,10 +308,10 @@ const LatencyPlayScreen = (props) =>{
                 </View> :
                 <View style={styles.gameOverContainer}>
                     <View style={{alignItems: 'center',justifyContent:'center',flex:1}}>
-                        <Heading>המשחק נגמר!</Heading>
+                        <Heading> הסתיים משחקון {store.getCountMiniGames()+1} מתוך 3 </Heading>
                     </View>
                     <View style={{flexDirection:'row',justifyContent:'space-between'}}>
-                        <Button size={"lg"} style={{width:'45%'}} onPress={onNextPress}>המשך</Button>
+                        <Button size={"lg"} style={{width:'45%'}} onPress={onNextPress}>המשך לשאלון</Button>
                         <Button size={"lg"} style={{width:'45%'}} onPress={playAgain}>שחק שוב</Button>
                     </View>
                 </View>}
@@ -350,7 +352,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(20,174,255,0.51)',
         justifyContent: 'center',
         alignContent: 'center',
-        borderWidth: 3,
+        // borderWidth: 3,
         borderRadius: (150 / 2),
         width: 150,
         height: 150,
@@ -359,7 +361,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#ff7f50',
         justifyContent: 'center',
         alignContent: 'center',
-        borderWidth: 3,
+        // borderWidth: 3
         borderRadius: (150 / 2),
         width: 150,
         height: 150,

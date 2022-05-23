@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {StyleSheet, Keyboard, TouchableWithoutFeedback, ScrollView} from 'react-native';
+import {StyleSheet, Keyboard, TouchableWithoutFeedback, ScrollView, BackHandler} from 'react-native';
 import {
     NativeBaseProvider,
     Button,
@@ -10,6 +10,7 @@ import {
 import uuid from 'react-native-uuid';
 
 import api from "../api";
+import {store} from "../state/state";
 export default function GoodByeScreen() {
     const [textAreaValue, setTextAreaValue] = useState('')
     const [isDone,setIsDone] = useState(false)
@@ -34,8 +35,11 @@ export default function GoodByeScreen() {
                         <Heading  style={{textAlign:'right'}} size='lg'>תודה רבה על ההשתתפות בניסוי. </Heading>
                     </View>
                     <View style={{marginBottom:'10%'}}>
-                        <Heading  style={{textAlign:'right'}} size='sm'>אם תרצי/ה, נשמח לשמוע אם תרצי לומר דבר מה על תחושותיך במהלך הניסוי.
-                            אנא כתב/י כאן:
+                        <Heading  style={{textAlign:'right'}} size='sm'>לסיום, אנא ציינ/י עם איזה מהמשתתפים שפעלת מולם תעדיף/י להמשיך בניסוי המשך, אם יהיה?
+                        </Heading>
+                    </View>
+                    <View style={{marginBottom:'10%'}}>
+                        <Heading  style={{textAlign:'right'}} size='sm'>אם תרצה/י לכתוב דבר מה על תחושותייך במהלך הניסוי, אנא כתב/י כאן:
                         </Heading>
                     </View>
                     <TextArea
@@ -54,10 +58,10 @@ export default function GoodByeScreen() {
                 </View>
                 <View style={{justifyContent:'space-between',marginTop:'20%'}}>
                     <Heading style={{textAlign:'right'}} size='sm'>נשמח לשמוע ממך במייל זה: </Heading>
-                    <Heading style={{textAlign:'right'}} size='sm'>test@gmail.com</Heading>
+                    <Heading style={{textAlign:'right'}} size='sm'>rinottm@post.bgu.ac.il</Heading>
                 </View>
                 <View style={{marginTop:'50%'}}>
-                    <Button onPress={press}>סיים</Button>
+                    <Button onPress={press}>סיום ויציאה מהאפליקציה</Button>
                 </View>
 
             </ScrollView>
@@ -65,6 +69,11 @@ export default function GoodByeScreen() {
     }
 
     const renderTanks = () =>{
+        setTimeout(() => {
+            BackHandler.exitApp();
+
+        }, 2000);
+
         return(
             <View style={styles.textContainer}>
                 <Heading size='2xl'>תודה רבה!</Heading>
@@ -79,7 +88,7 @@ export default function GoodByeScreen() {
 }
 GoodByeScreen.navigationOptions = navigationData =>{
     return{
-        title: '',
+        title: 'סיום הניסוי',
         headerTitleAlign: 'center',
 
     }

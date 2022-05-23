@@ -125,9 +125,9 @@ const QuestionnaireScreen =(props) => {
             api.sendAnswers(store.getModel(),agent_type,qDict)
             // api.sendQuestionnaireAnswers(qDict,agent_type,deviceUUID) // send user id,
             console.log("count before is now: ", store.getCountMiniGames())
-            if(store.getCountMiniGames() < 9){
-                // let temp = store.getcountMiniGames() + 1
-                // store.setcountMiniGames(temp)
+            if(store.getCountMiniGames() < 3){
+                let temp = store.getcountMiniGames() + 1
+                store.setcountMiniGames(temp)
                 // setCountMiniGames(countMiniGames++)
                 // countMiniGames = countMiniGames + 1
                 // console.log("Finished Game. count after is now: ", store.getcountMiniGames())
@@ -153,26 +153,28 @@ const QuestionnaireScreen =(props) => {
         <NativeBaseProvider>
             <ScrollView>
             <View style={styles.container}>
-                <Heading size={"md"} style={{textAlign:'right'}}>אנא מלא את השאלון</Heading>
+                <Heading size={"md"} style={{textAlign:'center'}}>הסתיים המשחקון</Heading>
+
+                <Heading size={"md"} style={{textAlign:'center'}}>להלן מספר שאלות</Heading>
                 <Text style={{paddingTop: 20,...styles.text}}> 1. באיזה מידה התרכזת במשימה?</Text>
                 <PickerComponent title='באיזה מידה התרכזת במשימה? 1' rating={sendRating1}/>
 
-                <Text style={styles.text}> 2. באיזה מידה  הרגשת שהלחיצות שלך תואמות את אלה של המשתתפ/ת 1? </Text>
+                <Text style={styles.text}> 2. באיזה מידה  הרגשת שהלחיצות שלך תואמות את אלה של משתתפ/ת {store.getCountMiniGames()+1}? </Text>
                 <PickerComponent title='באיזה מידה  הרגשת שהלחיצות שלך תואמות את אלה של המשתתפ/ת 1? 2' rating={sendRating2}/>
 
-                <Text style={styles.text}>3. האם חשת ״תחושת ביחד״ כשלחצת עם המשתתפ/ת השני/יה? </Text>
+                <Text style={styles.text}>3. האם חשת ״תחושת ביחד״ כשלחצת עם משתתפ/ת {store.getCountMiniGames()+1}? </Text>
                 <PickerComponent title='האם חשת ״תחושת ביחד״ כשלחצת עם המשתתפ/ת השני/יה? 3' rating={sendRating3}/>
 
-                <Text style={styles.text}>4. באיזו מידה הרגשת שאת/ה והמשתתפ/ת השני/ה שיתפתם פעולה?</Text>
+                <Text style={styles.text}>4. באיזו מידה הרגשת שאת/ה ומשתתפ/ת {store.getCountMiniGames()+1}  שיתפתם פעולה?</Text>
                 <PickerComponent title='באיזו מידה הרגשת שאת/ה והמשתתפ/ת השני/ה שיתפתם פעולה? 4' rating={sendRating4}/>
 
-                <Text style={styles.text}>5. כמה קירבה את/ה מרגיש/ה כרגע למשתתפ/ת המרוחק/ת בניסוי:</Text>
+                <Text style={styles.text}>5. כמה קירבה את/ה מרגיש/ה כרגע למשתתפ/ת {store.getCountMiniGames()+1}  בניסוי:</Text>
                 <PickerComponent title='כמה קירבה את/ה מרגיש/ה כרגע למשתתפ/ת המרוחק/ת בניסוי: 5' rating={sendRating5}/>
 
-                <Text style={styles.text}>6. באיזו מידה תהי/ה פתוח לשיתוף פעולה נוסף עם המשתתפ/ת המרוחק/ת הזה בניסוי המשך? </Text>
+                <Text style={styles.text}>6. באיזו מידה תהי/ה פתוח לשיתוף פעולה נוסף עם משתתפ/ת {store.getCountMiniGames()+1} בניסוי המשך? </Text>
                 <PickerComponent title='באיזו מידה תהי/ה פתוח לשיתוף פעולה נוסף עם המשתתפ/ת המרוחק/ת הזה בניסוי המשך? 6' rating={sendRating6}/>
 
-                <Text  style={styles.text} >7. תאר/י בכמה מילים את חוווית המשחק מול משתתפ/ת 1  </Text>
+                <Text  style={styles.text} >7. תאר/י בכמה מילים את חוווית המשחק מול משתתפ/ת {store.getCountMiniGames()+1}  </Text>
                 <TextArea
                     value={textAreaValue}
                     onChangeText={(text)=>{sendText7(text)}}
@@ -189,7 +191,7 @@ const QuestionnaireScreen =(props) => {
                         <Text fontSize={'lg'} style={{textAlign:'center',color: 'red'}}>נא הכנס את כל הפרטים</Text>
                 </View>
                 }
-                <Button onPress={onNextPress}>המשך</Button>
+                <Button onPress={onNextPress}>המשך למשחקון הבא</Button>
             </View>
             </ScrollView>
         </NativeBaseProvider>
@@ -197,7 +199,7 @@ const QuestionnaireScreen =(props) => {
 }
 QuestionnaireScreen.navigationOptions = navigationData =>{
     return{
-        title: '',
+        title: ' שאלון לגבי משחקון ' + (store.getCountMiniGames()+1) + ' עם משתתפ/ת ' + + (store.getCountMiniGames()+1),
         headerTitleAlign: ''
         // headerTitleStyle: 'open-sans',
     }
@@ -208,7 +210,6 @@ const styles = StyleSheet.create({
         padding:15,
         flex: 1,
         justifyContent: 'space-between',
-
     },
     text:{
         textAlign:'right',
