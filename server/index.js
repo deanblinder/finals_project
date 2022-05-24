@@ -1,10 +1,38 @@
+var https = require('https');
+var fs = require('fs');
+var cors = require("cors");
+var cookieSession = require('cookie-session')
+
 const express = require('express')
 const bodyParser = require('body-parser')
 const app = express();
+app.use(express.json());
 
-const PORT = 1433;
-// app.use(bodyParser({limit: '50mb'}));
-// app.use(bodyParser.json());
+const PORT = 443;
+
+var httpsOptions = {
+    //key: fs.readFileSync(path.join(__dirname, "server.key")),
+    //cert: fs.readFileSync(path.join(__dirname, "server.cert")),
+    key: fs.readFileSync('privkey.pem'),
+    cert: fs.readFileSync('fullchain.pem')
+}
+
+app.use(cookieSession({
+    name: 'session',
+    keys: [process.env.COOKIE_SECRET],
+
+    // Cookie Options
+    maxAge: 24 * 60 * 60 * 1000, // 24 hours
+
+}));
+
+const corsConfig = {
+    origin: true,
+    credential: true,
+};
+app.use(cors(corsConfig));
+app.options("*", cors(corsConfig));
+app.use(cors());
 
 app.use(bodyParser.urlencoded({
     extended: true
@@ -15,6 +43,9 @@ app.use((_, res, next) => {
     res.setHeader('Access-Control-Allow-Headers', '*');
     next();
 });
+
+
+
 
 const users = require("./routes/users");
 app.use("/users", users);
@@ -44,55 +75,20 @@ const feedback = require("./routes/feedback");
 app.use("/feedback", feedback);
 
 
+var server = https.createServer(httpsOptions, app);
+server.listen(PORT);
+server.on('listening', onListening);
 
-/*
-TODO: delete all until app.listen(PORT);
+//app.listen(PORT);
+//console.log('Listening on port', PORT);
+/**
+ * Event listener for HTTP server "listening" event.
  */
-// app.get('/api/administratorLogin/:username/:password',(req,res)=>{
-//     console.log('---administratorLogin---')
-//     const username = req.params.username
-//     const password = req.params.password
-//     console.log(username,password)
-//
-// })
-// app.post('/api/changeAgentParams/:agent/:latency/:variance',(req,res)=>{
-//     console.log('---changeAgentParams---')
-//     const agent = req.params.agent
-//     const latency = req.params.latency
-//     const variance = req.params.variance
-//     console.log(agent,latency,variance)
-//
-// })
-// app.post('/api/registerPlayer/:mail/:age/:gender',(req,res)=>{
-//     console.log('---registerPlayer---')
-//     const mail = req.params.mail
-//     const age = req.params.age
-//     const gender = req.params.gender
-//     console.log(mail,age,gender)
-//
-// })
-// app.post('/api/questionnaireAnswers',(req,res)=>{
-//     console.log('---questionnaireAnswers---')
-//     const qDict = req.body
-//     console.log(qDict)
-//
-// })
-// app.post('/api/sendFeedBack/:feedBack',(req,res)=>{
-//     console.log('---sendFeedBack---')
-//     const feedBack = req.params.feedBack
-//     console.log(feedBack)
-//
-// })
-// app.post('/api/sendGameData',(req,res)=>{
-//     console.log('---sendFeedBack---')
-//     const playerData = req.body
-//     // const agentData = req.params.agentData
-//     console.log(playerData)
-//
-// })
-
-
-
-app.listen(PORT);
-console.log('Listening on port', PORT);
-
+server.address("https://syncProject.cs.bgu.ac.il");
+function onListening() {
+    var addr = server.address();
+    var bind = typeof addr === 'string'
+        ? 'pipe ' + addr
+        : 'port ' + addr.port;
+    console.log(`Server listen in port ${PORT} in adrress ${addr.address}`);
+}

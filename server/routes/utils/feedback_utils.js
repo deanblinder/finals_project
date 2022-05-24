@@ -7,10 +7,10 @@ async function getFeedbackByUserId(user_id) {
     );
 }
 
-async function addFeedback(user_id,feedback) {
+async function addFeedback(user_id,feedback,bestPlayer) {
     console.log(" in addFeedback")
     await DButils.execQuery(
-        `INSERT INTO feedback VALUES ('${user_id}','${feedback}')`
+        `INSERT INTO feedback VALUES ('${user_id}','${feedback}',${bestPlayer})`
     );
 }
 
