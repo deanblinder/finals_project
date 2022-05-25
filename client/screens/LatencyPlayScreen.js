@@ -201,25 +201,25 @@ const LatencyPlayScreen = (props) =>{
 
     const setGitterLatencyForGame = () => {
         ////////////////////////////////////////////// remove at the end, just for administrator
-        // let administratorGitter = store.getGitter()
-        // store.setGitter(administratorGitter)
-        // let administratorLatency = store.getLatency()
-        // store.setLatency(administratorLatency)
-        // let administratorAVG = store.getAvgOff()
-        // store.setAvgOf(administratorAVG)
-        // let administratorGameTime = store.getGameTime()
-        // store.setGameTime(administratorGameTime)
+        let administratorGitter = store.getGitter()
+        store.setGitter(administratorGitter)
+        let administratorLatency = store.getLatency()
+        store.setLatency(administratorLatency)
+        let administratorAVG = store.getAvgOff()
+        store.setAvgOf(administratorAVG)
+        let administratorGameTime = store.getGameTime()
+        store.setGameTime(administratorGameTime)
         ////////////////////////////////////////////////////
 
-        let randomIndex = getRndInteger(0,store.getGitterParams().length)
-        let gitterExperience = store.getGitterParams()[randomIndex]
-        let latencyExperience = store.getLatencyParams()[randomIndex]
-        store.setGitter(gitterExperience)
-        store.setLatency(latencyExperience)
-        // console.log("gitterAfter: ", store.getGitter())
-        // console.log("latencyAfter: ", store.getLatency())
-        store.setDeleteGitterParams(randomIndex)
-        store.setDeleteLatencyParams(randomIndex)
+        // let randomIndex = getRndInteger(0,store.getGitterParams().length)
+        // let gitterExperience = store.getGitterParams()[randomIndex]
+        // let latencyExperience = store.getLatencyParams()[randomIndex]
+        // store.setGitter(gitterExperience)
+        // store.setLatency(latencyExperience)
+        // // console.log("gitterAfter: ", store.getGitter())
+        // // console.log("latencyAfter: ", store.getLatency())
+        // store.setDeleteGitterParams(randomIndex)
+        // store.setDeleteLatencyParams(randomIndex)
     }
     const agentButtonFadeIn = () => {
         // Will change fadeAnim value to 1 in 5 seconds
@@ -321,8 +321,8 @@ const LatencyPlayScreen = (props) =>{
                         <Heading> הסתיים משחקון {store.getCountMiniGames()} מתוך 3 </Heading>
                     </View>
                     <View style={{flexDirection:'row',justifyContent:'space-between'}}>
-                        <Button size={"lg"} style={{width:'45%'}} onPress={onNextPress}>המשך לשאלון</Button>
-                        <Button size={"lg"} style={{width:'45%'}} onPress={playAgain}>שחק שוב</Button>
+
+                        <Button size={"lg"} style={{width:'100%'}} onPress={onNextPress}>המשך לשאלון</Button>
                     </View>
                 </View>}
 
