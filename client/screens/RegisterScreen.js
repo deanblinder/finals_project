@@ -20,8 +20,6 @@ const RegisterScreen = (props) => {
     const [mail,setMail] = useState(undefined)
     const [age,setAge] = useState(undefined)
     const [gender,setGender] = useState(undefined)
-    // const [deviceUid,setDeviceUid] = useState(uuid.v4())
-    // const [version, setVersion] = useState(Platform.constants['Release'])
     const [showError,setShowError] = useState(false)
    const onNextPress = () => {
         if (validateAge(age) && validateEmail(mail) && gender){
@@ -34,7 +32,7 @@ const RegisterScreen = (props) => {
        //          api.registerPlayer(mail,age,gender,deviceUid,'android_'+version)
        //      }
        // api.registerPlayer("try@try.com",28,'maale','fjdkd654',11)
-            console.log("version:", store.getVersion())
+       //      console.log("version:", store.getVersion())
             api.registerPlayer(mail,age,gender,store.getModel(),store.getVersion())
             props.navigation.navigate({routeName:'FindPlayer'});
         }
@@ -86,7 +84,7 @@ const RegisterScreen = (props) => {
                         </View>
                         <Input style={{textAlign:'right'}} onChangeText={(text)=>{setMail(text)}} type="email" defaultValue="" placeholder="מייל" />
                         <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>
-                            Atleast 6 characters are required.
+                            At least 6 characters are required.
                         </FormControl.ErrorMessage>
 
                         <View style={{margin:10,textAlign:'right',justifyContent: 'space-between'}}>

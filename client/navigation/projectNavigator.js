@@ -20,16 +20,17 @@ export const AppNavigator = createStackNavigator({
     // FindPlayer:FindPlayersScreen,
     // Questionnaire:QuestionnaireScreen,
     // LatencyPlay:LatencyPlayScreen,
+    // LeaderFollowerPlay:LeaderFollowerPlayScreen,
+    // GoodBye:GoodByeScreen,
 
     Welcome:WelcomeScreen,
     Guidelines:GuidelinesScreen,
     Register:RegisterScreen,
-    // FindPlayer:FindPlayersScreen,
+    FindPlayer:FindPlayersScreen,
     LatencyPlay:LatencyPlayScreen,
     LeaderFollowerPlay:LeaderFollowerPlayScreen,
-
-    GoodBye:GoodByeScreen,
     Questionnaire:QuestionnaireScreen,
+    GoodBye:GoodByeScreen,
     Administrator:AdministratorScreen,
     ChangeParam:ChangeParamAdministratorScreen,
 

@@ -20,7 +20,6 @@ const FindPlayersScreen = (props) => {
         }, (Math.floor(Math.random() * 5)+1)*1000);
     });
     const press = () =>{
-        store.setCountMiniGames(store.getCountMiniGames()+1)
         if (store.getExperimentType() === 'followerLeader'){
             props.navigation.navigate({routeName:'LeaderFollowerPlay'})
         }
@@ -32,8 +31,6 @@ const FindPlayersScreen = (props) => {
         <NativeBaseProvider>
         <View style={styles.container}>
             <View style={{alignItems: 'center',justifyContent:'center',flex:1}}>
-                <Heading style={{textAlign:'center'}} size={"lg"}>חיפוש משתתף</Heading>
-
                 <HStack space={2} alignItems="center">
                     {isLoading ? <View>
                         <Spinner size="lg" accessibilityLabel="Loading posts" />

@@ -82,7 +82,6 @@ const LatencyPlayScreen = (props) =>{
         setAgentTimeStampArr(arr)
         const num = parseInt(store.getAvgOff())
         let diffBetweenAgentPresses;
-        // console.log("diff_arr_agent: ", agentDiffPressArr)
         numberOfAgentPresses = numberOfAgentPresses + 1
         setNumberOfAgentPresses(numberOfAgentPresses)
 
@@ -201,6 +200,17 @@ const LatencyPlayScreen = (props) =>{
     }
 
     const setGitterLatencyForGame = () => {
+        ////////////////////////////////////////////// remove at the end, just for administrator
+        // let administratorGitter = store.getGitter()
+        // store.setGitter(administratorGitter)
+        // let administratorLatency = store.getLatency()
+        // store.setLatency(administratorLatency)
+        // let administratorAVG = store.getAvgOff()
+        // store.setAvgOf(administratorAVG)
+        // let administratorGameTime = store.getGameTime()
+        // store.setGameTime(administratorGameTime)
+        ////////////////////////////////////////////////////
+
         let randomIndex = getRndInteger(0,store.getGitterParams().length)
         let gitterExperience = store.getGitterParams()[randomIndex]
         let latencyExperience = store.getLatencyParams()[randomIndex]
@@ -308,7 +318,7 @@ const LatencyPlayScreen = (props) =>{
                 </View> :
                 <View style={styles.gameOverContainer}>
                     <View style={{alignItems: 'center',justifyContent:'center',flex:1}}>
-                        <Heading> הסתיים משחקון {store.getCountMiniGames()+1} מתוך 3 </Heading>
+                        <Heading> הסתיים משחקון {store.getCountMiniGames()} מתוך 3 </Heading>
                     </View>
                     <View style={{flexDirection:'row',justifyContent:'space-between'}}>
                         <Button size={"lg"} style={{width:'45%'}} onPress={onNextPress}>המשך לשאלון</Button>

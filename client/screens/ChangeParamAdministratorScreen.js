@@ -18,8 +18,6 @@ import api from "../api";
 const ChangeParamAdministratorScreen = (props) => {
     const [agent,setAgent] = useState(undefined)
     const [avg,setAvg] = useState(1)
-    const [latency,setLatency] = useState(undefined)
-    const [gitter,setGitter] = useState(undefined)
     const [showError, setShowError] = useState(false)
     const [experimentType, setExperimentType] = useState('')
     const onConfirmationPress = () => {
@@ -205,15 +203,10 @@ const ChangeParamAdministratorScreen = (props) => {
                             </Stack>
                         </FormControl>
                     </Box>
-                    {/*{!(agent && variance && latency) &&*/}
-                    {/*    <View style={{marginBottom:10}}>*/}
-                    {/*        <Text fontSize={'lg'} style={{textAlign:'center',color:'red'}}>נא הכנס את כל הפרטים</Text>*/}
-                    {/*    </View>}*/}
                     <View>
                         <Button onPress={onUpdatePress}>עדכן</Button>
                     </View>
                 </View>
-                {/*<Button onPress={onEndPress}>סיום</Button>*/}
             </View>
             </ScrollView>
         </NativeBaseProvider>

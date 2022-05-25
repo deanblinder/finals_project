@@ -1,5 +1,5 @@
 import React,{useState} from 'react';
-import {ScrollView, StyleSheet} from 'react-native';
+import {Keyboard, ScrollView, StyleSheet, TouchableWithoutFeedback} from 'react-native';
 import {
     NativeBaseProvider,
     Button,
@@ -17,13 +17,6 @@ import {store} from '../state/state'
 const QuestionnaireScreen =(props) => {
     const [textAreaValue, setTextAreaValue] = useState('')
     let [agent_type,setAgent_type] = useState('')
-    // const [deviceUid,setDeviceUid] = useState(uuid.v4())
-
-    // let [percent, setPercent] = useState(0)
-    // let countMiniGames = 0
-    // let [countMiniGames, setCountMiniGames] = useState(0)
-
-
     let [qDict, setQDict] = useState({
         questionOne:undefined,
         questionTwo:undefined,
@@ -98,53 +91,41 @@ const QuestionnaireScreen =(props) => {
     //     }
     // }
     const updateAgentType = () => {
-        // console.log("here")
         if (store.getExperimentType() === 'followerLeader'){
-            // console.log("Im in if")
-
             // setPercentForGame()
             //old one -  setAgent_type("LeadFollowAgent_" + percent)
             // setAgent_type("LeadFollowAgent_" + store.getWeight())
-            agent_type = "LeadFollowAgent_" + store.getWeight()
+            agent_type = "LeadFollowAgent_weight_" + store.getWeight()
+            setAgent_type(agent_type)
             console.log("agent_type:", agent_type)
         }
         else{
-            // console.log("Im in else")
-            setAgent_type("LatencyAgent_"+store.getGitter()+"_"+store.getLatency())
-            // console.log("agentType", agent_type)
+            console.log("in else")
+            agent_type = "LatencyAgent_Gitter_"+store.getGitter()+"_Latency_"+store.getLatency()
+            setAgent_type(agent_type)
         }
     }
+    const DismissKeyboard = ({children})=>(
+        <TouchableWithoutFeedback onPress={()=>Keyboard.dismiss()}>
+            {children}
+        </TouchableWithoutFeedback>
+    );
     const onNextPress = () =>{
         // console.log(qDict)
         //send Qdict
 
         if (qDict.questionOne && qDict.questionTwo && qDict.questionThree && qDict.questionFour && qDict.questionFive && qDict.questionSix && qDict.questionSeven){
-            // const user_id = uuid.v4()
             updateAgentType()
-            // console.log("agent_type", agent_type)
-            api.sendAnswers(store.getModel(),agent_type,qDict)
+            // console.log("here")
+            api.sendAnswers(store.getModel(),agent_type,qDict,store.getCountMiniGames())
             // api.sendQuestionnaireAnswers(qDict,agent_type,deviceUUID) // send user id,
             console.log("count before is now: ", store.getCountMiniGames())
             if(store.getCountMiniGames() < 3){
-                let temp = store.getcountMiniGames() + 1
-                store.setcountMiniGames(temp)
-                // setCountMiniGames(countMiniGames++)
-                // countMiniGames = countMiniGames + 1
-                // console.log("Finished Game. count after is now: ", store.getcountMiniGames())
-
+                let temp = store.getCountMiniGames() + 1
+                store.setCountMiniGames(temp)
                 props.navigation.navigate({routeName:'FindPlayer'});
-
-                // if (store.getExperimentType() === 'followerLeader'){
-                //     props.navigation.navigate({routeName:'LeaderFollowerPlay'})
-                // }
-                // else {
-                //     props.navigation.navigate({routeName:'LatencyPlay'})
-                // }
             }
             else {
-                // console.log("last game, count now: ", store.getcountMiniGames())
-                // store.setcountMiniGames(0)
-                // countMiniGames = 0
                 props.navigation.navigate({routeName: 'GoodBye'});
             }
         }
@@ -152,34 +133,32 @@ const QuestionnaireScreen =(props) => {
     return (
         <NativeBaseProvider>
             <ScrollView>
-            <View style={styles.container}>
+            <View style={styles.container} aria-label="Close" accessible={true}>
                 <Heading size={"md"} style={{textAlign:'center'}}>הסתיים המשחקון</Heading>
 
                 <Heading size={"md"} style={{textAlign:'center'}}>להלן מספר שאלות</Heading>
                 <Text style={{paddingTop: 20,...styles.text}}> 1. באיזה מידה התרכזת במשימה?</Text>
                 <PickerComponent title='באיזה מידה התרכזת במשימה? 1' rating={sendRating1}/>
 
-                <Text style={styles.text}> 2. באיזה מידה  הרגשת שהלחיצות שלך תואמות את אלה של משתתפ/ת {store.getCountMiniGames()+1}? </Text>
+                <Text style={styles.text}> 2. באיזה מידה  הרגשת שהלחיצות שלך תואמות את אלה של משתתפ/ת {store.getCountMiniGames()}? </Text>
                 <PickerComponent title='באיזה מידה  הרגשת שהלחיצות שלך תואמות את אלה של המשתתפ/ת 1? 2' rating={sendRating2}/>
 
-                <Text style={styles.text}>3. האם חשת ״תחושת ביחד״ כשלחצת עם משתתפ/ת {store.getCountMiniGames()+1}? </Text>
+                <Text style={styles.text}>3. האם חשת ״תחושת ביחד״ כשלחצת עם משתתפ/ת {store.getCountMiniGames()}? </Text>
                 <PickerComponent title='האם חשת ״תחושת ביחד״ כשלחצת עם המשתתפ/ת השני/יה? 3' rating={sendRating3}/>
 
-                <Text style={styles.text}>4. באיזו מידה הרגשת שאת/ה ומשתתפ/ת {store.getCountMiniGames()+1}  שיתפתם פעולה?</Text>
+                <Text style={styles.text}>4. באיזו מידה הרגשת שאת/ה ומשתתפ/ת {store.getCountMiniGames()}  שיתפתם פעולה?</Text>
                 <PickerComponent title='באיזו מידה הרגשת שאת/ה והמשתתפ/ת השני/ה שיתפתם פעולה? 4' rating={sendRating4}/>
 
-                <Text style={styles.text}>5. כמה קירבה את/ה מרגיש/ה כרגע למשתתפ/ת {store.getCountMiniGames()+1}  בניסוי:</Text>
+                <Text style={styles.text}>5. כמה קירבה את/ה מרגיש/ה כרגע למשתתפ/ת {store.getCountMiniGames()}  בניסוי:</Text>
                 <PickerComponent title='כמה קירבה את/ה מרגיש/ה כרגע למשתתפ/ת המרוחק/ת בניסוי: 5' rating={sendRating5}/>
 
-                <Text style={styles.text}>6. באיזו מידה תהי/ה פתוח לשיתוף פעולה נוסף עם משתתפ/ת {store.getCountMiniGames()+1} בניסוי המשך? </Text>
+                <Text style={styles.text}>6. באיזו מידה תהי/ה פתוח לשיתוף פעולה נוסף עם משתתפ/ת {store.getCountMiniGames()} בניסוי המשך? </Text>
                 <PickerComponent title='באיזו מידה תהי/ה פתוח לשיתוף פעולה נוסף עם המשתתפ/ת המרוחק/ת הזה בניסוי המשך? 6' rating={sendRating6}/>
 
-                <Text  style={styles.text} >7. תאר/י בכמה מילים את חוווית המשחק מול משתתפ/ת {store.getCountMiniGames()+1}  </Text>
+                <Text  style={styles.text} >7. תאר/י בכמה מילים את חוווית המשחק מול משתתפ/ת {store.getCountMiniGames()}  </Text>
                 <TextArea
                     value={textAreaValue}
                     onChangeText={(text)=>{sendText7(text)}}
-                    // numberOfLines={10}
-                    // h={100}
                     placeholder="מלא כאן"
                     w={{
                         base: "100%",
@@ -191,7 +170,12 @@ const QuestionnaireScreen =(props) => {
                         <Text fontSize={'lg'} style={{textAlign:'center',color: 'red'}}>נא הכנס את כל הפרטים</Text>
                 </View>
                 }
-                <Button onPress={onNextPress}>המשך למשחקון הבא</Button>
+                {
+                    store.getCountMiniGames()===3?
+                        <Button aria-label="Close" onPress={onNextPress}>סיום ומעבר למשוב</Button>:
+                        <Button aria-label="Close" onPress={onNextPress}>המשך למשחקון הבא</Button>
+
+                }
             </View>
             </ScrollView>
         </NativeBaseProvider>
@@ -199,7 +183,7 @@ const QuestionnaireScreen =(props) => {
 }
 QuestionnaireScreen.navigationOptions = navigationData =>{
     return{
-        title: ' שאלון לגבי משחקון ' + (store.getCountMiniGames()+1) + ' עם משתתפ/ת ' + + (store.getCountMiniGames()+1),
+        title: ' שאלון לגבי משחקון ' + (store.getCountMiniGames()) + ' עם משתתפ/ת ' + + (store.getCountMiniGames()),
         headerTitleAlign: ''
         // headerTitleStyle: 'open-sans',
     }

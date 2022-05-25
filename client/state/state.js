@@ -5,7 +5,7 @@ import {Platform} from "react-native";
 
 const initialState = {
     isLoading: true,
-    experimentType: 'followerLeader',
+    experimentType: 'latency',
     agentType: 0,
     avgOff:3,
     gameTime:30,
@@ -13,20 +13,22 @@ const initialState = {
     gitter:0,
     weight:0,
     agentTypeForQuestionnaire: "",
-    weightExp:[0.2,0,0.4,0.6,1,0.8],
+    weightExp:[1],
     // weightExpRandom:[],
-    gitterParams:[0,30,60,0,30,60,0,30,60],
+    // gitterParams:[0,30,60,0,30,60,0,30,60],
+    gitterParams:[0,30,60],
     // gitterParams:[0],
     // gitterParams:[0],
     // gitterParamsRandom:[],
     // latencyParams:[0],
-    latencyParams:[300,300,300,150,150,150,70,70,70],
+    // latencyParams:[300,300,300,150,150,150,70,70,70],
+    latencyParams:[300,300,300],
     // latencyParams:[0],
     modelDevice:uuid.v4(),
     versionDevice:Platform.constants['Release'],
     // latencyParamsRandom:[],
 
-    countMiniGames:0
+    countMiniGames:1
 };
 
 const setters = remx.setters({
