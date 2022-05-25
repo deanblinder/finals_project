@@ -332,7 +332,7 @@ const LatencyPlayScreen = (props) =>{
 
 LatencyPlayScreen.navigationOptions = navigationData =>{
     return{
-        title: 'Latency Game',
+        title: '',
         headerTitleAlign: 'center'
     }
 }
