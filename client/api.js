@@ -1,6 +1,7 @@
 import axios from 'axios';
 const events_data = [];
-const address = "https://syncProject.cs.bgu.ac.il:443"
+// const address = "https://syncProject.cs.bgu.ac.il:443"
+const address = 'http://192.168.0.167:3232'
 import {NetworkInfo} from 'react-native-network-info';
 // require module
 // var NetworkInfo = require('react-native-network-info');
