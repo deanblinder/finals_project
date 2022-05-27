@@ -53,30 +53,30 @@ const LatencyPlayScreen = (props) =>{
 
     const setGitterLatencyForGame = () => {
         ////////////////////////////////////////////// remove at the end, just for administrator
-        // let administratorGitter = store.getGitter()
-        // store.setGitter(administratorGitter)
-        // let administratorLatency = store.getLatency()
-        // store.setLatency(administratorLatency)
-        // let administratorAVG = store.getAvgOff()
-        // store.setAvgOf(administratorAVG)
-        // let administratorGameTime = store.getGameTime()
-        // store.setGameTime(administratorGameTime)
+        let administratorGitter = store.getGitter()
+        store.setGitter(administratorGitter)
+        let administratorLatency = store.getLatency()
+        store.setLatency(administratorLatency)
+        let administratorAVG = store.getAvgOff()
+        store.setAvgOf(administratorAVG)
+        let administratorGameTime = store.getGameTime()
+        store.setGameTime(administratorGameTime)
         ////////////////////////////////////////////////////
-
-        let randomIndex = getRndInteger(0,store.getGitterParams().length)
-        let gitterExperience = store.getGitterParams()[randomIndex]
-        let latencyExperience = store.getLatencyParams()[randomIndex]
-        store.setGitter(gitterExperience)
-        store.setLatency(latencyExperience)
-        // console.log("gitterAfter: ", store.getGitter())
-        // console.log("latencyAfter: ", store.getLatency())
-        store.setDeleteGitterParams(randomIndex)
-        store.setDeleteLatencyParams(randomIndex)
+        //
+        // let randomIndex = getRndInteger(0,store.getGitterParams().length)
+        // let gitterExperience = store.getGitterParams()[randomIndex]
+        // let latencyExperience = store.getLatencyParams()[randomIndex]
+        // store.setGitter(gitterExperience)
+        // store.setLatency(latencyExperience)
+        // // console.log("gitterAfter: ", store.getGitter())
+        // // console.log("latencyAfter: ", store.getLatency())
+        // store.setDeleteGitterParams(randomIndex)
+        // store.setDeleteLatencyParams(randomIndex)
     }
     const onNextPress = () => {
         api.sendPressTimeStamp(store.getModel(),playerTimeStampArr.current, agentTimeStampArr.current, "LatencyAgent_Gitter_"+store.getGitter()+"_Latency_"+store.getLatency())
-        // props.navigation.navigate({routeName:'Questionnaire'});
-        props.navigation.navigate({routeName:'FindPlayer'});
+        props.navigation.navigate({routeName:'Questionnaire'});
+        // props.navigation.navigate({routeName:'FindPlayer'});
 
     }
     const buttonFadeFunc = ({isAgent}) => {
@@ -103,7 +103,7 @@ const LatencyPlayScreen = (props) =>{
 
         if (numberOfAgentPresses.current > 2){
             const diffBetweenAgentPresses = agentTimeStampArr.current[agentTimeStampArr.current.length-1]-agentTimeStampArr.current[agentTimeStampArr.current.length-2]
-            console.log("diffBetweenAgentPresses:",diffBetweenAgentPresses)
+            // console.log("diffBetweenAgentPresses:",diffBetweenAgentPresses)
             agentDiffPressArr.current.push(diffBetweenAgentPresses)
             const numOfLastPresses = parseInt(store.getAvgOff())
             const  divBy =  agentDiffPressArr.current.length < numOfLastPresses ?agentDiffPressArr.current.length : numOfLastPresses
@@ -111,7 +111,7 @@ const LatencyPlayScreen = (props) =>{
             avgAgentPresses.current = sumOfAgentDiffPressArr / divBy
         }
         numberOfAgentPresses.current = numberOfAgentPresses.current +1
-        console.log("listen", LatencyGitter.current)
+        // console.log("listen", LatencyGitter.current)
         timeoutID.current = setTimeout(agentPress,LatencyGitter.current -(30))
     }
 

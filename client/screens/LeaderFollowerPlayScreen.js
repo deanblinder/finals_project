@@ -17,6 +17,7 @@ const LeaderFollowerPlayScreen = (props) =>{
     const numberOfPresses = useRef(0)
     const avgAgentPresses = useRef(2000)
     const intervalID1 = useRef()
+    const timeoutID =  useRef(0)
     const listeningLevel2 =useRef(2000)
     let [timePassedId,setTimePassedId] = useState(null)
     const numberOfAgentPresses = useRef(0)
@@ -33,7 +34,8 @@ const LeaderFollowerPlayScreen = (props) =>{
 
     useEffect(()=>{
         if (isFinish){
-            clearInterval(intervalID1.current)
+            // clearInterval(intervalID1.current)
+            clearTimeout(timeoutID.current)
             setLoading(false)
         }
     },    [isFinish])
@@ -41,23 +43,33 @@ const LeaderFollowerPlayScreen = (props) =>{
 
     useEffect(()=>{
         if (isTimePassed){
-            clearInterval(intervalID1.current)
-            setIsTimePassed(false)
+            // clearInterval(intervalID1.current)
+            clearTimeout(timeoutID.current)
+            setIsTimePassed(true)
         }
     }, [isTimePassed])
 
 
 
     const setWeightForGame = () => {
-        let randomIndex = getRndInteger(0,store.getWeightExp().length)
-        let weightExperience = store.getWeightExp()[randomIndex]
-        store.setWeight(weightExperience)
-        store.setDeleteWeightExp(randomIndex)
-        console.log("LeadFollowAgent_"+store.getWeight())
+        ////////////////////////////////////////////// remove at the end, just for administrator
+        let administratorWeight = store.getAgentType()
+        store.setWeight(administratorWeight)
+        let administratorAVG = store.getAvgOff()
+        store.setAvgOf(administratorAVG)
+        let administratorGameTime = store.getGameTime()
+        store.setGameTime(administratorGameTime)
+        //////////////////////////////////////////////
+        // let randomIndex = getRndInteger(0,store.getWeightExp().length)
+        // let weightExperience = store.getWeightExp()[randomIndex]
+        // store.setWeight(weightExperience)
+        // store.setDeleteWeightExp(randomIndex)
+        // console.log("LeadFollowAgent_"+store.getWeight())
     }
     const onNextPress = () => {
         api.sendPressTimeStamp(store.getModel(),playerTimeStampArr.current, agentTimeStampArr.current, "LeadFollowAgent_"+store.getWeight())
-        props.navigation.navigate({routeName:'FindPlayer'});
+        props.navigation.navigate({routeName:'Questionnaire'});
+        // props.navigation.navigate({routeName:'FindPlayer'});
     }
     const buttonFadeFunc = ({isAgent}) => {
         if (isAgent){
@@ -73,13 +85,14 @@ const LeaderFollowerPlayScreen = (props) =>{
             }, 250)
         }
     }
-    const playAgain = () => {
-        props.navigation.navigate({routeName:'FindPlayer'});
-    }
+    // const playAgain = () => {
+    //     props.navigation.navigate({routeName:'FindPlayer'});
+    // }
     const agentPress = () => {
         const timeStamp = new Date().getTime()
         buttonFadeFunc({isAgent:true})
         agentTimeStampArr.current.push(timeStamp)
+
         if (numberOfAgentPresses.current > 2) {
             const diffBetweenAgentPresses = agentTimeStampArr.current[agentTimeStampArr.current.length- 1] - agentTimeStampArr.current[agentTimeStampArr.current.length - 2]
             agentDiffPressArr.current.push(diffBetweenAgentPresses)
@@ -92,6 +105,10 @@ const LeaderFollowerPlayScreen = (props) =>{
         setTimeout(agentPress,listeningLevel2.current-(30))
     }
     const playerPress = () => {
+        if (isTimePassed){
+            setTimeout(agentPress,600)
+            setIsTimePassed(false)
+        }
         clearTimeout(timePassedId)
         const timeUntilAgentStopPress = setTimeout(() => {
             setIsTimePassed(true)
@@ -212,8 +229,8 @@ const LeaderFollowerPlayScreen = (props) =>{
                         <Heading>המשחק נגמר!</Heading>
                     </View>
                     <View style={{flexDirection:'row',justifyContent:'space-between'}}>
-                        <Button size={"lg"} style={{width:'45%'}} onPress={onNextPress}>המשך</Button>
-                        <Button size={"lg"} style={{width:'45%'}} onPress={playAgain}>שחק שוב</Button>
+                        <Button size={"lg"} style={{width:'100%'}} onPress={onNextPress}>המשך לשאלון</Button>
+                        {/*<Button size={"lg"} style={{width:'45%'}} onPress={playAgain}>שחק שוב</Button>*/}
                     </View>
                 </View>}
 
@@ -223,7 +240,7 @@ const LeaderFollowerPlayScreen = (props) =>{
 
 LeaderFollowerPlayScreen.navigationOptions = navigationData =>{
     return{
-        title: 'Leader-Follower Game',
+        title: '',
         headerTitleAlign: 'center'
     }
 }
