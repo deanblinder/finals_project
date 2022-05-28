@@ -97,8 +97,14 @@ const LatencyPlayScreen = (props) =>{
     //     props.navigation.navigate({routeName:'FindPlayer'});
     // }
     const agentPress = () => {
+        const timeUntilAgentStopPress = setTimeout(() => {
+            setIsTimePassed(true)
+        }, TIME_UNTIL_AGENT_STOP_PRESS)
+        setTimePassedId(timeUntilAgentStopPress)
         const timeStamp = new Date().getTime()
         buttonFadeFunc({isAgent:true})
+        clearTimeout(timeoutID.current)
+        clearInterval(intervalID1.current)
         agentTimeStampArr.current.push(timeStamp)
 
         if (numberOfAgentPresses.current > 2){
@@ -112,7 +118,7 @@ const LatencyPlayScreen = (props) =>{
         }
         numberOfAgentPresses.current = numberOfAgentPresses.current +1
         // console.log("listen", LatencyGitter.current)
-        timeoutID.current = setTimeout(agentPress,LatencyGitter.current -(30))
+        timeoutID.current = setInterval(agentPress,LatencyGitter.current -(30))
     }
 
 

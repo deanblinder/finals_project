@@ -5,7 +5,7 @@ import {Platform} from "react-native";
 
 const initialState = {
     isLoading: true,
-    experimentType: 'latency',
+    experimentType: 'followerLeader',
     agentType: 0,
     avgOff:3,
     gameTime:30,
@@ -13,7 +13,7 @@ const initialState = {
     gitter:0,
     weight:0,
     agentTypeForQuestionnaire: "",
-    weightExp:[1],
+    weightExp:[0],
     // weightExpRandom:[],
     gitterParams:[0,30,60,0,30,60,0,30,60],
     // gitterParams:[0,30,60],

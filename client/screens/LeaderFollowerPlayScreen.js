@@ -23,7 +23,7 @@ const LeaderFollowerPlayScreen = (props) =>{
     const numberOfAgentPresses = useRef(0)
     let [isFinish,setIsFinish] = useState(false)
     let [isTimePassed,setIsTimePassed] = useState(false)
-    const TIME_UNTIL_AGENT_STOP_PRESS = 4000
+    const TIME_UNTIL_AGENT_STOP_PRESS = 6000
     useEffect(() => {
         setWeightForGame()
         intervalID1.current = setInterval(agentPress,listeningLevel2.current)
@@ -45,7 +45,7 @@ const LeaderFollowerPlayScreen = (props) =>{
         if (isTimePassed){
             // clearInterval(intervalID1.current)
             clearTimeout(timeoutID.current)
-            setIsTimePassed(true)
+            setIsTimePassed(false)
         }
     }, [isTimePassed])
 
@@ -53,21 +53,26 @@ const LeaderFollowerPlayScreen = (props) =>{
 
     const setWeightForGame = () => {
         ////////////////////////////////////////////// remove at the end, just for administrator
-        let administratorWeight = store.getAgentType()
-        store.setWeight(administratorWeight)
-        let administratorAVG = store.getAvgOff()
-        store.setAvgOf(administratorAVG)
-        let administratorGameTime = store.getGameTime()
-        store.setGameTime(administratorGameTime)
+        // let administratorWeight = store.getAgentType()
+        // store.setWeight(administratorWeight)
+        // let administratorAVG = store.getAvgOff()
+        // store.setAvgOf(administratorAVG)
+        // let administratorGameTime = store.getGameTime()
+        // store.setGameTime(administratorGameTime)
         //////////////////////////////////////////////
-        // let randomIndex = getRndInteger(0,store.getWeightExp().length)
-        // let weightExperience = store.getWeightExp()[randomIndex]
-        // store.setWeight(weightExperience)
-        // store.setDeleteWeightExp(randomIndex)
-        // console.log("LeadFollowAgent_"+store.getWeight())
+        let randomIndex = getRndInteger(0,store.getWeightExp().length)
+        let weightExperience = store.getWeightExp()[randomIndex]
+        store.setWeight(weightExperience)
+        store.setDeleteWeightExp(randomIndex)
+        console.log("LeadFollowAgent_"+store.getWeight())
     }
     const onNextPress = () => {
-        api.sendPressTimeStamp(store.getModel(),playerTimeStampArr.current, agentTimeStampArr.current, "LeadFollowAgent_"+store.getWeight())
+        if (playerTimeStampArr.current === []){
+            api.sendPressTimeStamp(store.getModel(),playerTimeStampArr.current, [], "LeadFollowAgent_"+store.getWeight())
+        }
+        else {
+            api.sendPressTimeStamp(store.getModel(), playerTimeStampArr.current, agentTimeStampArr.current, "LeadFollowAgent_" + store.getWeight())
+        }
         props.navigation.navigate({routeName:'Questionnaire'});
         // props.navigation.navigate({routeName:'FindPlayer'});
     }
@@ -89,10 +94,16 @@ const LeaderFollowerPlayScreen = (props) =>{
     //     props.navigation.navigate({routeName:'FindPlayer'});
     // }
     const agentPress = () => {
+        // const timeUntilAgentStopPress = setTimeout(() => {
+        //     setIsTimePassed(true)
+        // }, TIME_UNTIL_AGENT_STOP_PRESS)
+        // setTimePassedId(timeUntilAgentStopPress)
         const timeStamp = new Date().getTime()
         buttonFadeFunc({isAgent:true})
+        clearTimeout(timeoutID.current)
+        clearInterval(intervalID1.current)
         agentTimeStampArr.current.push(timeStamp)
-
+        console.log("agentTimeStampArr:",agentTimeStampArr)
         if (numberOfAgentPresses.current > 2) {
             const diffBetweenAgentPresses = agentTimeStampArr.current[agentTimeStampArr.current.length- 1] - agentTimeStampArr.current[agentTimeStampArr.current.length - 2]
             agentDiffPressArr.current.push(diffBetweenAgentPresses)
@@ -102,12 +113,13 @@ const LeaderFollowerPlayScreen = (props) =>{
             avgAgentPresses.current = sumOfAgentDiffPressArr / divBy
         }
         numberOfAgentPresses.current = numberOfAgentPresses.current +1
-        setTimeout(agentPress,listeningLevel2.current-(30))
+        timeoutID.current = setInterval(agentPress,listeningLevel2.current-(30))
     }
+
     const playerPress = () => {
         if (isTimePassed){
-            setTimeout(agentPress,600)
             setIsTimePassed(false)
+            setTimeout(agentPress,600)
         }
         clearTimeout(timePassedId)
         const timeUntilAgentStopPress = setTimeout(() => {
@@ -116,6 +128,7 @@ const LeaderFollowerPlayScreen = (props) =>{
         setTimePassedId(timeUntilAgentStopPress)
         const timeStamp = new Date().getTime()
         buttonFadeFunc({isAgent:false})
+
         playerTimeStampArr.current.push(timeStamp)
         if (numberOfPresses.current > 2) {
             clearInterval(intervalID1.current)
@@ -190,7 +203,7 @@ const LeaderFollowerPlayScreen = (props) =>{
                     ]}
                 >
                     <View style={styles.agentButton} >
-                        <Text style={{textAlign: 'center',fontSize:20,color:'black',justifyContent:'center'}}>${store.getWeight()}</Text>
+                        <Text style={{textAlign: 'center',fontSize:20,color:'black',justifyContent:'center'}}>משתתף מרוחק</Text>
                     </View>
                 </Animated.View>
             </View>

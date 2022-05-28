@@ -38,7 +38,7 @@ const WelcomeScreen = (props) => {
 WelcomeScreen.navigationOptions = navigationData =>{
     return{
         title: 'ברוכים הבאים',
-        headerTitleAlign: 'center'
+        headerTitleAlign: 'center',
     }
 }
 
@@ -65,6 +65,7 @@ const styles = StyleSheet.create({
         // textAlign:'right',
         // display:'flex',
         justifyContent: 'center',
+        textAlign: 'right',
         flex:1,
         // direction: "rtl"
     },

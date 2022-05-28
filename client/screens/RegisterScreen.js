@@ -22,8 +22,8 @@ const RegisterScreen = (props) => {
     const [gender,setGender] = useState(undefined)
     const [showError,setShowError] = useState(false)
    const onNextPress = () => {
-        if (validateAge(age) && validateEmail(mail) && gender){
-       // if (true){
+        // if (validateAge(age) && validateEmail(mail) && gender){
+       if (true){
        //      const deviceUUID = uuid.v4()
        //      if (Platform.OS === 'ios'){
        //          api.registerPlayer(mail,age,gender,deviceUid,'iso_'+version)

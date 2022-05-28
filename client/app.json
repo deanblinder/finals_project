@@ -23,7 +23,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.nicolekenig.finalsproject_for_michal1"
     },
     "web": {
       "favicon": "./assets/favicon.png"
