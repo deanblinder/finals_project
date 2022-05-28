@@ -67,6 +67,7 @@ const LatencyPlayScreen = (props) =>{
         // store.setGameTime(administratorGameTime)
         ////////////////////////////////////////////////////
         //
+        console.log("all array: latancy",store.getGitterLatacyParams())
         const randomIndex = getRndInteger(0,store.getGitterLatacyParams().length)
         const gitterLatacyParams = store.getGitterLatacyParams()[randomIndex]
         console.log({gitterLatacyParams})

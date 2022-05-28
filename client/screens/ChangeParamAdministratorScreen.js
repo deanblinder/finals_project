@@ -15,7 +15,8 @@ import AdministratorScreen from "./AdministratortScreen";
 import api from "../api";
 
 const ChangeParamAdministratorScreen = (props) => {
-    const [agent,setAgent] = useState(undefined)
+    const [latancy,setLatancy] = useState()
+    const [gitter,setGitter] = useState()
     // const [avg,setAvg] = useState(1)
     const [showError, setShowError] = useState(false)
     const [experimentType, setExperimentType] = useState('')
@@ -23,10 +24,10 @@ const ChangeParamAdministratorScreen = (props) => {
     //
     // },[]);
     const onConfirmationPress = () => {
-
         // if (agent && latency && variance){
         // if (true){
         // await api.changeAgentParams(agent,latency,variance)
+        store.setLatacyGitterObjectSameForEach(gitter,latancy)
         props.navigation.push('Welcome')
         // }
     }
@@ -65,14 +66,14 @@ const ChangeParamAdministratorScreen = (props) => {
                                 startIcon: <CheckIcon size={5} />,
                             }}
                             mt="1"
-                            onValueChange={(agent) => store.setWeight(parseFloat(agent))}
+                            onValueChange={(agent) => store.setWeightExpSameForEach(parseFloat(agent))}
                     >
-                        <Select.Item label="0 לסוכן" value="0" onValueChange={() => store.setWeight(parseFloat(0))}/>
-                        <Select.Item label="0.2 לסוכן" value="0.2" onValueChange={() => store.setWeight(parseFloat(0.2))}/>
-                        <Select.Item label="0.4 לסוכן" value="0.4" onValueChange={() => store.setWeight(parseFloat(0.4))}/>
-                        <Select.Item label="0.6 לסוכן" value="0.6" onValueChange={() => store.setWeight(parseFloat(0.6))}/>
-                        <Select.Item label="0.8 לסוכן" value="0.8" onValueChange={() => store.setWeight(parseFloat(0.8))}/>
-                        <Select.Item label="1 לסוכן" value="1" onValueChange={() => store.setWeight(parseFloat(1))}/>
+                        <Select.Item label="0 לסוכן" value="0" onValueChange={() => store.setWeightExpSameForEach(parseFloat(0))}/>
+                        <Select.Item label="0.2 לסוכן" value="0.2" onValueChange={() => store.setWeightExpSameForEach(parseFloat(0.2))}/>
+                        <Select.Item label="0.4 לסוכן" value="0.4" onValueChange={() => store.setWeightExpSameForEach(parseFloat(0.4))}/>
+                        <Select.Item label="0.6 לסוכן" value="0.6" onValueChange={() => store.setWeightExpSameForEach(parseFloat(0.6))}/>
+                        <Select.Item label="0.8 לסוכן" value="0.8" onValueChange={() => store.setWeightExpSameForEach(parseFloat(0.8))}/>
+                        <Select.Item label="1 לסוכן" value="1" onValueChange={() => store.setWeightExpSameForEach(parseFloat(1))}/>
                     </Select>
                     <View style={{margin:10,textAlign:'right',justifyContent: 'space-between'}}>
                         <Text style={{textAlign:'right'}}>בחר ממוצע</Text>
@@ -111,11 +112,11 @@ const ChangeParamAdministratorScreen = (props) => {
                     <View style={{margin:10,textAlign:'right',justifyContent: 'space-between'}}>
                         <Text style={{textAlign:'right'}}>עכבה (ms)</Text>
                     </View>
-                    <Input style={{textAlign:'right'}} onChangeText={(val)=>{store.setLatency(parseInt(val))}} defaultValue="" type="number" placeholder="הכנס עכבה" />
+                    <Input style={{textAlign:'right'}} onChangeText={(val)=>{setLatancy(parseInt(val))}} defaultValue="" type="number" placeholder="הכנס עכבה" />
                     <View style={{margin:10,textAlign:'right',justifyContent: 'space-between'}}>
                         <Text style={{textAlign:'right'}}>שונות (ms)</Text>
                     </View>
-                    <Input style={{textAlign:'right'}} onChangeText={(val)=>{store.setGitter(parseInt(val))}} defaultValue="" type="number" placeholder="הכנס שונות" />
+                    <Input style={{textAlign:'right'}} onChangeText={(val)=>{setGitter(parseInt(val))}} defaultValue="" type="number" placeholder="הכנס שונות" />
                     <View style={{margin:10,textAlign:'right',justifyContent: 'space-between'}}>
                         <Text style={{textAlign:'right'}}>בחר ממוצע</Text>
                     </View>

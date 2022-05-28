@@ -61,6 +61,7 @@ const LeaderFollowerPlayScreen = (props) =>{
         // let administratorGameTime = store.getGameTime()
         // store.setGameTime(administratorGameTime)
         //////////////////////////////////////////////
+        console.log("all arr: leader",store.getWeightExp())
         let randomIndex = getRndInteger(0,store.getWeightExp().length)
         let weightExperience = store.getWeightExp()[randomIndex]
         store.setWeight(weightExperience)

@@ -13,28 +13,23 @@ const initialState = {
     gitter:0,
     weight:0.2,
     agentTypeForQuestionnaire: "",
-    weightExp:[0,0.2,0.4],
     gameNumber:0,
-    // weightExpRandom:[],
     gitterParams:[0,30,60,0,30,60,0,30,60],
     latencyParams:[300,300,300,150,150,150,70,70,70],
-    latacyGitterObject : [{gitter:0,latency:300},{gitter:30,latency:300},{gitter:60,latency:300}],
-    // gitterParams:[0,30,60],
-    // gitterParams:[0],
-    // gitterParams:[0],
-    // gitterParamsRandom:[],
-    // latencyParams:[0],
+    weightExp:[0,0.2,0.4],
 
-    // latencyParams:[300,300,300],
-    // latencyParams:[0],
+    latacyGitterObject : [{gitter:0,latency:300},{gitter:30,latency:300},{gitter:60,latency:300}],
     modelDevice:uuid.v4(),
     versionDevice:Platform.constants['Release'],
-    // latencyParamsRandom:[],
-
-    countMiniGames:1
 };
 
 const setters = remx.setters({
+    setWeightExpSameForEach(weightExp) {
+        state.weightExp = [weightExp,weightExp,weightExp];
+    },
+    setLatacyGitterObjectSameForEach(gitter,latency) {
+        state.latacyGitterObject = [{gitter:gitter,latency:latency},{gitter:gitter,latency:latency},{gitter:gitter,latency:latency}];
+    },
     setAgentType(agentType) {
         state.agentType = agentType;
     },
