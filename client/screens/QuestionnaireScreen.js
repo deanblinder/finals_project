@@ -65,9 +65,6 @@ const QuestionnaireScreen =(props) => {
     }
     const updateAgentType = () => {
         if (store.getExperimentType() === 'followerLeader'){
-            // setPercentForGame()
-            //old one -  setAgent_type("LeadFollowAgent_" + percent)
-            // setAgent_type("LeadFollowAgent_" + store.getWeight())
             agent_type = "LeadFollowAgent_weight_" + store.getWeight()
             setAgent_type(agent_type)
             console.log("agent_type:", agent_type)
@@ -84,20 +81,19 @@ const QuestionnaireScreen =(props) => {
         </TouchableWithoutFeedback>
     );
     const onNextPress = () =>{
-        // console.log(qDict)
-        //send Qdict
-
-        if (qDict.questionOne && qDict.questionTwo && qDict.questionThree && qDict.questionFour && qDict.questionFive && qDict.questionSix && qDict.questionSeven){
+        // if (qDict.questionOne && qDict.questionTwo && qDict.questionThree && qDict.questionFour && qDict.questionFive && qDict.questionSix && qDict.questionSeven){
+        if (true){
             updateAgentType()
             // console.log("here")
             api.sendAnswers(store.getModel(),agent_type,qDict,store.getGameNumber())
             // api.sendQuestionnaireAnswers(qDict,agent_type,deviceUUID) // send user id,
             console.log("count before is now: ", store.getGameNumber())
             if(store.getGameNumber() < 3){
-                props.navigation.navigate({routeName:'FindPlayer'});
+                // props.navigation.navigate({routeName:'FindPlayer'});
+                props.navigation.push('FindPlayer');
             }
             else {
-                props.navigation.navigate({routeName: 'GoodBye'});
+                props.navigation.push('GoodBye');
             }
         }
     }

@@ -5,7 +5,6 @@ import {
     Input,
     NativeBaseProvider,
     FormControl,
-    WarningOutlineIcon,
     Stack,
     Box,
     Heading,
@@ -14,7 +13,6 @@ import {
 } from 'native-base';
 import AdministratorScreen from "./AdministratortScreen";
 import api from "../api";
-// import {useEffect} from "@types/react";
 
 const ChangeParamAdministratorScreen = (props) => {
     const [agent,setAgent] = useState(undefined)
@@ -29,7 +27,7 @@ const ChangeParamAdministratorScreen = (props) => {
         // if (agent && latency && variance){
         // if (true){
         // await api.changeAgentParams(agent,latency,variance)
-        props.navigation.navigate({routeName:'Welcome'})
+        props.navigation.push('Welcome')
         // }
     }
     const onUpdatePress = () => {

@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react';
-import {Alert, StyleSheet, View, Platform} from 'react-native';
+import {Alert, StyleSheet, View} from 'react-native';
 import {
     Input,
     NativeBaseProvider,
@@ -14,7 +14,6 @@ import {
 import {store} from '../state/state'
 
 import api from "../api";
-import uuid from 'react-native-uuid';
 
 const RegisterScreen = (props) => {
     const [mail,setMail] = useState(undefined)
@@ -34,7 +33,7 @@ const RegisterScreen = (props) => {
        // api.registerPlayer("try@try.com",28,'maale','fjdkd654',11)
        //      console.log("version:", store.getVersion())
             api.registerPlayer(mail,age,gender,store.getModel(),store.getVersion())
-            props.navigation.navigate({routeName:'FindPlayer'});
+            props.navigation.push('FindPlayer');
         }
         else {
             Alert.alert(

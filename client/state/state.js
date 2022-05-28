@@ -8,7 +8,7 @@ const initialState = {
     experimentType: 'followerLeader',
     agentType: 0,
     avgOff:3,
-    gameTime:10,
+    gameTime:30,
     latency:0,
     gitter:0,
     weight:0.2,

@@ -26,7 +26,7 @@ const AdministratorScreen = (props) => {
         // }
         // if (response .status === 200) {
         if (true){
-            props.navigation.navigate({routeName: 'ChangeParam'});
+            props.navigation.push('ChangeParam');
         } else {
             Alert.alert(
                 "שם משתמש או סיסמה שגויים",

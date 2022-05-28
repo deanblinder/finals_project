@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
-import {TouchableOpacity, Text, StyleSheet, Keyboard, TouchableWithoutFeedback, ScrollView, BackHandler, Alert} from 'react-native';
-import {CheckBox, checkbox} from 'react-native-elements'
+import React, {useEffect, useState} from 'react';
+import {Text, StyleSheet, Keyboard, TouchableWithoutFeedback, ScrollView, BackHandler} from 'react-native';
+import {CheckBox} from 'react-native-elements'
 import {
     NativeBaseProvider,
     Button,
@@ -19,7 +19,6 @@ export default function GoodByeScreen() {
     const [playerTwo,setPlayerTwo] = useState(false)
     const [playerThree,setPlayerThree] = useState(false)
 
-    // const [deviceUid,setDeviceUid] = useState(uuid.v4())
     const [bestPlayer,setBestPlayer] = useState('')
     const press = () => {
         if(bestPlayer !== '') {
@@ -106,7 +105,7 @@ export default function GoodByeScreen() {
                         </View>
                     }
                     <View style={{marginTop: '35%'}}>
-                        <Button onPress={press}>סיום ויציאה מהאפליקציה</Button>
+                        <Button style={{marginBottom:"7%"}} onPress={press}>סיום ויציאה מהאפליקציה</Button>
                     </View>
 
                 </ScrollView>

@@ -84,7 +84,7 @@ const LatencyPlayScreen = (props) =>{
     }
     const onNextPress = () => {
         api.sendPressTimeStamp(store.getModel(),playerTimeStampArr.current, agentTimeStampArr.current, "LatencyAgent_Gitter_"+store.getGitter()+"_Latency_"+store.getLatency())
-        props.navigation.navigate({routeName:'Questionnaire'});
+        props.navigation.push('Questionnaire');
         // props.navigation.navigate({routeName:'FindPlayer'});
 
     }

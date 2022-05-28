@@ -13,10 +13,10 @@ import {
 const WelcomeScreen = (props) => {
 
     const onStartPress=()=>{
-        props.navigation.navigate({routeName:'Guidelines'});
+        props.navigation.push('Guidelines');
     }
     const onStartAdministrator =()=>{
-        props.navigation.navigate({routeName:'Administrator'});
+        props.navigation.push('Administrator');
     }
     return (
         <NativeBaseProvider>

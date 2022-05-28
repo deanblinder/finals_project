@@ -1,10 +1,8 @@
 import React, {useEffect, useState,useRef} from 'react';
-import { StyleSheet, View,TouchableOpacity,Animated} from 'react-native';
-import {Circle, NativeBaseProvider, Button, Heading, createIcon, Center, Avatar,Pressable,Text} from 'native-base';
+import { StyleSheet, View,Animated} from 'react-native';
+import {NativeBaseProvider, Button, Heading,Pressable,Text} from 'native-base';
 import {store} from '../state/state'
-import AdministratorScreen from "./AdministratortScreen";
 import api from "../api";
-import uuid from "react-native-uuid";
 
 const LeaderFollowerPlayScreen = (props) =>{
     const agentOpacity = useRef(new Animated.Value(1)).current;
@@ -71,7 +69,7 @@ const LeaderFollowerPlayScreen = (props) =>{
     }
     const onNextPress = () => {
         api.sendPressTimeStamp(store.getModel(), playerTimeStampArr.current, agentTimeStampArr.current, "LeadFollowAgent_" + store.getWeight())
-        props.navigation.navigate({routeName:'Questionnaire'});
+        props.navigation.push('Questionnaire');
         // props.navigation.navigate({routeName:'FindPlayer'});
     }
     const buttonFadeFunc = ({isAgent}) => {

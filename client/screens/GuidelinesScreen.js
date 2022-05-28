@@ -19,7 +19,7 @@ export const Guidelines = () => {
 const GuidelinesScreen = (props) => {
 
     const onStartPress = () => {
-        props.navigation.navigate({routeName:'Register'});
+        props.navigation.push('Register');
     }
     return (
         <NativeBaseProvider>

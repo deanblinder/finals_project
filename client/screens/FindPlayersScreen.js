@@ -12,19 +12,18 @@ import {store} from "../state/state";
 
 const FindPlayersScreen = (props) => {
 
-    const [isLoading,setLoading] = useState(true)
+    const [isLoading,setIsLoading] = useState(true);
 
     useEffect(() => {
         setTimeout(() => {
-            setLoading(false)
+            setIsLoading(false)
         }, (Math.floor(Math.random() * 5)+1)*1000);
     },[]);
-    useEffect(()=>{
-        console.log('------------------')
-    },[isLoading])
+
+
     const press = () => {
         if (store.getExperimentType() === 'followerLeader'){
-            props.navigation.navigate({routeName:'LeaderFollowerPlay'})
+            props.navigation.push('LeaderFollowerPlay')
         }
         else {
             props.navigation.navigate({routeName:'LatencyPlay'})
@@ -32,29 +31,29 @@ const FindPlayersScreen = (props) => {
     }
     return (
         <NativeBaseProvider>
-        <View style={styles.container}>
-            <View style={{alignItems: 'center',justifyContent:'center',flex:1}}>
-                <HStack space={2} alignItems="center">
-                    {isLoading ? <View>
-                        <Spinner size="lg" accessibilityLabel="Loading posts" />
-                            <Heading color="primary.500" fontSize="md">
-                                מחפש משתתפ/ת מרוחק/ת....
-                            </Heading>
-                    </View>: <View>
-                        <Heading color="primary.500" fontSize="4xl" style={{textAlign:'right'}}>
-                        נמצא משתתף מרוחק
-                    </Heading></View>}
-                </HStack>
-            </View>
+            <View style={styles.container}>
+                <View style={{alignItems: 'center',justifyContent:'center',flex:1}}>
+                    <HStack space={2} alignItems="center">
+                        {isLoading ? <View>
+                            <Spinner size="lg" accessibilityLabel="Loading posts" />
+                                <Heading color="primary.500" fontSize="md">
+                                    מחפש משתתפ/ת מרוחק/ת....
+                                </Heading>
+                        </View>: <View>
+                            <Heading color="primary.500" fontSize="4xl" style={{textAlign:'right'}}>
+                            נמצא משתתף מרוחק
+                        </Heading></View>}
+                    </HStack>
+                </View>
 
-            <View>
-                {!isLoading ?
-                        <View>
-                            <Button onPress={press}>התחל ניסוי</Button>
-                        </View>
-                    : null}
+                <View>
+                    {!isLoading ?
+                            <View>
+                                <Button onPress={press}>התחל ניסוי</Button>
+                            </View>
+                        : undefined}
+                </View>
             </View>
-        </View>
         </NativeBaseProvider>
     );
 }
@@ -63,7 +62,6 @@ FindPlayersScreen.navigationOptions = navigationData =>{
     return{
         title: 'חיפוש משתתף',
         headerTitleAlign: 'center'
-        // headerTitleStyle: 'open-sans',
     }
 }
 
