@@ -1,7 +1,6 @@
 import React from 'react';
 import { StyleSheet} from 'react-native';
-import {View,Center, Heading, SectionList,NativeBaseProvider,Text,Button} from "native-base";
-import AdministratorScreen from "../screens/AdministratortScreen";
+import {View, Heading,NativeBaseProvider,Text,Button} from "native-base";
 
 export const Guidelines = () => {
     return (
@@ -45,9 +44,9 @@ const styles = StyleSheet.create({
         textAlign:'center',
     },
     Text:{
-        textAlign:'right',
+        textAlign:'center',
         marginTop: 15,
-        fontSize:15
+        fontSize:18
     }
 });
 export default GuidelinesScreen

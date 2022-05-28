@@ -10,7 +10,7 @@ import {
     Box,
     Heading,
     Button,
-    Text, extendTheme
+    Text,
 } from 'native-base';
 
 const api = createApiClient;
@@ -45,7 +45,7 @@ const AdministratorScreen = (props) => {
         <NativeBaseProvider>
             <View style={styles.container}>
                 <View style={{flex:1,justifyContent: 'center'}}>
-                    <Heading style={{marginBottom:20,textAlign:'right'}} size={"lg"}>הכנס פרטים</Heading>
+                    <Heading style={{marginBottom:20,textAlign:'center'}} size={"lg"}>הכנס פרטים</Heading>
                     <Box
                         w={{
                             base: "90%",
@@ -55,14 +55,14 @@ const AdministratorScreen = (props) => {
                         <FormControl isRequired>
                             <Stack mx="4">
                                 <View style={{margin:10,textAlign:'right',justifyContent: 'space-between'}}>
-                                    <Text style={{textAlign:'right'}}>שם משתמש</Text>
+                                    <Text style={{textAlign:'center'}}>שם משתמש</Text>
                                 </View>
                                 <Input style={{...styles.input, textAlign:'right'}} onChangeText={(text)=>{setUsername(text)}} type="email" defaultValue="" placeholder="שם משתמש" />
                                 <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>
                                     Atleast 6 characters are required.
                                 </FormControl.ErrorMessage>
                                 <View style={{margin:10}}>
-                                    <Text style={{textAlign:'right'}}>סיסמה</Text>
+                                    <Text style={{textAlign:'center'}}>סיסמה</Text>
                                 </View>
                                 <Input style={{textAlign:'right'}} onChangeText={(text)=>{setPassword(text)}}  type="password" defaultValue="" placeholder="סיסמה" />
                                 <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>

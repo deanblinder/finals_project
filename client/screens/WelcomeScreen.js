@@ -22,8 +22,8 @@ const WelcomeScreen = (props) => {
         <NativeBaseProvider>
             <View style={styles.Container} >
                     <View style={styles.TextContainer}>
-                            <Text style={{...styles.Text, textAlign: 'right'}} >ברוכים הבאים לניסוי פעולה משותפת מרחוק.</Text>
-                            <Text style={{...styles.Text, textAlign: 'right'}} >בניסוי תפעלו יחד עם משתתפים מרוחקים, דרך הטלפון. </Text>
+                            <Text style={{...styles.Text}} >ברוכים הבאים לניסוי פעולה משותפת מרחוק.</Text>
+                            <Text style={{...styles.Text}} >בניסוי תפעלו יחד עם משתתפים מרוחקים, דרך הטלפון. </Text>
                             <Text style={styles.Text} >אנא קראו את ההוראות בתשומת לב לפני שתתחילו. </Text>
                     </View>
                 <View style={{flexDirection:'row',justifyContent:'space-between'}}>
@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
         width:'100%',
     },
     Text:{
-      textAlign:'right',
+      textAlign:'center',
       fontWeight:'bold',
         fontSize: 20,
         marginBottom: 20
@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
         // textAlign:'right',
         // display:'flex',
         justifyContent: 'center',
-        textAlign: 'right',
+        textAlign: 'center',
         flex:1,
         // direction: "rtl"
     },

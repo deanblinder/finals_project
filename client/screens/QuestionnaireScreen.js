@@ -81,12 +81,10 @@ const QuestionnaireScreen =(props) => {
         </TouchableWithoutFeedback>
     );
     const onNextPress = () =>{
-        // if (qDict.questionOne && qDict.questionTwo && qDict.questionThree && qDict.questionFour && qDict.questionFive && qDict.questionSix && qDict.questionSeven){
-        if (true){
+        if (qDict.questionOne && qDict.questionTwo && qDict.questionThree && qDict.questionFour && qDict.questionFive && qDict.questionSix && qDict.questionSeven){
+        // if (true){
             updateAgentType()
-            // console.log("here")
             api.sendAnswers(store.getModel(),agent_type,qDict,store.getGameNumber())
-            // api.sendQuestionnaireAnswers(qDict,agent_type,deviceUUID) // send user id,
             console.log("count before is now: ", store.getGameNumber())
             if(store.getGameNumber() < 3){
                 // props.navigation.navigate({routeName:'FindPlayer'});
@@ -162,9 +160,10 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
     },
     text:{
-        textAlign:'right',
+        textAlign:'center',
         paddingTop: 15,
-        marginBottom:5
+        marginBottom:5,
+        fontWeight:'bold'
     }
 });
 export default QuestionnaireScreen

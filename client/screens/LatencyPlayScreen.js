@@ -1,10 +1,8 @@
 import React, {useEffect, useState,useRef} from 'react';
 import { StyleSheet, View,TouchableOpacity,Animated} from 'react-native';
-import {Circle, NativeBaseProvider, Button, Heading, createIcon, Center, Avatar,Pressable,Text} from 'native-base';
+import {NativeBaseProvider, Button, Heading, createIcon, Center, Avatar,Pressable,Text} from 'native-base';
 import {store} from '../state/state'
-import AdministratorScreen from "./AdministratortScreen";
 import api from "../api";
-import uuid from "react-native-uuid";
 
 const LatencyPlayScreen = (props) =>{
     const agentOpacity = useRef(new Animated.Value(1)).current;
@@ -40,7 +38,6 @@ const LatencyPlayScreen = (props) =>{
 
     useEffect(()=>{
         if (isFinish){
-            // clearInterval(intervalID1.current)
             clearTimeout(timeoutID.current)
             setLoading(false)
         }

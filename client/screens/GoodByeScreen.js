@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {Text, StyleSheet, Keyboard, TouchableWithoutFeedback, ScrollView, BackHandler} from 'react-native';
 import {CheckBox} from 'react-native-elements'
 import {
@@ -6,9 +6,8 @@ import {
     Button,
     View,
     Heading,
-    TextArea, Input
+    TextArea,
 } from 'native-base';
-import uuid from 'react-native-uuid';
 
 import api from "../api";
 import {store} from "../state/state";
@@ -18,7 +17,6 @@ export default function GoodByeScreen() {
     const [playerOne,setPlayerOne] = useState(false)
     const [playerTwo,setPlayerTwo] = useState(false)
     const [playerThree,setPlayerThree] = useState(false)
-
     const [bestPlayer,setBestPlayer] = useState('')
     const press = () => {
         if(bestPlayer !== '') {
@@ -55,10 +53,10 @@ export default function GoodByeScreen() {
                 <ScrollView style={styles.container}>
                     <View>
                         <View style={{marginBottom: '10%'}}>
-                            <Heading style={{textAlign: 'right'}} size='lg'>תודה רבה על ההשתתפות בניסוי. </Heading>
+                            <Heading style={{textAlign: 'center'}} size='lg'>תודה רבה על ההשתתפות בניסוי. </Heading>
                         </View>
                         <View style={{marginBottom: '10%'}}>
-                            <Heading style={{textAlign: 'right'}} size='sm'>לסיום, אנא ציינ/י עם איזה מהמשתתפים שפעלת
+                            <Heading style={{textAlign: 'center'}} size='sm'>לסיום, אנא ציינ/י עם איזה מהמשתתפים שפעלת
                                 מולם תעדיף/י להמשיך בניסוי המשך, אם יהיה?
                             </Heading>
                         </View>
@@ -77,7 +75,7 @@ export default function GoodByeScreen() {
                             </CheckBox>
                         </View>
                         <View style={{marginBottom: '10%'}}>
-                            <Heading style={{textAlign: 'right'}} size='sm'>אם תרצה/י לכתוב דבר מה על תחושותייך במהלך
+                            <Heading style={{textAlign: 'center'}} size='sm'>אם תרצה/י לכתוב דבר מה על תחושותייך במהלך
                                 הניסוי, אנא כתב/י כאן:
                             </Heading>
                         </View>
@@ -96,8 +94,8 @@ export default function GoodByeScreen() {
 
                     </View>
                     <View style={{justifyContent: 'space-between', marginTop: '10%'}}>
-                        <Heading style={{textAlign: 'right'}} size='sm'>נשמח לשמוע ממך במייל זה: </Heading>
-                        <Heading style={{textAlign: 'right'}} size='sm'>rinottm@post.bgu.ac.il</Heading>
+                        <Heading style={{textAlign: 'center'}} size='sm'>נשמח לשמוע ממך במייל זה: </Heading>
+                        <Heading style={{textAlign: 'center'}} size='sm'>rinottm@post.bgu.ac.il</Heading>
                     </View>
                     {(bestPlayer === '') &&
                         <View style={{marginTop: '10%'}}>

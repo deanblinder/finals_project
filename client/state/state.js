@@ -16,7 +16,7 @@ const initialState = {
     gameNumber:0,
     gitterParams:[0,30,60,0,30,60,0,30,60],
     latencyParams:[300,300,300,150,150,150,70,70,70],
-    weightExp:[0,0.2,0.4],
+    weightExp:[0.2,0.4,0.6],
 
     latacyGitterObject : [{gitter:0,latency:300},{gitter:30,latency:300},{gitter:60,latency:300}],
     modelDevice:uuid.v4(),

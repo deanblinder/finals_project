@@ -32,7 +32,7 @@ const RegisterScreen = (props) => {
        //      }
        // api.registerPlayer("try@try.com",28,'maale','fjdkd654',11)
        //      console.log("version:", store.getVersion())
-            api.registerPlayer(mail,age,gender,store.getModel(),store.getVersion())
+       //      api.registerPlayer(mail,age,gender,store.getModel(),store.getVersion())
             props.navigation.push('FindPlayer');
         }
         else {
@@ -79,7 +79,7 @@ const RegisterScreen = (props) => {
                 <FormControl isRequired>
                     <Stack mx="4">
                         <View style={{margin:10,textAlign:'right',justifyContent: 'space-between'}}>
-                            <Text style={{textAlign:'right'}}>מייל</Text>
+                            <Text style={{textAlign:'center'}}>מייל</Text>
                         </View>
                         <Input style={{textAlign:'right'}} onChangeText={(text)=>{setMail(text)}} type="email" defaultValue="" placeholder="מייל" />
                         <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>
@@ -87,7 +87,7 @@ const RegisterScreen = (props) => {
                         </FormControl.ErrorMessage>
 
                         <View style={{margin:10,textAlign:'right',justifyContent: 'space-between'}}>
-                            <Text style={{textAlign:'right'}}>גיל</Text>
+                            <Text style={{textAlign:'center'}}>גיל</Text>
                         </View>
                         <Input style={{textAlign:'right'}} onChangeText={(text)=>{setAge(text)}}  type="number" defaultValue="" placeholder="גיל" />
                         <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>
@@ -95,7 +95,7 @@ const RegisterScreen = (props) => {
                         </FormControl.ErrorMessage>
                         <FormControl isRequired isInvalid={false}>
                             <View style={{margin:10,textAlign:'right',justifyContent: 'space-between'}}>
-                                <Text style={{textAlign:'right'}}>בחר מגדר</Text>
+                                <Text style={{textAlign:'center'}}>בחר מגדר</Text>
                             </View>
                             <Select style={{textAlign:'right'}}
                                     minWidth="200"

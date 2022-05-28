@@ -51,7 +51,7 @@ const PickerComponent = (props) => {
 
 
                         <View style={{justifyContent:'center',marginLeft:5}}>
-                            <Text>במידה רבה</Text>
+                            <Text>מאוד</Text>
                         </View>
                     </View>
                 </Stack>
