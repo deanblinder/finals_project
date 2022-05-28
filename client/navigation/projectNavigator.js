@@ -13,6 +13,7 @@ import LatencyPlayScreen from "../screens/LatencyPlayScreen";
 import FindPlayersScreen from "../screens/FindPlayersScreen";
 import AdministratorScreen from "../screens/AdministratortScreen";
 import ChangeParamAdministratorScreen from "../screens/ChangeParamAdministratorScreen";
+import FindScreen from "../screens/screens/findScreen";
 
 
 export const AppNavigator = createStackNavigator({
@@ -22,18 +23,18 @@ export const AppNavigator = createStackNavigator({
     // LatencyPlay:LatencyPlayScreen,
     // LeaderFollowerPlay:LeaderFollowerPlayScreen,
     // GoodBye:GoodByeScreen,
+    FindPlayer:FindPlayersScreen,
 
     Welcome:WelcomeScreen,
     Guidelines:GuidelinesScreen,
     Register:RegisterScreen,
-    FindPlayer:FindPlayersScreen,
     LatencyPlay:LatencyPlayScreen,
     LeaderFollowerPlay:LeaderFollowerPlayScreen,
     Questionnaire:QuestionnaireScreen,
     GoodBye:GoodByeScreen,
     Administrator:AdministratorScreen,
     ChangeParam:ChangeParamAdministratorScreen,
-
+    Find: FindScreen
 
 
 

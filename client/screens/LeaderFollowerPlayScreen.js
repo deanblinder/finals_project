@@ -14,19 +14,23 @@ const LeaderFollowerPlayScreen = (props) =>{
     const agentTimeStampArr = useRef([])
     const playerDiffPressArr = useRef([])
     const agentDiffPressArr = useRef([])
+    const startGameTime = useRef()
     const numberOfPresses = useRef(0)
     const avgAgentPresses = useRef(2000)
     const intervalID1 = useRef()
+    const didPlayerStartPlay = useRef(false)
     const timeoutID =  useRef(0)
     const listeningLevel2 =useRef(2000)
     let [timePassedId,setTimePassedId] = useState(null)
     const numberOfAgentPresses = useRef(0)
     let [isFinish,setIsFinish] = useState(false)
     let [isTimePassed,setIsTimePassed] = useState(false)
-    const TIME_UNTIL_AGENT_STOP_PRESS = 6000
+    const TIME_UNTIL_AGENT_STOP_PRESS = 4000
     useEffect(() => {
+        store.setGameNumber(store.getGameNumber()+1)
+        startGameTime.current = new Date().getTime()
         setWeightForGame()
-        intervalID1.current = setInterval(agentPress,listeningLevel2.current)
+        timeoutID.current = setTimeout(agentPress,listeningLevel2.current)
         setTimeout(() => {
             setIsFinish(true)
         }, parseInt(store.getGameTime())*1000);
@@ -34,7 +38,6 @@ const LeaderFollowerPlayScreen = (props) =>{
 
     useEffect(()=>{
         if (isFinish){
-            // clearInterval(intervalID1.current)
             clearTimeout(timeoutID.current)
             setLoading(false)
         }
@@ -43,9 +46,9 @@ const LeaderFollowerPlayScreen = (props) =>{
 
     useEffect(()=>{
         if (isTimePassed){
+            console.log('isTimePassed effect')
             // clearInterval(intervalID1.current)
             clearTimeout(timeoutID.current)
-            setIsTimePassed(false)
         }
     }, [isTimePassed])
 
@@ -67,12 +70,7 @@ const LeaderFollowerPlayScreen = (props) =>{
         console.log("LeadFollowAgent_"+store.getWeight())
     }
     const onNextPress = () => {
-        if (playerTimeStampArr.current === []){
-            api.sendPressTimeStamp(store.getModel(),playerTimeStampArr.current, [], "LeadFollowAgent_"+store.getWeight())
-        }
-        else {
-            api.sendPressTimeStamp(store.getModel(), playerTimeStampArr.current, agentTimeStampArr.current, "LeadFollowAgent_" + store.getWeight())
-        }
+        api.sendPressTimeStamp(store.getModel(), playerTimeStampArr.current, agentTimeStampArr.current, "LeadFollowAgent_" + store.getWeight())
         props.navigation.navigate({routeName:'Questionnaire'});
         // props.navigation.navigate({routeName:'FindPlayer'});
     }
@@ -90,20 +88,13 @@ const LeaderFollowerPlayScreen = (props) =>{
             }, 250)
         }
     }
-    // const playAgain = () => {
-    //     props.navigation.navigate({routeName:'FindPlayer'});
-    // }
     const agentPress = () => {
-        // const timeUntilAgentStopPress = setTimeout(() => {
-        //     setIsTimePassed(true)
-        // }, TIME_UNTIL_AGENT_STOP_PRESS)
-        // setTimePassedId(timeUntilAgentStopPress)
+        if (!didPlayerStartPlay.current && ( new Date().getTime() - startGameTime.current > TIME_UNTIL_AGENT_STOP_PRESS )){
+            setIsTimePassed(true)
+        }
         const timeStamp = new Date().getTime()
         buttonFadeFunc({isAgent:true})
-        clearTimeout(timeoutID.current)
-        clearInterval(intervalID1.current)
         agentTimeStampArr.current.push(timeStamp)
-        console.log("agentTimeStampArr:",agentTimeStampArr)
         if (numberOfAgentPresses.current > 2) {
             const diffBetweenAgentPresses = agentTimeStampArr.current[agentTimeStampArr.current.length- 1] - agentTimeStampArr.current[agentTimeStampArr.current.length - 2]
             agentDiffPressArr.current.push(diffBetweenAgentPresses)
@@ -113,13 +104,14 @@ const LeaderFollowerPlayScreen = (props) =>{
             avgAgentPresses.current = sumOfAgentDiffPressArr / divBy
         }
         numberOfAgentPresses.current = numberOfAgentPresses.current +1
-        timeoutID.current = setInterval(agentPress,listeningLevel2.current-(30))
+        timeoutID.current = setTimeout(agentPress,listeningLevel2.current-(30))
     }
 
     const playerPress = () => {
+        didPlayerStartPlay.current = true
         if (isTimePassed){
             setIsTimePassed(false)
-            setTimeout(agentPress,600)
+            timeoutID.current = setTimeout(agentPress,600)
         }
         clearTimeout(timePassedId)
         const timeUntilAgentStopPress = setTimeout(() => {
@@ -128,7 +120,6 @@ const LeaderFollowerPlayScreen = (props) =>{
         setTimePassedId(timeUntilAgentStopPress)
         const timeStamp = new Date().getTime()
         buttonFadeFunc({isAgent:false})
-
         playerTimeStampArr.current.push(timeStamp)
         if (numberOfPresses.current > 2) {
             clearInterval(intervalID1.current)
@@ -193,7 +184,7 @@ const LeaderFollowerPlayScreen = (props) =>{
     }
     const renderAgentCircle = () =>{
         return(
-            <View>
+            <View style={styles.circleBorderAgent}>
                 <Animated.View
                     style={[
                         2 ,
@@ -212,6 +203,7 @@ const LeaderFollowerPlayScreen = (props) =>{
     }
     const renderPlayerCircle = () =>{
         return(
+            <View style={styles.circleBorderPlayer}>
             <Pressable onPressIn={playerPress}>
                 <Animated.View
                     style={[
@@ -226,6 +218,7 @@ const LeaderFollowerPlayScreen = (props) =>{
                     </View>
                 </Animated.View>
             </Pressable>
+            </View>
         )
     }
     return (
@@ -239,7 +232,7 @@ const LeaderFollowerPlayScreen = (props) =>{
                 </View> :
                 <View style={styles.gameOverContainer}>
                     <View style={{alignItems: 'center',justifyContent:'center',flex:1}}>
-                        <Heading>המשחק נגמר!</Heading>
+                        <Heading>הסתיים משחקון {store.getGameNumber()} מתוך 3</Heading>
                     </View>
                     <View style={{flexDirection:'row',justifyContent:'space-between'}}>
                         <Button size={"lg"} style={{width:'100%'}} onPress={onNextPress}>המשך לשאלון</Button>
@@ -283,7 +276,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(20,174,255,0.51)',
         justifyContent: 'center',
         alignContent: 'center',
-        borderWidth: 3,
+        // borderWidth: 3,
         borderRadius: (150 / 2),
         width: 150,
         height: 150,
@@ -293,11 +286,27 @@ const styles = StyleSheet.create({
         backgroundColor: '#ff7f50',
         justifyContent: 'center',
         alignContent: 'center',
-        borderWidth: 3,
+        // borderWidth: 3,
         borderRadius: (150 / 2),
         width: 150,
         height: 150,
 
     },
+    circleBorderPlayer: {
+        borderWidth: 3,
+        borderRadius: (150 / 2),
+        width: 153,
+        height: 153,
+        justifyContent: 'center',
+        alignContent: 'center',
+    },
+    circleBorderAgent:{
+        borderWidth: 3,
+        borderRadius: (150 / 2),
+        width: 155,
+        height: 154,
+        justifyContent: 'center',
+        alignContent: 'center',
+    }
 });
 export default LeaderFollowerPlayScreen

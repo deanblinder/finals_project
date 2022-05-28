@@ -1,25 +1,28 @@
 import React, {useEffect, useState} from 'react';
-import { StyleSheet} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {
     NativeBaseProvider,
     Heading,
     HStack,
     Spinner,
     View,
-    Button, Select, CheckIcon
+    Button
 } from 'native-base';
-import AdministratorScreen from "./AdministratortScreen";
 import {store} from "../state/state";
 
 const FindPlayersScreen = (props) => {
 
     const [isLoading,setLoading] = useState(true)
+
     useEffect(() => {
         setTimeout(() => {
             setLoading(false)
         }, (Math.floor(Math.random() * 5)+1)*1000);
-    });
-    const press = () =>{
+    },[]);
+    useEffect(()=>{
+        console.log('------------------')
+    },[isLoading])
+    const press = () => {
         if (store.getExperimentType() === 'followerLeader'){
             props.navigation.navigate({routeName:'LeaderFollowerPlay'})
         }

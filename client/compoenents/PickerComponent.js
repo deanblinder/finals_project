@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import { StyleSheet} from 'react-native';
-import {View,Box, Checkbox, FormControl, HStack, Stack, WarningOutlineIcon,Text} from "native-base";
+import {View,Box, Checkbox, Stack, Text} from "native-base";
 
 
 const PickerComponent = (props) => {
@@ -17,7 +17,6 @@ const PickerComponent = (props) => {
         }
     }
     return (
-        // <View>
           <Box alignItems="center">
                 <Stack style={{
                     flexDirection: "row"
@@ -57,7 +56,6 @@ const PickerComponent = (props) => {
                     </View>
                 </Stack>
             </Box>
-        // </View>
     );
 }
 

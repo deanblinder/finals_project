@@ -8,20 +8,23 @@ const initialState = {
     experimentType: 'followerLeader',
     agentType: 0,
     avgOff:3,
-    gameTime:30,
+    gameTime:10,
     latency:0,
     gitter:0,
-    weight:0,
+    weight:0.2,
     agentTypeForQuestionnaire: "",
-    weightExp:[0],
+    weightExp:[0,0.2,0.4],
+    gameNumber:0,
     // weightExpRandom:[],
     gitterParams:[0,30,60,0,30,60,0,30,60],
+    latencyParams:[300,300,300,150,150,150,70,70,70],
+    latacyGitterObject : [{gitter:0,latency:300},{gitter:30,latency:300},{gitter:60,latency:300}],
     // gitterParams:[0,30,60],
     // gitterParams:[0],
     // gitterParams:[0],
     // gitterParamsRandom:[],
     // latencyParams:[0],
-    latencyParams:[300,300,300,150,150,150,70,70,70],
+
     // latencyParams:[300,300,300],
     // latencyParams:[0],
     modelDevice:uuid.v4(),
@@ -32,11 +35,14 @@ const initialState = {
 };
 
 const setters = remx.setters({
-    setIsLoading(isLoading) {
-        state.isLoading = isLoading;
-    },
     setAgentType(agentType) {
         state.agentType = agentType;
+    },
+    deleteGitterLatacyByIndex(gitterIndex) {
+        state.latacyGitterObject.splice(gitterIndex,1)
+    },
+    setGitterLatacyParams(latacyGitterObject) {
+        state.latacyGitterObject = latacyGitterObject
     },
     setAvgOf(avgOff) {
         state.avgOff = avgOff;
@@ -59,6 +65,9 @@ const setters = remx.setters({
     setWeight(weight) {
         state.weight = weight
     },
+    setGameNumber(gameNumber) {
+        state.gameNumber = gameNumber
+    },
     // setGitterParamsRandom(gitterParam) {
     //     state.gitterParamsRandom.push(gitterParam)
     // },
@@ -74,14 +83,11 @@ const setters = remx.setters({
     setAgentTypeForQuestionnaire(agentTypeForQuestionnaire) {
         state.agentTypeForQuestionnaire = agentTypeForQuestionnaire;
     },
-    setCountMiniGames(countMiniGames) {
-        state.countMiniGames = countMiniGames;
-    },
 });
 
 const getters = remx.getters({
-    getIsLoading() {
-        return state.isLoading;
+    getGitterLatacyParams() {
+        return state.latacyGitterObject;
     },
     getAgentType() {
         return state.agentType;
@@ -122,15 +128,15 @@ const getters = remx.getters({
     getVersion() {
         return state.versionDevice;
     },
+    getGameNumber() {
+        return state.gameNumber
+    },
     // getGitterParamsRandom() {
     //     return state.gitterParamsRandom;
     // },
     // getLatencyParamsRandom() {
     //     return state.latencyParamsRandom;
     // },
-    getCountMiniGames() {
-        return state.countMiniGames;
-    },
 });
 
 export const store = {

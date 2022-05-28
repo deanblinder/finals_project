@@ -18,16 +18,20 @@ const LatencyPlayScreen = (props) =>{
     const avgAgentPresses = useRef(2000)
     const intervalID1 = useRef()
     const LatencyGitter =useRef(2000)
+    const didPlayerStartPlay = useRef(false)
+    const startGameTime = useRef()
+
     const timeoutID =  useRef(0)
     let [timePassedId,setTimePassedId] = useState(0)
     const numberOfAgentPresses = useRef(0)
-    // let [numberOfAgentPresses,setNumberOfAgentPresses] = useState(0)
     let [isFinish,setIsFinish] = useState(false)
     let [isTimePassed,setIsTimePassed] = useState(false)
     const TIME_UNTIL_AGENT_STOP_PRESS = 4000
     useEffect(() => {
+        store.setGameNumber(store.getGameNumber()+1)
+        startGameTime.current = new Date().getTime()
         setGitterLatencyForGame()
-        intervalID1.current = setInterval(agentPress, LatencyGitter.current)
+        intervalID1.current = setTimeout(agentPress, LatencyGitter.current)
         setTimeout(() => {
             setIsFinish(true)
         }, parseInt(store.getGameTime())*1000);
@@ -45,33 +49,38 @@ const LatencyPlayScreen = (props) =>{
 
     useEffect(()=>{
         if (isTimePassed){
+            console.log('isTimePassed effect')
             // clearInterval(intervalID1.current)
             clearTimeout(timeoutID.current)
-            setIsTimePassed(true)
         }
     },    [isTimePassed])
 
     const setGitterLatencyForGame = () => {
         ////////////////////////////////////////////// remove at the end, just for administrator
-        let administratorGitter = store.getGitter()
-        store.setGitter(administratorGitter)
-        let administratorLatency = store.getLatency()
-        store.setLatency(administratorLatency)
-        let administratorAVG = store.getAvgOff()
-        store.setAvgOf(administratorAVG)
-        let administratorGameTime = store.getGameTime()
-        store.setGameTime(administratorGameTime)
+        // let administratorGitter = store.getGitter()
+        // store.setGitter(administratorGitter)
+        // let administratorLatency = store.getLatency()
+        // store.setLatency(administratorLatency)
+        // let administratorAVG = store.getAvgOff()
+        // store.setAvgOf(administratorAVG)
+        // let administratorGameTime = store.getGameTime()
+        // store.setGameTime(administratorGameTime)
         ////////////////////////////////////////////////////
         //
-        // let randomIndex = getRndInteger(0,store.getGitterParams().length)
+        const randomIndex = getRndInteger(0,store.getGitterLatacyParams().length)
+        const gitterLatacyParams = store.getGitterLatacyParams()[randomIndex]
+        console.log({gitterLatacyParams})
         // let gitterExperience = store.getGitterParams()[randomIndex]
         // let latencyExperience = store.getLatencyParams()[randomIndex]
-        // store.setGitter(gitterExperience)
-        // store.setLatency(latencyExperience)
-        // // console.log("gitterAfter: ", store.getGitter())
-        // // console.log("latencyAfter: ", store.getLatency())
-        // store.setDeleteGitterParams(randomIndex)
-        // store.setDeleteLatencyParams(randomIndex)
+        store.setGitter(gitterLatacyParams.gitter)
+
+        store.setLatency(gitterLatacyParams.latency)
+        // console.log("gitterAfter: ", store.getGitter())
+        // console.log("latencyAfter: ", store.getLatency())
+        store.deleteGitterLatacyByIndex(randomIndex)
+        console.log(gitterLatacyParams)
+        console.log(store.getGitter())
+        console.log(store.getLatency())
     }
     const onNextPress = () => {
         api.sendPressTimeStamp(store.getModel(),playerTimeStampArr.current, agentTimeStampArr.current, "LatencyAgent_Gitter_"+store.getGitter()+"_Latency_"+store.getLatency())
@@ -93,23 +102,17 @@ const LatencyPlayScreen = (props) =>{
             }, 250)
         }
     }
-    // const playAgain = () => {
-    //     props.navigation.navigate({routeName:'FindPlayer'});
-    // }
+
     const agentPress = () => {
-        const timeUntilAgentStopPress = setTimeout(() => {
+        if (!didPlayerStartPlay.current && ( new Date().getTime() - startGameTime.current > TIME_UNTIL_AGENT_STOP_PRESS )){
+            console.log('didPlayerStartPlay')
             setIsTimePassed(true)
-        }, TIME_UNTIL_AGENT_STOP_PRESS)
-        setTimePassedId(timeUntilAgentStopPress)
+        }
         const timeStamp = new Date().getTime()
         buttonFadeFunc({isAgent:true})
-        clearTimeout(timeoutID.current)
-        clearInterval(intervalID1.current)
         agentTimeStampArr.current.push(timeStamp)
-
         if (numberOfAgentPresses.current > 2){
             const diffBetweenAgentPresses = agentTimeStampArr.current[agentTimeStampArr.current.length-1]-agentTimeStampArr.current[agentTimeStampArr.current.length-2]
-            // console.log("diffBetweenAgentPresses:",diffBetweenAgentPresses)
             agentDiffPressArr.current.push(diffBetweenAgentPresses)
             const numOfLastPresses = parseInt(store.getAvgOff())
             const  divBy =  agentDiffPressArr.current.length < numOfLastPresses ?agentDiffPressArr.current.length : numOfLastPresses
@@ -117,15 +120,15 @@ const LatencyPlayScreen = (props) =>{
             avgAgentPresses.current = sumOfAgentDiffPressArr / divBy
         }
         numberOfAgentPresses.current = numberOfAgentPresses.current +1
-        // console.log("listen", LatencyGitter.current)
-        timeoutID.current = setInterval(agentPress,LatencyGitter.current -(30))
+        timeoutID.current = setTimeout(agentPress,LatencyGitter.current -(30))
     }
 
 
     const playerPress = () => {
+        didPlayerStartPlay.current = true
         if (isTimePassed){
-            setTimeout(agentPress,600)
             setIsTimePassed(false)
+            timeoutID.current = setTimeout(agentPress,600)
         }
         clearTimeout(timePassedId)
         const timeUntilAgentStopPress = setTimeout(() => {
@@ -137,7 +140,7 @@ const LatencyPlayScreen = (props) =>{
         buttonFadeFunc({isAgent:false})
         playerTimeStampArr.current.push(timeStamp)
         if (numberOfPresses.current > 2) {
-            clearInterval(intervalID1.current)
+            // clearInterval(intervalID1.current)
             const diffBetweenPlayerPresses = playerTimeStampArr.current[playerTimeStampArr.current.length - 1] - playerTimeStampArr.current[playerTimeStampArr.current.length - 2]
             playerDiffPressArr.current.push(diffBetweenPlayerPresses)
             const numOfLastPresses = parseInt(store.getAvgOff())
@@ -225,7 +228,7 @@ const LatencyPlayScreen = (props) =>{
     }
     const renderPlayerCircle = () =>{
         return(
-            <View style={styles.circleBorder}>
+            <View style={styles.circleBorderPlayer}>
                 <Pressable onPressIn={playerPress}>
                     <Animated.View
                         style={[
@@ -254,7 +257,7 @@ const LatencyPlayScreen = (props) =>{
                 </View> :
                 <View style={styles.gameOverContainer}>
                     <View style={{alignItems: 'center',justifyContent:'center',flex:1}}>
-                        <Heading> הסתיים משחקון {store.getCountMiniGames()} מתוך 3 </Heading>
+                        <Heading> הסתיים משחקון {store.getGameNumber()} מתוך 3 </Heading>
                     </View>
                     <View style={{flexDirection:'row',justifyContent:'space-between'}}>
 
@@ -313,7 +316,7 @@ const styles = StyleSheet.create({
         height: 150,
 
     },
-    circleBorder: {
+    circleBorderPlayer: {
         borderWidth: 3,
         borderRadius: (150 / 2),
         width: 153,

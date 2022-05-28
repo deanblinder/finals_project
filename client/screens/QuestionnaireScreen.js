@@ -1,18 +1,15 @@
 import React,{useState} from 'react';
-import {Keyboard, ScrollView, StyleSheet, TouchableWithoutFeedback} from 'react-native';
+import {Keyboard, ScrollView, StyleSheet} from 'react-native';
+import {Text} from 'react-native-ui-lib'
 import {
     NativeBaseProvider,
     Button,
     View,
-    Heading, Text, TextArea
+    TextArea
 } from 'native-base';
 import PickerComponent from "../compoenents/PickerComponent";
-import AdministratorScreen from "./AdministratortScreen";
 import api from "../api";
-import uuid from "react-native-uuid";
-// import GuidelineComponent from "../compoenents/GuidelineComponent";
 import {store} from '../state/state'
-// import {state} from "remx";
 
 const QuestionnaireScreen =(props) => {
     const [textAreaValue, setTextAreaValue] = useState('')
@@ -66,30 +63,6 @@ const QuestionnaireScreen =(props) => {
         tempQDict.questionSeven=textAreaValue
         setQDict(tempQDict)
     }
-    // const setPercentForGame = () => {
-    //     switch (store.getAgentType()) {
-    //         case 0:
-    //             setPercent(0.0)
-    //             break
-    //         case 1:
-    //             setPercent(0.2)
-    //             break
-    //         case 2:
-    //             setPercent(0.4)
-    //             break
-    //         case 3:
-    //             setPercent(0.6)
-    //             break
-    //         case 4:
-    //             setPercent(0.8)
-    //             break
-    //         case 5:
-    //             setPercent(1)
-    //             break
-    //         default:
-    //             setPercent(0.0)
-    //     }
-    // }
     const updateAgentType = () => {
         if (store.getExperimentType() === 'followerLeader'){
             // setPercentForGame()
@@ -117,12 +90,10 @@ const QuestionnaireScreen =(props) => {
         if (qDict.questionOne && qDict.questionTwo && qDict.questionThree && qDict.questionFour && qDict.questionFive && qDict.questionSix && qDict.questionSeven){
             updateAgentType()
             // console.log("here")
-            api.sendAnswers(store.getModel(),agent_type,qDict,store.getCountMiniGames())
+            api.sendAnswers(store.getModel(),agent_type,qDict,store.getGameNumber())
             // api.sendQuestionnaireAnswers(qDict,agent_type,deviceUUID) // send user id,
-            console.log("count before is now: ", store.getCountMiniGames())
-            if(store.getCountMiniGames() < 3){
-                let temp = store.getCountMiniGames() + 1
-                store.setCountMiniGames(temp)
+            console.log("count before is now: ", store.getGameNumber())
+            if(store.getGameNumber() < 3){
                 props.navigation.navigate({routeName:'FindPlayer'});
             }
             else {
@@ -134,28 +105,27 @@ const QuestionnaireScreen =(props) => {
         <NativeBaseProvider>
             <ScrollView>
             <View style={styles.container} aria-label="Close" accessible={true}>
-                <Heading size={"md"} style={{textAlign:'center'}}>הסתיים המשחקון</Heading>
-
-                <Heading size={"md"} style={{textAlign:'center'}}>להלן מספר שאלות</Heading>
+                <Text center text60>הסתיים המשחקון</Text>
+                <Text center text60>{ 'להלן מספר שאלות לגבי משחקון ' + (store.getGameNumber()) + ' עם משתתפ/ת ' + + (store.getGameNumber())}</Text>
                 <Text style={{paddingTop: 20,...styles.text}}> 1. באיזה מידה התרכזת במשימה?</Text>
                 <PickerComponent title='באיזה מידה התרכזת במשימה? 1' rating={sendRating1}/>
 
-                <Text style={styles.text}> 2. באיזה מידה  הרגשת שהלחיצות שלך תואמות את אלה של משתתפ/ת {store.getCountMiniGames()}? </Text>
+                <Text style={styles.text}> 2. באיזה מידה  הרגשת שהלחיצות שלך תואמות את אלה של משתתפ/ת {store.getGameNumber()}? </Text>
                 <PickerComponent title='באיזה מידה  הרגשת שהלחיצות שלך תואמות את אלה של המשתתפ/ת 1? 2' rating={sendRating2}/>
 
-                <Text style={styles.text}>3. האם חשת ״תחושת ביחד״ כשלחצת עם משתתפ/ת {store.getCountMiniGames()}? </Text>
+                <Text style={styles.text}>3. האם חשת ״תחושת ביחד״ כשלחצת עם משתתפ/ת {store.getGameNumber()}? </Text>
                 <PickerComponent title='האם חשת ״תחושת ביחד״ כשלחצת עם המשתתפ/ת השני/יה? 3' rating={sendRating3}/>
 
-                <Text style={styles.text}>4. באיזו מידה הרגשת שאת/ה ומשתתפ/ת {store.getCountMiniGames()}  שיתפתם פעולה?</Text>
+                <Text style={styles.text}>4. באיזו מידה הרגשת שאת/ה ומשתתפ/ת {store.getGameNumber()}  שיתפתם פעולה?</Text>
                 <PickerComponent title='באיזו מידה הרגשת שאת/ה והמשתתפ/ת השני/ה שיתפתם פעולה? 4' rating={sendRating4}/>
 
-                <Text style={styles.text}>5. כמה קירבה את/ה מרגיש/ה כרגע למשתתפ/ת {store.getCountMiniGames()}  בניסוי:</Text>
+                <Text style={styles.text}>5. כמה קירבה את/ה מרגיש/ה כרגע למשתתפ/ת {store.getGameNumber()}  בניסוי:</Text>
                 <PickerComponent title='כמה קירבה את/ה מרגיש/ה כרגע למשתתפ/ת המרוחק/ת בניסוי: 5' rating={sendRating5}/>
 
-                <Text style={styles.text}>6. באיזו מידה תהי/ה פתוח לשיתוף פעולה נוסף עם משתתפ/ת {store.getCountMiniGames()} בניסוי המשך? </Text>
+                <Text style={styles.text}>6. באיזו מידה תהי/ה פתוח לשיתוף פעולה נוסף עם משתתפ/ת {store.getGameNumber()} בניסוי המשך? </Text>
                 <PickerComponent title='באיזו מידה תהי/ה פתוח לשיתוף פעולה נוסף עם המשתתפ/ת המרוחק/ת הזה בניסוי המשך? 6' rating={sendRating6}/>
 
-                <Text  style={styles.text} >7. תאר/י בכמה מילים את חוווית המשחק מול משתתפ/ת {store.getCountMiniGames()}  </Text>
+                <Text  style={styles.text} >7. תאר/י בכמה מילים את חוווית המשחק מול משתתפ/ת {store.getGameNumber()}  </Text>
                 <TextArea
                     value={textAreaValue}
                     onChangeText={(text)=>{sendText7(text)}}
@@ -171,7 +141,7 @@ const QuestionnaireScreen =(props) => {
                 </View>
                 }
                 {
-                    store.getCountMiniGames()===3?
+                    store.getGameNumber()===3?
                         <Button aria-label="Close" onPress={onNextPress}>סיום ומעבר למשוב</Button>:
                         <Button aria-label="Close" onPress={onNextPress}>המשך למשחקון הבא</Button>
 
@@ -183,7 +153,7 @@ const QuestionnaireScreen =(props) => {
 }
 QuestionnaireScreen.navigationOptions = navigationData =>{
     return{
-        title: ' שאלון לגבי משחקון ' + (store.getCountMiniGames()) + ' עם משתתפ/ת ' + + (store.getCountMiniGames()),
+        title:'שאלון',
         headerTitleAlign: ''
         // headerTitleStyle: 'open-sans',
     }
