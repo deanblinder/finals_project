@@ -27,15 +27,7 @@ async function administratorLogin(name,password) {
     );
 }
 
-async function deleteAdminByUserName(name) {
-    console.log(" in deleteAdminByUserName")
-    await DButils.execQuery(
-        `DELETE FROM admin where admin_name='${name}'`
-    );
-}
-
 // exports.getAdminByAdminName= getAdminByAdminName;
 // exports.getAdminByEmail= getAdminByEmail;
 exports.addAdmin= addAdmin;
-exports.deleteAdminByUserName= deleteAdminByUserName;
 exports.administratorLogin =administratorLogin;

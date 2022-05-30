@@ -20,15 +20,7 @@ async function addAction(user_session_id, user_press_time,agent_press_time,exper
     // }
 }
 
-async function deleteActionByUserSessionId(userId) {
-    console.log("in delete action")
-    await DButils.execQuery(
-        `DELETE FROM action where user_session_id='${userId}'`
-    );
-}
-
 
 exports.getActionByUserId= getActionByUserId;
 exports.getSessionIdByUserId = getSessionIdByUserId;
 exports.addAction= addAction;
-exports.deleteActionByUserSessionId= deleteActionByUserSessionId;

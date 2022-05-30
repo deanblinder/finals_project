@@ -14,13 +14,6 @@ async function addFeedback(user_id,feedback,bestPlayer) {
     );
 }
 
-async function deleteFeedbackByUserId(user_id) {
-    console.log(" in deleteFeedbackByUserId")
-    await DButils.execQuery(
-        `DELETE FROM feedback where user_id='${user_id}'`
-    );
-}
 
 exports.getFeedbackByUserId= getFeedbackByUserId;
 exports.addFeedback= addFeedback;
-exports.deleteFeedbackByUserId= deleteFeedbackByUserId;
