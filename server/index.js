@@ -46,7 +46,6 @@ app.use((_, res, next) => {
 
 
 
-
 const users = require("./routes/users");
 app.use("/users", users);
 
@@ -64,12 +63,6 @@ app.use("/admin", admin);
 
 const agents = require("./routes/agents");
 app.use("/agents", agents);
-
-const params = require("./routes/params");
-app.use("/params", params);
-
-const errors = require("./routes/errors");
-app.use("/errors", errors);
 
 const feedback = require("./routes/feedback");
 app.use("/feedback", feedback);
