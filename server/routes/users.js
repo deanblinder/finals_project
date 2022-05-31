@@ -28,11 +28,37 @@ router.get("/getUserByEmail/:email", async (req, res, next) => {
 
 router.get("/getUserIdByUUID/:uuid", async (req, res, next) => {
     try {
-        const user_details = await users_utils.getUserIdByUUID(
+        const user_details = await users_utils.getUserIdByModel(
             req.params.uuid
         );
         console.log(user_details)
         res.send(user_details).status(200);
+    } catch (error) {
+        next(error);
+    }
+});
+
+router.get("/isUserModelExists/:uuid", async (req, res, next) => {
+    try {
+        const users_id = await users_utils.getUserIdByModel(
+            req.params.uuid
+        );
+        console.log(users_id)
+        var to_send = []
+        if(users_id > 0){
+            const len = length(users_id)
+            if(users_id[len-2] === '/'){
+                to_send = [true,users_id[len-1]]
+            }
+            else{  // there is only one model in the DB
+                to_send = [true,0]
+            }
+        }
+        else{
+            // the model isn't in the DB
+            to_send = [false,0]
+        }
+        res.send(to_send).status(200);
     } catch (error) {
         next(error);
     }
