@@ -13,11 +13,10 @@ import {store} from "../state/state";
 const FindPlayersScreen = (props) => {
 
     const [isLoading,setIsLoading] = useState(true);
-
     useEffect(() => {
         setTimeout(() => {
             setIsLoading(false)
-        }, (Math.floor(Math.random() * 5)+1)*1000);
+        }, (Math.floor(Math.random() * 7)+3)*1000);
     },[]);
 
 
@@ -26,7 +25,7 @@ const FindPlayersScreen = (props) => {
             props.navigation.push('LeaderFollowerPlay')
         }
         else {
-            props.navigation.navigate({routeName:'LatencyPlay'})
+            props.navigation.push('LatencyPlay')
         }
     }
     return (

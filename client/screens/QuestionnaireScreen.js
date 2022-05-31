@@ -5,11 +5,13 @@ import {
     NativeBaseProvider,
     Button,
     View,
-    TextArea
+    TextArea,
+    Radio, Stack
 } from 'native-base';
 import PickerComponent from "../compoenents/PickerComponent";
 import api from "../api";
 import {store} from '../state/state'
+import RatingExampleControlled from "../compoenents/rating";
 
 const QuestionnaireScreen =(props) => {
     const [textAreaValue, setTextAreaValue] = useState('')
@@ -81,6 +83,7 @@ const QuestionnaireScreen =(props) => {
         </TouchableWithoutFeedback>
     );
     const onNextPress = () =>{
+        console.log(qDict)
         if (qDict.questionOne && qDict.questionTwo && qDict.questionThree && qDict.questionFour && qDict.questionFive && qDict.questionSix && qDict.questionSeven){
         // if (true){
             updateAgentType()
@@ -103,7 +106,6 @@ const QuestionnaireScreen =(props) => {
                 <Text center text60>{ 'להלן מספר שאלות לגבי משחקון ' + (store.getGameNumber()) + ' עם משתתפ/ת ' + + (store.getGameNumber())}</Text>
                 <Text style={{paddingTop: 20,...styles.text}}> 1. באיזה מידה התרכזת במשימה?</Text>
                 <PickerComponent title='באיזה מידה התרכזת במשימה? 1' rating={sendRating1}/>
-
                 <Text style={styles.text}> 2. באיזה מידה  הרגשת שהלחיצות שלך תואמות את אלה של משתתפ/ת {store.getGameNumber()}? </Text>
                 <PickerComponent title='באיזה מידה  הרגשת שהלחיצות שלך תואמות את אלה של המשתתפ/ת 1? 2' rating={sendRating2}/>
 

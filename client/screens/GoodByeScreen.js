@@ -1,5 +1,7 @@
 import React, {useState} from 'react';
 import {Text, StyleSheet, Keyboard, TouchableWithoutFeedback, ScrollView, BackHandler} from 'react-native';
+import { StackActions } from '@react-navigation/native';
+
 import {CheckBox} from 'react-native-elements'
 import {
     NativeBaseProvider,
@@ -11,7 +13,7 @@ import {
 
 import api from "../api";
 import {store} from "../state/state";
-export default function GoodByeScreen() {
+export default function GoodByeScreen(props) {
     const [textAreaValue, setTextAreaValue] = useState('')
     const [isDone,setIsDone] = useState(false)
     const [playerOne,setPlayerOne] = useState(false)
@@ -22,6 +24,7 @@ export default function GoodByeScreen() {
         if(bestPlayer !== '') {
             api.sendFeedBack(store.getModel(), textAreaValue, bestPlayer)
             setIsDone(true)
+            // props.navigation.dispatch(StackActions.popToTop());
         }
     }
     const DismissKeyboard = ({children})=>(

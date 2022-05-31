@@ -14,16 +14,16 @@ const LeaderFollowerPlayScreen = (props) =>{
     const agentDiffPressArr = useRef([])
     const startGameTime = useRef()
     const numberOfPresses = useRef(0)
-    const avgAgentPresses = useRef(2000)
+    const avgAgentPresses = useRef(1500)
     const intervalID1 = useRef()
     const didPlayerStartPlay = useRef(false)
     const timeoutID =  useRef(0)
-    const listeningLevel2 =useRef(2000)
+    const listeningLevel2 =useRef(1500)
     let [timePassedId,setTimePassedId] = useState(null)
     const numberOfAgentPresses = useRef(0)
     let [isFinish,setIsFinish] = useState(false)
     let [isTimePassed,setIsTimePassed] = useState(false)
-    const TIME_UNTIL_AGENT_STOP_PRESS = 4000
+    const TIME_UNTIL_AGENT_STOP_PRESS = 4600
     useEffect(() => {
         store.setGameNumber(store.getGameNumber()+1)
         startGameTime.current = new Date().getTime()
@@ -71,20 +71,19 @@ const LeaderFollowerPlayScreen = (props) =>{
     const onNextPress = () => {
         api.sendPressTimeStamp(store.getModel(), playerTimeStampArr.current, agentTimeStampArr.current, "LeadFollowAgent_" + store.getWeight())
         props.navigation.push('Questionnaire');
-        // props.navigation.navigate({routeName:'FindPlayer'});
     }
     const buttonFadeFunc = ({isAgent}) => {
         if (isAgent){
             agentButtonFadeOut()
             setTimeout(() => {
                 agentButtonFadeIn()
-            }, 250)
+            }, 500)
         }
         else{
             playerButtonFadeOut()
             setTimeout(() => {
                 playerButtonFadeIn()
-            }, 250)
+            }, 500)
         }
     }
     const agentPress = () => {
@@ -112,7 +111,7 @@ const LeaderFollowerPlayScreen = (props) =>{
             setIsTimePassed(false)
             timeoutID.current = setTimeout(agentPress,600)
         }
-        clearTimeout(timePassedId)
+        clearTimeout(timePassedId) // not nedded
         const timeUntilAgentStopPress = setTimeout(() => {
             setIsTimePassed(true)
         }, TIME_UNTIL_AGENT_STOP_PRESS)

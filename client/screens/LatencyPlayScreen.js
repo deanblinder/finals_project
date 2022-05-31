@@ -13,9 +13,9 @@ const LatencyPlayScreen = (props) =>{
     const playerDiffPressArr = useRef([])
     const agentDiffPressArr = useRef([])
     const numberOfPresses = useRef(0)
-    const avgAgentPresses = useRef(2000)
+    const avgAgentPresses = useRef(1500)
     const intervalID1 = useRef()
-    const LatencyGitter =useRef(2000)
+    const LatencyGitter =useRef(1500)
     const didPlayerStartPlay = useRef(false)
     const startGameTime = useRef()
 
@@ -24,12 +24,12 @@ const LatencyPlayScreen = (props) =>{
     const numberOfAgentPresses = useRef(0)
     let [isFinish,setIsFinish] = useState(false)
     let [isTimePassed,setIsTimePassed] = useState(false)
-    const TIME_UNTIL_AGENT_STOP_PRESS = 4000
+    const TIME_UNTIL_AGENT_STOP_PRESS = 4600
     useEffect(() => {
         store.setGameNumber(store.getGameNumber()+1)
         startGameTime.current = new Date().getTime()
         setGitterLatencyForGame()
-        intervalID1.current = setTimeout(agentPress, LatencyGitter.current)
+        timeoutID.current = setTimeout(agentPress, LatencyGitter.current)
         setTimeout(() => {
             setIsFinish(true)
         }, parseInt(store.getGameTime())*1000);
@@ -136,25 +136,24 @@ const LatencyPlayScreen = (props) =>{
         const timeStamp = new Date().getTime()
         const percent = 0.5
         buttonFadeFunc({isAgent:false})
-        playerTimeStampArr.current.push(timeStamp)
-        if (numberOfPresses.current > 2) {
-            // clearInterval(intervalID1.current)
-            const diffBetweenPlayerPresses = playerTimeStampArr.current[playerTimeStampArr.current.length - 1] - playerTimeStampArr.current[playerTimeStampArr.current.length - 2]
-            playerDiffPressArr.current.push(diffBetweenPlayerPresses)
-            const numOfLastPresses = parseInt(store.getAvgOff())
-            const sumOfPlayerDiffPress = mySum(playerDiffPressArr.current, numOfLastPresses);
-            const divBy = playerDiffPressArr.current.length < numOfLastPresses ? playerDiffPressArr.current.length : numOfLastPresses
-            const avgPlayerPresses = sumOfPlayerDiffPress / divBy
-            const listeningLevel = (((1 - percent) * avgPlayerPresses) + (percent * avgAgentPresses.current))
-            let rndGitter = Math.floor(Math.random() * store.getGitter())
-            const rand = Math.random()
-            if (rand >= 0.5) {
-                rndGitter = rndGitter * -1
-            }
-            LatencyGitter.current = ((listeningLevel + store.getLatency()) + rndGitter)
+            playerTimeStampArr.current.push(timeStamp)
+            if (numberOfPresses.current > 2) {
+                // clearInterval(intervalID1.current)
+                const diffBetweenPlayerPresses = playerTimeStampArr.current[playerTimeStampArr.current.length - 1] - playerTimeStampArr.current[playerTimeStampArr.current.length - 2]
+                playerDiffPressArr.current.push(diffBetweenPlayerPresses)
+                const numOfLastPresses = parseInt(store.getAvgOff())
+                const sumOfPlayerDiffPress = mySum(playerDiffPressArr.current, numOfLastPresses);
+                const divBy = playerDiffPressArr.current.length < numOfLastPresses ? playerDiffPressArr.current.length : numOfLastPresses
+                const avgPlayerPresses = sumOfPlayerDiffPress / divBy
+                const listeningLevel = (((1 - percent) * avgPlayerPresses) + (percent * avgAgentPresses.current))
+                let rndGitter = Math.floor(Math.random() * store.getGitter())
+                const rand = Math.random()
+                if (rand >= 0.5) {
+                    rndGitter = rndGitter * -1
+                }
+                LatencyGitter.current = ((listeningLevel + store.getLatency()) + rndGitter)
+                numberOfPresses.current = numberOfPresses.current + 1
         }
-        numberOfPresses.current = numberOfPresses.current + 1
-
     }
 
 
