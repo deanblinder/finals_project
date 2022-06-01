@@ -11,7 +11,6 @@ import {
 import PickerComponent from "../compoenents/PickerComponent";
 import api from "../api";
 import {store} from '../state/state'
-import RatingExampleControlled from "../compoenents/rating";
 
 const QuestionnaireScreen =(props) => {
     const [textAreaValue, setTextAreaValue] = useState('')
@@ -85,12 +84,10 @@ const QuestionnaireScreen =(props) => {
     const onNextPress = () =>{
         console.log(qDict)
         if (qDict.questionOne && qDict.questionTwo && qDict.questionThree && qDict.questionFour && qDict.questionFive && qDict.questionSix && qDict.questionSeven){
-        // if (true){
             updateAgentType()
             api.sendAnswers(store.getModel(),agent_type,qDict,store.getGameNumber())
             console.log("count before is now: ", store.getGameNumber())
             if(store.getGameNumber() < 3){
-                // props.navigation.navigate({routeName:'FindPlayer'});
                 props.navigation.push('FindPlayer');
             }
             else {
@@ -108,7 +105,6 @@ const QuestionnaireScreen =(props) => {
                 <PickerComponent title='באיזה מידה התרכזת במשימה? 1' rating={sendRating1}/>
                 <Text style={styles.text}> 2. באיזה מידה  הרגשת שהלחיצות שלך תואמות את אלה של משתתפ/ת {store.getGameNumber()}? </Text>
                 <PickerComponent title='באיזה מידה  הרגשת שהלחיצות שלך תואמות את אלה של המשתתפ/ת 1? 2' rating={sendRating2}/>
-
                 <Text style={styles.text}>3. האם חשת ״תחושת ביחד״ כשלחצת עם משתתפ/ת {store.getGameNumber()}? </Text>
                 <PickerComponent title='האם חשת ״תחושת ביחד״ כשלחצת עם המשתתפ/ת השני/יה? 3' rating={sendRating3}/>
 
