@@ -4,27 +4,27 @@ const users_utils = require("./utils/users_utils");
 
 
 
-router.get("/getUserById", async (req, res, next) => {
-    try {
-        const user_details = await users_utils.getUserById();
-        console.log(user_details)
-        res.send(user_details).status(200);
-    } catch (error) {
-        next(error);
-    }
-});
+// router.get("/getUserById", async (req, res, next) => {
+//     try {
+//         const user_details = await users_utils.getUserById();
+//         console.log(user_details)
+//         res.send(user_details).status(200);
+//     } catch (error) {
+//         next(error);
+//     }
+// });
 
-router.get("/getUserByEmail/:email", async (req, res, next) => {
-    try {
-        const user_details = await users_utils.getUserByEmail(
-            req.params.email
-        );
-        console.log(user_details)
-        res.send(user_details).status(200);
-    } catch (error) {
-        next(error);
-    }
-});
+// router.get("/getUserByEmail/:email", async (req, res, next) => {
+//     try {
+//         const user_details = await users_utils.getUserByEmail(
+//             req.params.email
+//         );
+//         console.log(user_details)
+//         res.send(user_details).status(200);
+//     } catch (error) {
+//         next(error);
+//     }
+// });
 
 router.get("/getUserIdByUUID/:uuid", async (req, res, next) => {
     try {
