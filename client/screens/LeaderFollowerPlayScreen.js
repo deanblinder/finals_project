@@ -87,13 +87,13 @@ const LeaderFollowerPlayScreen = (props) =>{
             agentButtonFadeOut()
             setTimeout(() => {
                 agentButtonFadeIn()
-            }, 500)
+            }, 400)
         }
         else{
             playerButtonFadeOut()
             setTimeout(() => {
                 playerButtonFadeIn()
-            }, 500)
+            }, 400)
         }
     }
     const agentPress = () => {
