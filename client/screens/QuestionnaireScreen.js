@@ -1,5 +1,5 @@
 import React,{useState} from 'react';
-import {Keyboard, ScrollView, StyleSheet} from 'react-native';
+import {BackHandler, Keyboard, ScrollView, StyleSheet} from 'react-native';
 import {Text} from 'react-native-ui-lib'
 import {
     NativeBaseProvider,
@@ -11,7 +11,13 @@ import {
 import PickerComponent from "../compoenents/PickerComponent";
 import api from "../api";
 import {store} from '../state/state'
-import RatingExampleControlled from "../compoenents/rating";
+// import RatingExampleControlled from "../compoenents/rating";
+
+function componentWillMount() {
+    BackHandler.addEventListener('hardwareBackPress', function () {
+        return true;
+    });
+}
 
 const QuestionnaireScreen =(props) => {
     const [textAreaValue, setTextAreaValue] = useState('')
@@ -73,7 +79,7 @@ const QuestionnaireScreen =(props) => {
         }
         else{
             console.log("in else")
-            agent_type = "LatencyAgent_Gitter_"+store.getGitter()+"_Latency_"+store.getLatency()
+            agent_type = "LatencyAgent_Jitter_"+store.getJitter()+"_Latency_"+store.getLatency()
             setAgent_type(agent_type)
         }
     }
@@ -86,8 +92,9 @@ const QuestionnaireScreen =(props) => {
         console.log(qDict)
         if (qDict.questionOne && qDict.questionTwo && qDict.questionThree && qDict.questionFour && qDict.questionFive && qDict.questionSix && qDict.questionSeven){
         // if (true){
+        //     const userExist = api.isUserModelExists(store.getModel())
             updateAgentType()
-            api.sendAnswers(store.getModel(),agent_type,qDict,store.getGameNumber())
+            api.sendAnswers(store.getMail(),agent_type,qDict,store.getGameNumber())
             console.log("count before is now: ", store.getGameNumber())
             if(store.getGameNumber() < 3){
                 // props.navigation.navigate({routeName:'FindPlayer'});
@@ -150,8 +157,10 @@ const QuestionnaireScreen =(props) => {
 QuestionnaireScreen.navigationOptions = navigationData =>{
     return{
         title:'שאלון',
-        headerTitleAlign: ''
+        headerTitleAlign: '',
         // headerTitleStyle: 'open-sans',
+        headerLeft: () => null
+
     }
 }
 

@@ -1,24 +1,28 @@
 import React from 'react';
 import { StyleSheet,Image} from 'react-native';
-import {View, Heading,NativeBaseProvider,Text,Button} from "native-base";
+import {View, Heading, NativeBaseProvider, Text, Button, ScrollView} from "native-base";
 
 const gameScreenShot = require('../assets/photos/ScreenS.jpeg')
 
 export const Guidelines = () => {
     return (
-        <View style={styles.container}>
-            <View >
-                <Text style={styles.Text}>בניסוי יוצגו על מהסך שני לחצנים. כפתור כחול עם כיתוב ״אני״, וכפתור אדום עם כיתוב ״משתתפ/ת מרוחק/ת״. אתם תחלצו על הכפתור ״אני״, והמשתתפ/ת הרחוק/ה ת/ילחץ על הכפתור השני.</Text>
-                <Text style={{fontWeight:'bold',...styles.Text}}>מטרתכם היא לנסות ללחוץ על הלחצנים באותו זמן, ככל האפשר.</Text>
-                <Text style={styles.Text}>בניסוי יהיו שלושה משחקונים בני דקה. בכל אחד מהמשחקונים תפעלו מול משתתפ/ת אחר/ת. בסיום כל משחקון - תתבקשו לענות על שאלון.</Text>
-                <Text style={styles.Text}> אנא הקפידו לסיים את כל שלושת המשחקונים והשאלונים.</Text>
-                <Text style={styles.Text}> תודה מראש על השתתפותכם! </Text>
-            </View>
-            <View style={{display:'flex',justifyContent:'center',alignItems:'center',margin:'auto'}} >
-                <Image source={gameScreenShot}/>
-            </View>
+        <NativeBaseProvider>
+            <ScrollView>
+                <View style={styles.container}>
+                    <View >
+                        <Text style={styles.Text}>בניסוי יוצגו על מהסך שני לחצנים. כפתור כחול עם כיתוב ״אני״, וכפתור אדום עם כיתוב ״משתתפ/ת מרוחק/ת״. אתם תחלצו על הכפתור ״אני״, והמשתתפ/ת הרחוק/ה ת/ילחץ על הכפתור השני.</Text>
+                        <Text style={{fontWeight:'bold',...styles.Text}}>מטרתכם היא לנסות ללחוץ על הלחצנים באותו זמן, ככל האפשר.</Text>
+                        <Text style={styles.Text}>בניסוי יהיו שלושה משחקונים בני דקה. בכל אחד מהמשחקונים תפעלו מול משתתפ/ת אחר/ת. בסיום כל משחקון - תתבקשו לענות על שאלון.</Text>
+                        <Text style={styles.Text}> אנא הקפידו לסיים את כל שלושת המשחקונים והשאלונים.</Text>
+                        <Text style={styles.Text}> תודה מראש על השתתפותכם! </Text>
+                    </View>
+                    <View style={{display:'flex',justifyContent:'center',alignItems:'center',margin:'auto'}} >
+                        <Image source={gameScreenShot}/>
+                    </View>
 
-        </View>
+                </View>
+            </ScrollView>
+        </NativeBaseProvider>
     )
 }
 const GuidelinesScreen = (props) => {

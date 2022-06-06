@@ -15,8 +15,8 @@ import AdministratorScreen from "./AdministratortScreen";
 import api from "../api";
 
 const ChangeParamAdministratorScreen = (props) => {
-    const [latancy,setLatancy] = useState()
-    const [gitter,setGitter] = useState()
+    const [latency,setLatency] = useState()
+    const [jitter,setJitter] = useState()
     // const [avg,setAvg] = useState(1)
     const [showError, setShowError] = useState(false)
     const [experimentType, setExperimentType] = useState('')
@@ -27,7 +27,7 @@ const ChangeParamAdministratorScreen = (props) => {
         // if (agent && latency && variance){
         // if (true){
         // await api.changeAgentParams(agent,latency,variance)
-        store.setLatacyGitterObjectSameForEach(gitter,latancy)
+        store.setLatencyJitterObjectSameForEach(jitter,latency)
         props.navigation.push('Welcome')
         // }
     }
@@ -112,11 +112,11 @@ const ChangeParamAdministratorScreen = (props) => {
                     <View style={{margin:10,textAlign:'right',justifyContent: 'space-between'}}>
                         <Text style={{textAlign:'right'}}>עכבה (ms)</Text>
                     </View>
-                    <Input style={{textAlign:'right'}} onChangeText={(val)=>{setLatancy(parseInt(val))}} defaultValue="" type="number" placeholder="הכנס עכבה" />
+                    <Input style={{textAlign:'right'}} onChangeText={(val)=>{setLatency(parseInt(val))}} defaultValue="" type="number" placeholder="הכנס עכבה" />
                     <View style={{margin:10,textAlign:'right',justifyContent: 'space-between'}}>
                         <Text style={{textAlign:'right'}}>שונות (ms)</Text>
                     </View>
-                    <Input style={{textAlign:'right'}} onChangeText={(val)=>{setGitter(parseInt(val))}} defaultValue="" type="number" placeholder="הכנס שונות" />
+                    <Input style={{textAlign:'right'}} onChangeText={(val)=>{setJitter(parseInt(val))}} defaultValue="" type="number" placeholder="הכנס שונות" />
                     <View style={{margin:10,textAlign:'right',justifyContent: 'space-between'}}>
                         <Text style={{textAlign:'right'}}>בחר ממוצע</Text>
                     </View>

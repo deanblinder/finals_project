@@ -2,6 +2,11 @@ import * as remx from 'remx';
 ///latency, followerLeader
 import uuid from 'react-native-uuid';
 import {Platform} from "react-native";
+import api from "../api";
+// import DeviceInfo from 'react-native-device-info';
+// import { getUniqueId, getManufacturer } from 'react-native-device-info';
+// import { NativeModules } from 'react-native'
+
 
 const initialState = {
     isLoading: true,
@@ -10,34 +15,39 @@ const initialState = {
     avgOff:3,
     gameTime:30,
     latency:0,
-    gitter:0,
+    jitter:0,
     weight:0.2,
     agentTypeForQuestionnaire: "",
     gameNumber:0,
-    gitterParams:[0,30,60,0,30,60,0,30,60],
+    jitterParams:[0,30,60,0,30,60,0,30,60],
     latencyParams:[300,300,300,150,150,150,70,70,70],
     weightExp:[0.2,0.4,0.6],
-
-    latacyGitterObject : [{gitter:0,latency:300},{gitter:30,latency:300},{gitter:60,latency:300}],
-    modelDevice:uuid.v4(),
+    mail:'',
+    latencyJitterObject : [{jitter:0,latency:300},{jitter:30,latency:300},{jitter:60,latency:300}],
+    // modelDevice:uuid.v4(),
+    // modelDevice:NativeModules.PlatformConstants.serial,
+    // modelDevice:DeviceInfo.getUniqueId(),
     versionDevice:Platform.constants['Release'],
 };
 
 const setters = remx.setters({
+    setMail(mail) {
+        state.mail = mail;
+    },
     setWeightExpSameForEach(weightExp) {
         state.weightExp = [weightExp,weightExp,weightExp];
     },
-    setLatacyGitterObjectSameForEach(gitter,latency) {
-        state.latacyGitterObject = [{gitter:gitter,latency:latency},{gitter:gitter,latency:latency},{gitter:gitter,latency:latency}];
+    setLatencyJitterObjectSameForEach(jitter,latency) {
+        state.latencyJitterObject = [{jitter:jitter,latency:latency},{jitter:jitter,latency:latency},{jitter:jitter,latency:latency}];
     },
     setAgentType(agentType) {
         state.agentType = agentType;
     },
-    deleteGitterLatacyByIndex(gitterIndex) {
-        state.latacyGitterObject.splice(gitterIndex,1)
+    deleteJitterLatencyByIndex(jitterIndex) {
+        state.latencyJitterObject.splice(jitterIndex,1)
     },
-    setGitterLatacyParams(latacyGitterObject) {
-        state.latacyGitterObject = latacyGitterObject
+    setJitterLatencyParams(latencyJitterObject) {
+        state.latencyJitterObject = latencyJitterObject
     },
     setAvgOf(avgOff) {
         state.avgOff = avgOff;
@@ -51,8 +61,8 @@ const setters = remx.setters({
     setLatency(latency) {
         state.latency = latency;
     },
-    setGitter(gitter) {
-        state.gitter = gitter;
+    setJitter(jitter) {
+        state.jitter =jitter;
     },
     setDeleteWeightExp(weightIndex) {
         state.weightExp.splice(weightIndex,1)
@@ -63,11 +73,11 @@ const setters = remx.setters({
     setGameNumber(gameNumber) {
         state.gameNumber = gameNumber
     },
-    // setGitterParamsRandom(gitterParam) {
-    //     state.gitterParamsRandom.push(gitterParam)
+    // setJitterParamsRandom(jitterParam) {
+    //     state.jitterParamsRandom.push(jitterParam)
     // },
-    setDeleteGitterParams(gitterIndex) {
-        state.gitterParams.splice(gitterIndex,1)
+    setDeleteJitterParams(jitterIndex) {
+        state.jitterParams.splice(jitterIndex,1)
     },
     setDeleteLatencyParams(latencyIndex) {
         state.latencyParams.splice(latencyIndex,1)
@@ -81,8 +91,11 @@ const setters = remx.setters({
 });
 
 const getters = remx.getters({
-    getGitterLatacyParams() {
-        return state.latacyGitterObject;
+    getJitterLatencyParams() {
+        return state.latencyJitterObject;
+    },
+    getMail() {
+        return state.mail;
     },
     getAgentType() {
         return state.agentType;
@@ -99,8 +112,8 @@ const getters = remx.getters({
     getLatency() {
         return state.latency;
     },
-    getGitter() {
-        return state.gitter;
+    getJitter() {
+        return state.jitter;
     },
     getAgentTypeForQuestionnaire() {
         return state.agentTypeForQuestionnaire;
@@ -108,8 +121,8 @@ const getters = remx.getters({
     getWeightExp() {
         return state.weightExp;
     },
-    getGitterParams() {
-        return state.gitterParams;
+    getJitterParams() {
+        return state.jitterParams;
     },
     getLatencyParams() {
         return state.latencyParams;
@@ -118,7 +131,9 @@ const getters = remx.getters({
         return state.weight;
     },
     getModel() {
-        return state.modelDevice;
+        // const userExist = api.isUserModelExists(store.getModel())
+        // console.log("device UUID: ", state.modelDevice+"-"+userExist)
+        return (state.modelDevice);
     },
     getVersion() {
         return state.versionDevice;
@@ -126,8 +141,8 @@ const getters = remx.getters({
     getGameNumber() {
         return state.gameNumber
     },
-    // getGitterParamsRandom() {
-    //     return state.gitterParamsRandom;
+    // getJitterParamsRandom() {
+    //     return state.jitterParamsRandom;
     // },
     // getLatencyParamsRandom() {
     //     return state.latencyParamsRandom;

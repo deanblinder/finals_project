@@ -13,6 +13,13 @@ import {
 
 import api from "../api";
 import {store} from "../state/state";
+
+function componentWillMount() {
+    BackHandler.addEventListener('hardwareBackPress', function () {
+        return true;
+    });
+}
+
 export default function GoodByeScreen(props) {
     const [textAreaValue, setTextAreaValue] = useState('')
     const [isDone,setIsDone] = useState(false)
@@ -22,7 +29,9 @@ export default function GoodByeScreen(props) {
     const [bestPlayer,setBestPlayer] = useState('')
     const press = () => {
         if(bestPlayer !== '') {
-            api.sendFeedBack(store.getModel(), textAreaValue, bestPlayer)
+            // const userExist = api.isUserModelExists(store.getModel())
+
+            api.sendFeedBack(store.getMail(), textAreaValue, bestPlayer)
             setIsDone(true)
             // props.navigation.dispatch(StackActions.popToTop());
         }
@@ -137,6 +146,7 @@ GoodByeScreen.navigationOptions = navigationData =>{
     return{
         title: 'סיום הניסוי',
         headerTitleAlign: 'center',
+        headerLeft: () => null
 
     }
 }

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet} from 'react-native';
+import {BackHandler, StyleSheet} from 'react-native';
 import {
     NativeBaseProvider,
     Heading,
@@ -10,6 +10,10 @@ import {
 } from 'native-base';
 import {store} from "../state/state";
 
+function componentWillMount() {
+
+}
+
 const FindPlayersScreen = (props) => {
 
     const [isLoading,setIsLoading] = useState(true);
@@ -19,7 +23,12 @@ const FindPlayersScreen = (props) => {
         }, (Math.floor(Math.random() * 7)+3)*1000);
     },[]);
 
-
+    componentWillMount()
+    {
+        BackHandler.addEventListener('hardwareBackPress', function () {
+            return true;
+        });
+    }
     const press = () => {
         if (store.getExperimentType() === 'followerLeader'){
             props.navigation.push('LeaderFollowerPlay')
@@ -60,7 +69,9 @@ const FindPlayersScreen = (props) => {
 FindPlayersScreen.navigationOptions = navigationData =>{
     return{
         title: 'חיפוש משתתף',
-        headerTitleAlign: 'center'
+        headerTitleAlign: 'center',
+        headerLeft: () => null
+
     }
 }
 

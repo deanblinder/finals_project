@@ -1,8 +1,12 @@
 import React, {useEffect, useState,useRef} from 'react';
-import { StyleSheet, View,TouchableOpacity,Animated} from 'react-native';
+import {StyleSheet, View, TouchableOpacity, Animated, BackHandler} from 'react-native';
 import {NativeBaseProvider, Button, Heading, createIcon, Center, Avatar,Pressable,Text} from 'native-base';
 import {store} from '../state/state'
 import api from "../api";
+
+function componentWillMount() {
+
+}
 
 const LatencyPlayScreen = (props) =>{
     const agentOpacity = useRef(new Animated.Value(1)).current;
@@ -15,7 +19,7 @@ const LatencyPlayScreen = (props) =>{
     const numberOfPresses = useRef(0)
     const avgAgentPresses = useRef(1500)
     const intervalID1 = useRef()
-    const LatencyGitter =useRef(1500)
+    const LatencyJitter =useRef(1500)
     const didPlayerStartPlay = useRef(false)
     const startGameTime = useRef()
 
@@ -28,8 +32,8 @@ const LatencyPlayScreen = (props) =>{
     useEffect(() => {
         store.setGameNumber(store.getGameNumber()+1)
         startGameTime.current = new Date().getTime()
-        setGitterLatencyForGame()
-        timeoutID.current = setTimeout(agentPress, LatencyGitter.current)
+        setJitterLatencyForGame()
+        timeoutID.current = setTimeout(agentPress, LatencyJitter.current)
         setTimeout(() => {
             setIsFinish(true)
         }, parseInt(store.getGameTime())*1000);
@@ -51,11 +55,16 @@ const LatencyPlayScreen = (props) =>{
             clearTimeout(timeoutID.current)
         }
     },    [isTimePassed])
-
-    const setGitterLatencyForGame = () => {
+    componentWillMount()
+    {
+        BackHandler.addEventListener('hardwareBackPress', function () {
+            return true;
+        });
+    }
+    const setJitterLatencyForGame = () => {
         ////////////////////////////////////////////// remove at the end, just for administrator
-        // let administratorGitter = store.getGitter()
-        // store.setGitter(administratorGitter)
+        // let administratorJitter = store.getJitter()
+        // store.setJitter(administratorJitter)
         // let administratorLatency = store.getLatency()
         // store.setLatency(administratorLatency)
         // let administratorAVG = store.getAvgOff()
@@ -64,24 +73,26 @@ const LatencyPlayScreen = (props) =>{
         // store.setGameTime(administratorGameTime)
         ////////////////////////////////////////////////////
         //
-        console.log("all array: latancy",store.getGitterLatacyParams())
-        const randomIndex = getRndInteger(0,store.getGitterLatacyParams().length)
-        const gitterLatacyParams = store.getGitterLatacyParams()[randomIndex]
-        console.log({gitterLatacyParams})
-        // let gitterExperience = store.getGitterParams()[randomIndex]
+        console.log("all array: latency",store.getJitterLatencyParams())
+        const randomIndex = getRndInteger(0,store.getJitterLatencyParams().length)
+        const jitterLatencyParams = store.getJitterLatencyParams()[randomIndex]
+        console.log({jitterLatencyParams})
+        // let jitterExperience = store.getJitterParams()[randomIndex]
         // let latencyExperience = store.getLatencyParams()[randomIndex]
-        store.setGitter(gitterLatacyParams.gitter)
+        store.setJitter(jitterLatencyParams.jitter)
 
-        store.setLatency(gitterLatacyParams.latency)
-        // console.log("gitterAfter: ", store.getGitter())
+        store.setLatency(jitterLatencyParams.latency)
+        // console.log("jitterAfter: ", store.getJitter())
         // console.log("latencyAfter: ", store.getLatency())
-        store.deleteGitterLatacyByIndex(randomIndex)
-        console.log(gitterLatacyParams)
-        console.log(store.getGitter())
+        store.deleteJitterLatencyByIndex(randomIndex)
+        console.log(jitterLatencyParams)
+        console.log(store.getJitter())
         console.log(store.getLatency())
     }
     const onNextPress = () => {
-        api.sendPressTimeStamp(store.getModel(),playerTimeStampArr.current, agentTimeStampArr.current, "LatencyAgent_Gitter_"+store.getGitter()+"_Latency_"+store.getLatency())
+        // const userExist = api.isUserModelExists(store.getModel())
+
+        api.sendPressTimeStamp(store.getMail(),playerTimeStampArr.current, agentTimeStampArr.current, "LatencyAgent_Jitter_"+store.getJitter()+"_Latency_"+store.getLatency())
         props.navigation.push('Questionnaire');
         // props.navigation.navigate({routeName:'FindPlayer'});
 
@@ -118,7 +129,7 @@ const LatencyPlayScreen = (props) =>{
             avgAgentPresses.current = sumOfAgentDiffPressArr / divBy
         }
         numberOfAgentPresses.current = numberOfAgentPresses.current +1
-        timeoutID.current = setTimeout(agentPress,LatencyGitter.current -(30))
+        timeoutID.current = setTimeout(agentPress,LatencyJitter.current -(30))
     }
 
 
@@ -146,12 +157,12 @@ const LatencyPlayScreen = (props) =>{
                 const divBy = playerDiffPressArr.current.length < numOfLastPresses ? playerDiffPressArr.current.length : numOfLastPresses
                 const avgPlayerPresses = sumOfPlayerDiffPress / divBy
                 const listeningLevel = (((1 - percent) * avgPlayerPresses) + (percent * avgAgentPresses.current))
-                let rndGitter = Math.floor(Math.random() * store.getGitter())
+                let rndJitter = Math.floor(Math.random() * store.getJitter())
                 const rand = Math.random()
                 if (rand >= 0.5) {
-                    rndGitter = rndGitter * -1
+                    rndJitter = rndJitter * -1
                 }
-                LatencyGitter.current = ((listeningLevel + store.getLatency()) + rndGitter)
+                LatencyJitter.current = ((listeningLevel + store.getLatency()) + rndJitter)
                 numberOfPresses.current = numberOfPresses.current + 1
         }
     }
@@ -269,7 +280,9 @@ const LatencyPlayScreen = (props) =>{
 LatencyPlayScreen.navigationOptions = navigationData =>{
     return{
         title: '',
-        headerTitleAlign: 'center'
+        headerTitleAlign: 'center',
+        headerLeft: () => null
+
     }
 }
 

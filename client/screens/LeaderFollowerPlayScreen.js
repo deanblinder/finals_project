@@ -1,8 +1,12 @@
 import React, {useEffect, useState,useRef} from 'react';
-import { StyleSheet, View,Animated} from 'react-native';
+import {StyleSheet, View, Animated, BackHandler} from 'react-native';
 import {NativeBaseProvider, Button, Heading,Pressable,Text} from 'native-base';
 import {store} from '../state/state'
 import api from "../api";
+
+function componentWillMount() {
+
+}
 
 const LeaderFollowerPlayScreen = (props) =>{
     const agentOpacity = useRef(new Animated.Value(1)).current;
@@ -51,7 +55,12 @@ const LeaderFollowerPlayScreen = (props) =>{
     }, [isTimePassed])
 
 
-
+    componentWillMount()
+    {
+        BackHandler.addEventListener('hardwareBackPress', function () {
+            return true;
+        });
+    }
     const setWeightForGame = () => {
         ////////////////////////////////////////////// remove at the end, just for administrator
         // let administratorWeight = store.getAgentType()
@@ -69,7 +78,8 @@ const LeaderFollowerPlayScreen = (props) =>{
         console.log("LeadFollowAgent_"+store.getWeight())
     }
     const onNextPress = () => {
-        api.sendPressTimeStamp(store.getModel(), playerTimeStampArr.current, agentTimeStampArr.current, "LeadFollowAgent_" + store.getWeight())
+        // const userExist = api.isUserModelExists(store.getModel())
+        api.sendPressTimeStamp(store.getMail(), playerTimeStampArr.current, agentTimeStampArr.current, "LeadFollowAgent_" + store.getWeight())
         props.navigation.push('Questionnaire');
     }
     const buttonFadeFunc = ({isAgent}) => {
@@ -245,7 +255,9 @@ const LeaderFollowerPlayScreen = (props) =>{
 LeaderFollowerPlayScreen.navigationOptions = navigationData =>{
     return{
         title: '',
-        headerTitleAlign: 'center'
+        headerTitleAlign: 'center',
+        headerLeft: () => null
+
     }
 }
 

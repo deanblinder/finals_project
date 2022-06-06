@@ -11,6 +11,8 @@ import {
     Button,
     Select, CheckIcon, Text
 } from 'native-base';
+
+
 import {store} from '../state/state'
 
 import api from "../api";
@@ -20,34 +22,45 @@ const RegisterScreen = (props) => {
     const [age,setAge] = useState(undefined)
     const [gender,setGender] = useState(undefined)
     const [showError,setShowError] = useState(false)
-   const onNextPress = () => {
-        // if (validateAge(age) && validateEmail(mail) && gender){
-       if (true){
-       //      const deviceUUID = uuid.v4()
-       //      if (Platform.OS === 'ios'){
-       //          api.registerPlayer(mail,age,gender,deviceUid,'iso_'+version)
-       //      }
-       //      else{
-       //          api.registerPlayer(mail,age,gender,deviceUid,'android_'+version)
-       //      }
-       // api.registerPlayer("try@try.com",28,'maale','fjdkd654',11)
-       //      console.log("version:", store.getVersion())
-       //      api.registerPlayer(mail,age,gender,store.getModel(),store.getVersion())
-            props.navigation.push('FindPlayer');
-        }
-        else {
-            Alert.alert(
-                "לפחות אחד מהפרטים אינו חוקי",
-                "",
-                [
-                    {
-                        text: " אישור", onPress: () => {
-                        }
-                    }
-                ],
-            );
-            setShowError(true)
-        }
+    const onNextPress =async () => {
+       // const userExist = api.isUserModelExists(store.getModel())
+       if (validateAge(age) && validateEmail(mail) && gender){
+       // if (true) {
+           //      const deviceUUID = uuid.v4()
+           //      if (Platform.OS === 'ios'){
+           //          api.registerPlayer(mail,age,gender,deviceUid,'iso_'+version)
+           //      }
+           //      else{
+           //          api.registerPlayer(mail,age,gender,deviceUid,'android_'+version)
+           //      }
+           // api.registerPlayer("try@try.com",28,'maale','fjdkd654',11)
+           //      console.log("version:", store.getVersion())
+           // const check_model = "290cfbd5-2db8-430d-9cd7-dda0cda87a4b"
+           const check_model2 = "model_test"
+           // console.log("store model: ", store.getModel())
+
+           // const userExist = api.isUserModelExists(check_model)
+           const userExist =await api.numberOfExistingMail(mail)
+
+           console.log("userExist: ", userExist)
+
+           // api.registerPlayer(mail, age, gender, store.getModel()+userExist, store.getVersion())
+           api.registerPlayer(mail+"$"+(userExist+1), age, gender,(userExist+1), store.getVersion())
+           store.setMail(mail+"$"+(userExist+1))
+           props.navigation.push('FindPlayer');
+       } else {
+           Alert.alert(
+               "לפחות אחד מהפרטים אינו חוקי",
+               "",
+               [
+                   {
+                       text: " אישור", onPress: () => {
+                       }
+                   }
+               ],
+           );
+           setShowError(true)
+       }
 
     }
     useEffect(() => {
@@ -132,7 +145,9 @@ const RegisterScreen = (props) => {
 RegisterScreen.navigationOptions = navigationData =>{
     return{
         title: 'הרשמה',
-        headerTitleAlign: 'center'
+        headerTitleAlign: 'center',
+        headerLeft: () => null
+
     }
 }
 
