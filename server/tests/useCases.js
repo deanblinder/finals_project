@@ -68,9 +68,9 @@ async function sendPressTimeStampUC(deviceUUID,playerTimeStampArr, agentTimeStam
 }
 
 
-async function isUserModelExistsUC(uuid){
+async function numberOfExistingModelsUC(mail){
     try{
-        return await axios_with_cookies.post(`${api_domain}/users/isUserModelExists/${uuid}`);
+        return await axios_with_cookies.post(`${api_domain}/users/numberOfExistingModels/${mail}`);
     } catch(error){
         return error;
     }
@@ -123,7 +123,7 @@ exports.registerPlayerUC = registerPlayerUC;
 exports.sendAnswersUC = sendAnswersUC;
 exports.sendFeedBackUC = sendFeedBackUC;
 exports.sendPressTimeStampUC = sendPressTimeStampUC;
-exports.isUserModelExistsUC = isUserModelExistsUC;
+exports.numberOfExistingModelsUC = numberOfExistingModelsUC;
 
 exports.deleteAgentUC = deleteAgentUC;
 exports.deleteUserByEmailUC = deleteUserByEmailUC;

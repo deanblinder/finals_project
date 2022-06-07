@@ -13,17 +13,17 @@ async function getUserByEmail(email) {
     );
 }
 
-async function getUserIdByModel(model) {
-    console.log(" in getUserIdByUUID")
+async function getUserIdByEmail(email) {
+    console.log(" in getUserIdByEmail")
     return await DButils.execQuery(
-        `select id from Users where model like '${model}%'`
+        `select email from Users where email like '${email}%'`
     );
 }
 
-async function addUser(email, age,gender, model,version ) {
+async function addUser(email, age,gender,version ) {
     console.log("in addUser")
     await DButils.execQuery(
-        `INSERT INTO Users VALUES ('${email}','${age}','${gender}', '${model}', '${version}' )`
+        `INSERT INTO Users VALUES ('${email}','${age}','${gender}', '${version}' )`
     );
 }
 
@@ -36,6 +36,6 @@ async function deleteUserByEmail(email) {
 
 exports.getUserById= getUserById;
 exports.getUserByEmail= getUserByEmail;
-exports.getUserIdByModel= getUserIdByModel;
+exports.getUserIdByEmail= getUserIdByEmail;
 exports.addUser= addUser;
 exports.deleteUserByEmail= deleteUserByEmail;

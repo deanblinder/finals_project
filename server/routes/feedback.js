@@ -17,13 +17,13 @@ router.get("/getFeedbackByUserId/:userId", async (req, res, next) => {
 });
 */
 
-router.post("/addFeedback/:uuid/:feedback/:bestPlayer", async (req, res, next) => {
+router.post("/addFeedback/:mail/:feedback/:bestPlayer", async (req, res, next) => {
     try {
         console.log('---in addFeedback---')
-        const uuid = req.params.uuid
+        const mail = req.params.mail
         const feedback = req.params.feedback
         const bestPlayer = req.params.bestPlayer
-        await feedback_utils.addFeedback(uuid,feedback,bestPlayer);
+        await feedback_utils.addFeedback(mail,feedback,bestPlayer);
         console.log("after addFeedback")
         res.status(201).send("The addFeedback added");
     } catch (error) {

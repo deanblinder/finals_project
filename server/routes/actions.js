@@ -4,20 +4,20 @@ const actions_utils = require("./utils/actions_utils");
 
 
 
-//
-// router.get("/getActionByUserId/:userId", async (req, res, next) => {
-//     let action = [];
-//     try {
-//         const action_details = await actions_utils.getActionByUserId(
-//             req.params.userId
-//         );
-//         console.log(action_details)
-//         action.push(action_details)
-//         res.send(action).status(200);
-//     } catch (error) {
-//         next(error);
-//     }
-// });
+
+ router.get("/getActionByUserId/:userId", async (req, res, next) => {
+     let action = [];
+     try {
+         const action_details = await actions_utils.getActionByUserId(
+             req.params.userId
+         );
+         console.log(action_details)
+         action.push(action_details)
+         res.send(action).status(200);
+     } catch (error) {
+         next(error);
+     }
+ });
 
 router.post("/addAction/:user_session_id/:user_press_time/:agent_press_time/:experiment_info", async (req, res, next) => {
     try {

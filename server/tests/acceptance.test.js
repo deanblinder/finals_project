@@ -82,10 +82,10 @@ test('test sendPressTimeStamp OK',async()=>{
     expect(response.data).toEqual("The addAction added");
 });
 
-// isUserModelExists Tesing
-test('test isUserModelExists OK',async()=>{
+// numberOfExistingModels Tesing
+test('test numberOfExistingModels OK',async()=>{
     expect.assertions(1);
-    const response = await use_cases.isUserModelExistsUC(deviceUid)
+    const response = await use_cases.numberOfExistingModelsUC(mail)
     expect(response.status).toEqual(201);
 });
 
