@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
     Container:{
         margin:10,
        backgroundColor:'red',
-        textAlign:'right'
+        textAlign:'right',
     },
 });
 export  default GuidelineComponent

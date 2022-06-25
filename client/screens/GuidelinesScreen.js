@@ -3,7 +3,7 @@ import { StyleSheet,Image} from 'react-native';
 import {View, Heading, NativeBaseProvider, Text, Button, ScrollView} from "native-base";
 import {Carousel} from "react-native-ui-lib";
 
-const gameScreenShot = require('../assets/photos/ScreenS.jpeg')
+const gameScreenShot = require('../assets/photos/ScreenS2.jpg')
 
 export const Guidelines = () => {
     return (
@@ -30,26 +30,26 @@ const GuidelinesScreen = (props) => {
     return (
         <NativeBaseProvider>
             <ScrollView style={styles.container}>
-                <Heading style={{textAlign:'center'}} size={"lg"}>הוראות לניסוי</Heading>
+                {/*<Heading style={{textAlign:'center'}} size={"lg"}>הוראות לניסוי</Heading>*/}
                 <Guidelines/>
                 <View style={{justifyContent:'center',alignItems:'center',marginBottom:"10%"}} >
                     <Image source={gameScreenShot}/>
                 </View>
-                <Button style={{marginBottom:'10%'}} onPress={onStartPress}>המשך לניסוי</Button>
+                <Button style={{marginBottom:'13%'}} onPress={onStartPress}>המשך לניסוי</Button>
             </ScrollView>
         </NativeBaseProvider>
     );
 }
 GuidelinesScreen.navigationOptions = navigationData =>{
     return{
-        title: '',
+        title: 'הוראות לניסוי',
         headerTitleAlign: 'center'
     }
 }
 
 const styles = StyleSheet.create({
     container: {
-        padding:15,
+        padding:11,
         flex: 1,
         textAlign:'center',
         display:"flex"
@@ -57,7 +57,8 @@ const styles = StyleSheet.create({
     Text:{
         textAlign:'center',
         marginTop: 13,
-        fontSize:18
+        fontSize:17
+
     }
 });
 export default GuidelinesScreen

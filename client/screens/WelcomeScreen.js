@@ -27,8 +27,8 @@ const WelcomeScreen = (props) => {
                             <Text style={styles.Text} >אנא קראו את ההוראות בתשומת לב לפני שתתחילו. </Text>
                     </View>
                 <View style={{flexDirection:'row',justifyContent:'space-between'}}>
-                    <Button size={"lg"} style={{width:'45%',textAlign: 'right'}} onPress={onStartAdministrator}>כניסת מנהל מערכת</Button>
-                    <Button size={"lg"} style={{width:'45%',textAlign: 'right'}} onPress={onStartPress}>המשך להוראות</Button>
+                    {/*<Button size={"lg"} style={{width:'45%',textAlign: 'right'}} onPress={onStartAdministrator}>כניסת מנהל מערכת</Button>*/}
+                    <Button size={"lg"} style={{width:'100%',textAlign: 'right'}} onPress={onStartPress}>המשך להוראות</Button>
                 </View>
 
             </View>
