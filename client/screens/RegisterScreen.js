@@ -40,13 +40,13 @@ const RegisterScreen = (props) => {
            // console.log("store model: ", store.getModel())
 
            // const userExist = api.isUserModelExists(check_model)
-           const userExist =await api.numberOfExistingMail(mail)
+           const numberOfExistingUser = await api.numberOfExistingMail(mail)
 
-           console.log("userExist: ", userExist)
+           console.log("numberOfExistingUser: ", numberOfExistingUser)
 
            // api.registerPlayer(mail, age, gender, store.getModel()+userExist, store.getVersion())
-           api.registerPlayer(mail+"$"+(userExist+1), age, gender,(userExist+1), store.getVersion())
-           store.setMail(mail+"$"+(userExist+1))
+           api.registerPlayer(mail+"$"+(numberOfExistingUser+1), age, gender,(numberOfExistingUser+1), store.getVersion())
+           store.setMail(mail+"$"+(numberOfExistingUser+1))
            props.navigation.push('FindPlayer');
        } else {
            Alert.alert(

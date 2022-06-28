@@ -10,7 +10,7 @@ import api from "../api";
 
 const initialState = {
     isLoading: true,
-    experimentType: 'followerLeader',
+    experimentType: 'latency',
     agentType: 0,
     avgOff:3,
     gameTime:90,

@@ -130,7 +130,7 @@ const LeaderFollowerPlayScreen = (props) =>{
         buttonFadeFunc({isAgent:false})
         playerTimeStampArr.current.push(timeStamp)
         if (numberOfPresses.current > 2) {
-            clearInterval(intervalID1.current)
+            // clearInterval(intervalID1.current)
             const diffBetweenPlayerPresses = playerTimeStampArr.current[playerTimeStampArr.current.length - 1] - playerTimeStampArr.current[playerTimeStampArr.current.length - 2]
             playerDiffPressArr.current.push(diffBetweenPlayerPresses)
             const numOfLastPresses = parseInt(store.getAvgOff())
